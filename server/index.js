@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
+const config = require("./config.js");
 const IngredientRoute = require("./routes/ingredient.route");
 
 const app = express();
@@ -18,4 +18,6 @@ app.get("/", (_req, res) => {
 });
 app.use("/ingredient", IngredientRoute);
 
-app.listen(port, () => console.log(`listening on http://localhost:${port}!`));
+app.listen(config.PORT, config.HOST, function () {
+  console.log(`App listening on http://${config.HOST}:${config.PORT}`);
+});

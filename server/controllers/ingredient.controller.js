@@ -1,11 +1,11 @@
 let IngredientService = require("../services/ingredient.service");
 
-exports.getIngredients = async function (req, res, next) {
-  // Validate request parameters, queries using express-validator
-  let page = req.params.page ? req.params.page : 1;
-  let limit = req.params.limit ? req.params.limit : 10;
+exports.getIngredients = async function (req, res) {
+  // TODO: Validate request parameters, queries using express-validator
+  let page = req.query.page ? Number(req.query.page) : 1;
+  let limit = req.query.limit ? Number(req.query.limit) : 10;
   try {
-    let ingredients = await IngredientService.getIngredients({}, page, limit);
+    let ingredients = await IngredientService.findAll({}, page, limit);
     return res.status(200).json({
       data: ingredients,
     });
