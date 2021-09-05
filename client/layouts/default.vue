@@ -1,16 +1,12 @@
 <template>
   <div id="app-layout">
-    <Navbar></Navbar>
+    <Navbar />
 
-    <div id="app-content" class="container">
-      <Nuxt></Nuxt>
+    <div id="app-content">
+      <Nuxt />
     </div>
 
-    <div class="footer bg-primary text-light py-5">
-      <div class="container">
-        <p>footer</p>
-      </div>
-    </div>
+    <Foot />
   </div>
 </template>
 
@@ -19,5 +15,3 @@ export default {
   name: 'Default',
 }
 </script>
-
-<style scoped></style>

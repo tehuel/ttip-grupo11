@@ -1,0 +1,10 @@
+@import "~bootswatch/dist/lumen/variables";
+
+$font-size-base: 1rem;
+
+@import '~bootstrap/scss/bootstrap.scss';
+@import "~bootswatch/dist/lumen/bootswatch";
+
+@import '~bootstrap-vue/src/index.scss';
+
+@import "./custom";
