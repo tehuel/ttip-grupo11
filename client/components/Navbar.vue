@@ -1,18 +1,20 @@
 <template>
   <b-navbar toggleable="lg" type="light" variant="primary">
     <div class="container">
-      <b-navbar-brand href="#">
+      <NuxtLink class="navbar-brand" active-class="nav-link-active" to="/">
         <img
           id="app-iso"
           src="~/assets/img/recetaris-iso@2x.png"
           class="d-inline-block"
           alt="Recetaris"
         />
-      </b-navbar-brand>
+      </NuxtLink>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item href="#">Link</b-nav-item>
+          <NuxtLink class="nav-link" active-class="active" to="/about"
+            >Acerca de</NuxtLink
+          >
         </b-navbar-nav>
       </b-collapse>
     </div>
@@ -26,11 +28,7 @@ export default {
 </script>
 
 <style scoped>
-#app-logo {
-  width: 36px;
-  height: 36px;
-}
 #app-iso {
-  max-height: 36px;
+  max-height: 34px;
 }
 </style>
