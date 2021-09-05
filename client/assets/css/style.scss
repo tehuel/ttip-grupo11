@@ -1,9 +1,14 @@
-@import "~bootswatch/dist/lumen/variables";
+@import "~bootswatch/dist/minty/variables";
 
-$font-size-base: 1rem;
+$primary: #408c5c;
+$secondary: #eb9744;
+
+$navbar-dark-color: rgba($white, .8);
+$navbar-dark-hover-color: rgba($white, .9);
+$navbar-dark-disabled-color: rgba($white, .5);
 
 @import '~bootstrap/scss/bootstrap.scss';
-@import "~bootswatch/dist/lumen/bootswatch";
+@import "~bootswatch/dist/minty/bootswatch";
 
 @import '~bootstrap-vue/src/index.scss';
 
