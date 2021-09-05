@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 
-var IngredientController = require('../controllers/ingredient.controller')
+const IngredientController = require("../controllers/ingredient.controller");
 
-router.get('/', IngredientController.getIngredients)
+router.get("/", IngredientController.getIngredients);
 
 module.exports = router;
