@@ -19,10 +19,15 @@ PORT=3000
 MONGO_URL=<completar con URL de MongoDB>
 ```
 
-## Iniciar Servidor
+## Setup
 
-```shell
-npm install
-npm run seed
-npm run start
+```bash
+# instalar dependencias
+$ npm install
+
+# seed de base de datos
+$ npm run seed
+
+# iniciar servidor (con hot-reload) en localhost:3000
+$ npm run start
 ```

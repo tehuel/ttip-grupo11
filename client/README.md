@@ -5,16 +5,12 @@ Frontend construido con [NuxtJS](https://nuxtjs.org).
 ## Setup
 
 ```bash
-# install dependencies
+# instalar dependencias
 $ npm install
 
-# serve with hot reload at localhost:3000
+# iniciar servidor (con hot-reload) en localhost:3000
 $ npm run dev
 
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
+# build estático del proyecto
 $ npm run generate
 ```
