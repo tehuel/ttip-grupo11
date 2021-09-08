@@ -17,6 +17,7 @@ app.get("/", (_req, res) => {
   });
 });
 app.use("/ingredient", IngredientRoute);
+app.use("/add", IngredientRoute)
 
 app.listen(config.PORT, config.HOST, function () {
   console.log(`App listening on http://${config.HOST}:${config.PORT}`);
