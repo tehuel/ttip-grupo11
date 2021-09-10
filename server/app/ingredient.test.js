@@ -28,13 +28,13 @@ describe("/ingredient", () => {
     await mongoServer.stop();
   });
 
-  it("GET /ingredient empty list", async () => {
+  it("GET /ingredients empty list", async () => {
     const res = await request(app).get("/ingredients");
     expect(res.statusCode).toBe(200);
     expect(res.body.data).toHaveLength(0);
   });
 
-  it("GET /ingredient with a single ingredient", async () => {
+  it("GET /ingredients with a single ingredient", async () => {
     // creates a single ingredient
     await Ingredient.create({
       name: "Test Ingredient",
@@ -42,5 +42,18 @@ describe("/ingredient", () => {
     const res = await request(app).get("/ingredients");
     expect(res.statusCode).toBe(200);
     expect(res.body.data).toHaveLength(1);
+  });
+
+  it("GET /ingredients with multiple ingredients", async () => {
+    // creates a single ingredient
+    await Ingredient.create({
+      name: "Test Ingredient",
+    });
+    await Ingredient.create({
+      name: "Another test ingredient",
+    });
+    const res = await request(app).get("/ingredients");
+    expect(res.statusCode).toBe(200);
+    expect(res.body.data).toHaveLength(2);
   });
 });
