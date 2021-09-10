@@ -9,8 +9,8 @@ exports.findAll = async function () {
   }
 };
 
-exports.create = async function (query) {
-  const ingredient = new Ingredient(query.name);
+exports.create = async function (ingredientData) {
+  const ingredient = new Ingredient(ingredientData);
   await ingredient.save();
   return ingredient;
 };

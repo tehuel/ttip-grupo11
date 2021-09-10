@@ -56,4 +56,15 @@ describe("/ingredient", () => {
     expect(res.statusCode).toBe(200);
     expect(res.body.data).toHaveLength(2);
   });
+
+  it("POST /ingredients to create ingredient", async () => {
+    // creates a single ingredient
+    const newIngredientData = {
+      name: "Test Ingredient",
+    };
+    const res = await request(app).post("/ingredients").send(newIngredientData);
+    expect(res.statusCode).toBe(201);
+    console.log(res.body);
+    // expect(res.body.data).toHaveLength(1);
+  });
 });

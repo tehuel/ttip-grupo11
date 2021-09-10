@@ -13,9 +13,18 @@ exports.getIngredients = async function (req, res) {
   }
 };
 
-exports.add = async function (req, res, next) {
+exports.add = async function (req, res) {
   try {
-    await IngredientService.create(req.body);
+    // validate req.body before using it
+    const { name } = req.body;
+
+    const result = await IngredientService.create({
+      name: name,
+    });
+    return res.status(201).json({
+      message: "Created",
+      data: result,
+    });
   } catch (e) {
     return res.status(400).json({
       message: e.message,
