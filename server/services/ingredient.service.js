@@ -15,16 +15,10 @@ exports.create = async function (ingredientData) {
   return ingredient;
 };
 
-exports.update = async function (name, ingredientParam) {
-  const ingredient = await Ingredient.find({ name });
-
-  // validate
-  if (!ingredient) throw "ingrediente no encontrado";
-
-  // copy ingredientParam properties to user
-  Object.assign(ingredient, ingredientParam);
-
-  await ingredient.save();
+exports.update = async function (name, update) {
+  return Ingredient.findOneAndUpdate({ name: name }, update, {
+    new: true,
+  });
 };
 
 exports.getByName = async function (name) {

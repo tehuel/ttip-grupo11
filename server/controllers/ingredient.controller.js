@@ -15,15 +15,13 @@ exports.getIngredients = async function (req, res) {
 
 exports.add = async function (req, res) {
   try {
-    // validate req.body before using it
+    // TODO: validate req.body
     const { name } = req.body;
 
-    const result = await IngredientService.create({
-      name: name,
-    });
+    const createdIngredient = await IngredientService.create({ name });
     return res.status(201).json({
       message: "Created",
-      data: result,
+      data: createdIngredient,
     });
   } catch (e) {
     return res.status(400).json({
@@ -32,10 +30,25 @@ exports.add = async function (req, res) {
   }
 };
 
-exports.update = async function (req, res, next) {
-  IngredientService.update(req.params.name, req.body)
-    .then(() => res.json({ message: "Ingrediente modificado" }))
-    .catch((err) => next(err));
+exports.update = async function (req, res) {
+  try {
+    // TODO: validate req.params and req.body
+    const { name: oldName } = req.params;
+    const { name: newName } = req.body;
+
+    const updatedIngredient = await IngredientService.update(oldName, {
+      name: newName,
+    });
+
+    return res.status(200).json({
+      message: "Ingrediente modificado",
+      data: updatedIngredient,
+    });
+  } catch (e) {
+    return res.status(400).json({
+      message: e.message,
+    });
+  }
 };
 
 exports.getByName = async function (req, res, next) {

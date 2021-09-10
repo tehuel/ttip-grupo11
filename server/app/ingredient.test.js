@@ -64,7 +64,23 @@ describe("/ingredient", () => {
     };
     const res = await request(app).post("/ingredients").send(newIngredientData);
     expect(res.statusCode).toBe(201);
-    console.log(res.body);
-    // expect(res.body.data).toHaveLength(1);
+    expect(res.body.message).toBe("Created");
+    expect(res.body.data.name).toBe("Test Ingredient");
+  });
+
+  it("PUT /ingredients/:ingredient to modify ingredient", async () => {
+    // creates a single ingredient
+    await Ingredient.create({
+      name: "test",
+    });
+    const newIngredientData = {
+      name: "Updated Name",
+    };
+    const res = await request(app)
+      .put("/ingredients/test")
+      .send(newIngredientData);
+    expect(res.statusCode).toBe(200);
+    expect(res.body.message).toBe("Ingrediente modificado");
+    expect(res.body.data.name).toBe("Updated Name");
   });
 });
