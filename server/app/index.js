@@ -15,6 +15,6 @@ app.get("/", (_req, res) => {
     message: "OK",
   });
 });
-app.use("/ingredient", IngredientRoute);
+app.use("/ingredients", IngredientRoute);
 
 module.exports = app;

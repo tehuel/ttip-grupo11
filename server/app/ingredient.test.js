@@ -29,7 +29,7 @@ describe("/ingredient", () => {
   });
 
   it("GET /ingredient empty list", async () => {
-    const res = await request(app).get("/ingredient");
+    const res = await request(app).get("/ingredients");
     expect(res.statusCode).toBe(200);
     expect(res.body.data).toHaveLength(0);
   });
@@ -39,7 +39,7 @@ describe("/ingredient", () => {
     await Ingredient.create({
       name: "Test Ingredient",
     });
-    const res = await request(app).get("/ingredient");
+    const res = await request(app).get("/ingredients");
     expect(res.statusCode).toBe(200);
     expect(res.body.data).toHaveLength(1);
   });
