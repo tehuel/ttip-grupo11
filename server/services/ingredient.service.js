@@ -1,12 +1,10 @@
 let Ingredient = require("../models/ingredient.model");
 
-exports.findAll = async function (query, page, limit) {
+exports.findAll = async function () {
   try {
-    return await Ingredient.find(query)
-      .limit(limit)
-      .skip(page * limit);
+    return await Ingredient.find();
   } catch (e) {
     console.error(e);
-    throw Error("Error while Paginating Ingredients");
+    throw Error("Error getting ingredients.");
   }
 };
