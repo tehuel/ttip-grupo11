@@ -21,6 +21,10 @@ exports.update = async function (name, update) {
   });
 };
 
+exports.delete = async function (name) {
+  return Ingredient.deleteOne({ name: name });
+};
+
 exports.getByName = async function (name) {
   return Ingredient.find({
     name: name,

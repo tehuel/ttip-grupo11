@@ -51,6 +51,23 @@ exports.update = async function (req, res) {
   }
 };
 
+exports.delete = async function (req, res) {
+  try {
+    // TODO: validate req.params and req.body
+    const { name } = req.params;
+
+    IngredientService.delete(name);
+
+    return res.status(200).json({
+      message: "Ingrediente eliminado",
+    });
+  } catch (e) {
+    return res.status(400).json({
+      message: e.message,
+    });
+  }
+};
+
 exports.getByName = async function (req, res, next) {
   IngredientService.getByName(req.params.name, req.body)
     .then((ingredients) => res.json(ingredients))

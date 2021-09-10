@@ -13,7 +13,6 @@ describe("/ingredient", () => {
     const url = mongoServer.getUri();
     await mongoose.connect(url, { useNewUrlParser: true });
   });
-
   afterEach(async () => {
     // delete all collections
     const collections = Object.keys(mongoose.connection.collections);
@@ -22,7 +21,6 @@ describe("/ingredient", () => {
       await collection.deleteMany();
     }
   });
-
   afterAll(async () => {
     await mongoose.disconnect();
     await mongoServer.stop();
@@ -82,5 +80,16 @@ describe("/ingredient", () => {
     expect(res.statusCode).toBe(200);
     expect(res.body.message).toBe("Ingrediente modificado");
     expect(res.body.data.name).toBe("Updated Name");
+  });
+
+  it("DELETE /ingredients/:ingredient to delete ingredient", async () => {
+    // creates a single ingredient
+    await Ingredient.create({
+      name: "test",
+    });
+    const res = await request(app).delete("/ingredients/test");
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.message).toBe("Ingrediente eliminado");
   });
 });
