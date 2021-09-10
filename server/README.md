@@ -25,9 +25,14 @@ MONGO_URL=<completar con URL de MongoDB>
 # instalar dependencias
 $ npm install
 
-# seed de base de datos
-$ npm run seed
-
 # iniciar servidor (con hot-reload) en localhost:3000
 $ npm run start
 ```
+
+## Tests
+
+```bash
+# ejecutar tests
+$ npm run test
+```
+
