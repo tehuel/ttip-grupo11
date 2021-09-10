@@ -13,7 +13,7 @@ exports.getIngredients = async function (req, res) {
   }
 };
 
-exports.add = async function (req, res, next){
+exports.add = async function (req, res, next) {
   try {
     await IngredientService.create(req.body);
   } catch (e) {
@@ -21,18 +21,16 @@ exports.add = async function (req, res, next){
       message: e.message,
     });
   }
-}
+};
 
-exports.update = async function(req, res, next) {
-  IngredientService
-    .update(req.params.name, req.body)
-    .then(() => res.json({ message: 'Ingrediente modificado' }))
-    .catch((err) => next(err))
-}
+exports.update = async function (req, res, next) {
+  IngredientService.update(req.params.name, req.body)
+    .then(() => res.json({ message: "Ingrediente modificado" }))
+    .catch((err) => next(err));
+};
 
-exports.getByName = async function(req, res, next) {
-  IngredientService
-    .getByName(req.params.name, req.body)
+exports.getByName = async function (req, res, next) {
+  IngredientService.getByName(req.params.name, req.body)
     .then((ingredients) => res.json(ingredients))
-    .catch((err) => next(err))
-}
+    .catch((err) => next(err));
+};

@@ -9,26 +9,26 @@ exports.findAll = async function () {
   }
 };
 
-exports.create = async function(query) {
-  const ingredient = new Ingredient(query.name)
-  await ingredient.save()
-  return ingredient
-}
+exports.create = async function (query) {
+  const ingredient = new Ingredient(query.name);
+  await ingredient.save();
+  return ingredient;
+};
 
-exports.update = async function(name, ingredientParam) {
-  const ingredient = await ingredient.findByName(name)
+exports.update = async function (name, ingredientParam) {
+  const ingredient = await Ingredient.find({ name });
 
   // validate
-  if (!ingredient) throw 'ingrediente no encontrado'
-  
+  if (!ingredient) throw "ingrediente no encontrado";
+
   // copy ingredientParam properties to user
-  Object.assign(ingredient, ingredientParam)
+  Object.assign(ingredient, ingredientParam);
 
-  await ingredient.save()
-}
+  await ingredient.save();
+};
 
-exports.getByName = async function(name) {
-  return await Ingredient.find({
-    name: name
-  })
-}
+exports.getByName = async function (name) {
+  return Ingredient.find({
+    name: name,
+  });
+};
