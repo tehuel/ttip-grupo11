@@ -1,22 +1,22 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
+const mongoose = require("mongoose");
 const config = require("./config.js");
-const IngredientRoute = require("./routes/ingredient.route");
+const app = require("./app");
 
-const app = express();
-const port = 3000;
-
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-app.get("/", (_req, res) => {
-  res.status(200).json({
-    message: "OK",
-  });
-});
-app.use("/ingredient", IngredientRoute);
+mongoose.connect(
+  config.MONGO_URL,
+  {
+    useNewUrlParser: true,
+  },
+  (err) => {
+    if (!err) {
+      console.log("Successfully Established Connection with MongoDB");
+    } else {
+      console.log(
+        "Failed to Establish Connection with MongoDB with Error: " + err
+      );
+    }
+  }
+);
 
 app.listen(config.PORT, config.HOST, function () {
   console.log(`App listening on http://${config.HOST}:${config.PORT}`);

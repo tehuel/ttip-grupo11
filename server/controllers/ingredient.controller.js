@@ -1,11 +1,8 @@
 let IngredientService = require("../services/ingredient.service");
 
 exports.getIngredients = async function (req, res) {
-  // TODO: Validate request parameters, queries using express-validator
-  let page = req.query.page ? Number(req.query.page) : 1;
-  let limit = req.query.limit ? Number(req.query.limit) : 10;
   try {
-    let ingredients = await IngredientService.findAll({}, page, limit);
+    let ingredients = await IngredientService.findAll();
     return res.status(200).json({
       data: ingredients,
     });
@@ -14,4 +11,65 @@ exports.getIngredients = async function (req, res) {
       message: e.message,
     });
   }
+};
+
+exports.add = async function (req, res) {
+  try {
+    // TODO: validate req.body
+    const { name } = req.body;
+
+    const createdIngredient = await IngredientService.create({ name });
+    return res.status(201).json({
+      message: "Created",
+      data: createdIngredient,
+    });
+  } catch (e) {
+    return res.status(400).json({
+      message: e.message,
+    });
+  }
+};
+
+exports.update = async function (req, res) {
+  try {
+    // TODO: validate req.params and req.body
+    const { name: oldName } = req.params;
+    const { name: newName } = req.body;
+
+    const updatedIngredient = await IngredientService.update(oldName, {
+      name: newName,
+    });
+
+    return res.status(200).json({
+      message: "Ingrediente modificado",
+      data: updatedIngredient,
+    });
+  } catch (e) {
+    return res.status(400).json({
+      message: e.message,
+    });
+  }
+};
+
+exports.delete = async function (req, res) {
+  try {
+    // TODO: validate req.params and req.body
+    const { name } = req.params;
+
+    IngredientService.delete(name);
+
+    return res.status(200).json({
+      message: "Ingrediente eliminado",
+    });
+  } catch (e) {
+    return res.status(400).json({
+      message: e.message,
+    });
+  }
+};
+
+exports.getByName = async function (req, res, next) {
+  IngredientService.getByName(req.params.name, req.body)
+    .then((ingredients) => res.json(ingredients))
+    .catch((err) => next(err));
 };
