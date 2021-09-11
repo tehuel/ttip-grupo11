@@ -17,8 +17,10 @@ exports.add = async function (req, res) {
   try {
     // TODO: validate req.body
     const { name } = req.body;
+    const { description } = req.body;
+    const { ingredients } = req.body;
 
-    const createdRecipe = await RecipeService.create({ name });
+    const createdRecipe = await RecipeService.create({ name, description, ingredients });
     return res.status(201).json({
       message: "Created",
       data: createdRecipe,
@@ -34,10 +36,17 @@ exports.update = async function (req, res) {
   try {
     // TODO: validate req.params and req.body
     const { name: oldName } = req.params;
-    const { name: newName } = req.body;
+    const { name: newName} = req.body;
+    const { description: newDescription } = req.body;
+    const { ingredients: newIngredients } = req.body;
+
+   
+    //const { ingredients: newIngredients } = req.body;
 
     const updatedRecipe = await RecipeService.update(oldName, {
       name: newName,
+      description: newDescription,
+      ingredients: newIngredients
     });
 
     return res.status(200).json({
