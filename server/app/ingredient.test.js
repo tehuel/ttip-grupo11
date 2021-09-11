@@ -11,7 +11,9 @@ describe("/ingredient", () => {
   beforeAll(async () => {
     mongoServer = await MongoMemoryServer.create();
     const url = mongoServer.getUri();
-    await mongoose.connect(url, { useNewUrlParser: true });
+    await mongoose.connect(url, {
+      useNewUrlParser: true,
+    });
   });
   afterEach(async () => {
     // delete all collections
@@ -37,6 +39,7 @@ describe("/ingredient", () => {
     await Ingredient.create({
       name: "Test Ingredient",
     });
+
     const res = await request(app).get("/ingredients");
     expect(res.statusCode).toBe(200);
     expect(res.body.data).toHaveLength(1);
@@ -64,6 +67,22 @@ describe("/ingredient", () => {
     expect(res.statusCode).toBe(201);
     expect(res.body.message).toBe("Created");
     expect(res.body.data.name).toBe("Test Ingredient");
+  });
+
+  it("POST /ingredients error repeated ingredient", async () => {
+    // creates a single ingredient
+    const newIngredientData = {
+      name: "Test Ingredient",
+    };
+    const res1 = await request(app)
+      .post("/ingredients")
+      .send(newIngredientData);
+    expect(res1.statusCode).toBe(201);
+
+    const res2 = await request(app)
+      .post("/ingredients")
+      .send(newIngredientData);
+    expect(res2.statusCode).toBe(400);
   });
 
   it("PUT /ingredients/:ingredient to modify ingredient", async () => {
