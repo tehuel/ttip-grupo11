@@ -63,7 +63,7 @@ exports.delete = async function (req, res) {
     // TODO: validate req.params and req.body
     const { name } = req.params;
 
-    RecipeService.delete(name);
+    await RecipeService.delete(name);
 
     return res.status(200).json({
       message: "Receta eliminada.",

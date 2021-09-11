@@ -10,5 +10,4 @@ router.put("/:name", RecipeController.update);
 router.delete("/:name", RecipeController.delete);
 router.get("/:name", RecipeController.getByName);
 
-
 module.exports = router;
