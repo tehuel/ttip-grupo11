@@ -37,18 +37,14 @@ exports.add = async function (req, res) {
 exports.update = async function (req, res) {
   try {
     // TODO: validate req.params and req.body
-    const { name: oldName } = req.params;
-    const { name: newName} = req.body;
-    const { description: newDescription } = req.body;
-    const { ingredients: newIngredients } = req.body;
-
-   
+    const { name: originalName } = req.params;
+    const { name, description, ingredients } = req.body;
     //const { ingredients: newIngredients } = req.body;
 
-    const updatedRecipe = await RecipeService.update(oldName, {
-      name: newName,
-      description: newDescription,
-      ingredients: newIngredients
+    const updatedRecipe = await RecipeService.update(originalName, {
+      name: name,
+      description: description,
+      ingredients: ingredients,
     });
 
     return res.status(200).json({
