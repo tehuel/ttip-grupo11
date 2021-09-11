@@ -10,12 +10,12 @@ exports.findAll = async function () {
 };
 
 exports.create = async function (ingredientData) {
-  const ingredient = new Ingredient(ingredientData);
-  await ingredient.save();
-  return ingredient;
+  await Ingredient.ensureIndexes();
+  return await Ingredient.create(ingredientData);
 };
 
 exports.update = async function (name, update) {
+  await Ingredient.ensureIndexes();
   return Ingredient.findOneAndUpdate({ name: name }, update, {
     new: true,
   });
