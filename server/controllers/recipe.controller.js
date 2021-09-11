@@ -16,11 +16,13 @@ exports.getRecipes = async function (req, res) {
 exports.add = async function (req, res) {
   try {
     // TODO: validate req.body
-    const { name } = req.body;
-    const { description } = req.body;
-    const { ingredients } = req.body;
+    const { name, description, ingredients } = req.body;
 
-    const createdRecipe = await RecipeService.create({ name, description, ingredients });
+    const createdRecipe = await RecipeService.create({
+      name,
+      description,
+      ingredients,
+    });
     return res.status(201).json({
       message: "Created",
       data: createdRecipe,
