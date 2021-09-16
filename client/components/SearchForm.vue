@@ -1,0 +1,62 @@
+<template>
+  <div>
+    <form>
+      <p v-if="$fetchState.pending" class="text-center">Cargando...</p>
+      <div v-else>
+        <b-form-checkbox-group
+          v-slot="{ ariaDescribedby }"
+          name="ingredients"
+          size="lg"
+          class="d-flex justify-content-center flex-wrap"
+        >
+          <b-form-checkbox
+            v-for="ingredient in ingredients"
+            :key="ingredient.id"
+            v-model="selected"
+            size="lg"
+            :value="ingredient"
+            :aria-describedby="ariaDescribedby"
+          >
+            {{ ingredient.name }}
+          </b-form-checkbox>
+        </b-form-checkbox-group>
+      </div>
+      <div class="d-flex w-100 justify-content-end">
+        <button
+          id="search-button"
+          type="submit"
+          class="btn btn-lg btn-secondary px-3 px-lg-5"
+          :disabled="$fetchState.pending"
+        >
+          Buscar
+        </button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'IngredientsList',
+  data() {
+    return {
+      selected: [], // Must be an array reference!
+    }
+  },
+  async fetch() {
+    await this.$store.dispatch('ingredients/getIngredients')
+  },
+  computed: {
+    ingredients() {
+      return this.$store.state.ingredients.list
+    },
+  },
+  fetchOnServer: false,
+  activated() {
+    // Call fetch again if last fetch more than 60 sec ago
+    if (this.$fetchState.timestamp <= Date.now() - 60000) {
+      this.$fetch()
+    }
+  },
+}
+</script>
