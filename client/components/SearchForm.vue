@@ -1,13 +1,13 @@
 <template>
   <div>
     <form>
-      <p v-if="$fetchState.pending">Cargando...</p>
+      <p v-if="$fetchState.pending" class="text-center">Cargando...</p>
       <div v-else>
         <b-form-checkbox-group
           v-slot="{ ariaDescribedby }"
           name="ingredients"
           size="lg"
-          class="d-flex justify-content-center"
+          class="d-flex justify-content-center flex-wrap"
         >
           <b-form-checkbox
             v-for="ingredient in ingredients"
@@ -23,8 +23,9 @@
       </div>
       <div class="d-flex w-100 justify-content-end">
         <button
+          id="search-button"
           type="submit"
-          class="btn btn-lg btn-primary px-5"
+          class="btn btn-lg btn-secondary px-3 px-lg-5"
           :disabled="$fetchState.pending"
         >
           Buscar
