@@ -51,5 +51,11 @@ export default {
     },
   },
   fetchOnServer: false,
+  activated() {
+    // Call fetch again if last fetch more than 60 sec ago
+    if (this.$fetchState.timestamp <= Date.now() - 60000) {
+      this.$fetch()
+    }
+  },
 }
 </script>

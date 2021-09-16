@@ -3,7 +3,7 @@
     <Navbar />
 
     <div id="app-content">
-      <Nuxt />
+      <Nuxt keep-alive />
     </div>
 
     <Foot />
