@@ -59,7 +59,9 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:5000', // Used as fallback if no runtime config is provided
+  },
 
   // BootstrapVue module configuration https://bootstrap-vue.org/docs#nuxtjs-module
   bootstrapVue: {
