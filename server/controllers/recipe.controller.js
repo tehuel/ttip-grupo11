@@ -1,4 +1,5 @@
 let RecipeService = require("../services/recipe.service");
+let IngredientService = require("../services/ingredient.service")
 
 exports.getRecipes = async function (req, res) {
   try {
@@ -23,6 +24,9 @@ exports.add = async function (req, res) {
       description,
       ingredients,
     });
+
+    await IngredientService.create(ingredients);
+
     return res.status(201).json({
       message: "Created",
       data: createdRecipe,
@@ -80,3 +84,9 @@ exports.getByName = async function (req, res, next) {
     .then((recipes) => res.json(recipes))
     .catch((err) => next(err));
 };
+
+exports.getByIngredient = async function (req, res, next) {
+  RecipeService.getByIngredient(req.params.ingredient)
+    .then((recipes) => res.json(recipes))
+    .catch((err) => next(err));
+}
