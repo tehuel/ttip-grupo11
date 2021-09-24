@@ -1,4 +1,3 @@
-// Ingredients
 const Ingredient = require("../models/ingredient.model");
 const IngredientFake = require("../models/ingredient.fake");
 
