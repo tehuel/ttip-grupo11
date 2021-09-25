@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 <template>
   <div>
     <form>
@@ -11,10 +12,10 @@
         >
           <b-form-checkbox
             v-for="ingredient in ingredients"
-            :key="ingredient.id"
+            :key="ingredient.name"
             v-model="selected"
             size="lg"
-            :value="ingredient"
+            :value="ingredient.name"
             :aria-describedby="ariaDescribedby"
           >
             {{ ingredient.name }}
@@ -27,6 +28,7 @@
           type="submit"
           class="btn btn-lg btn-secondary px-3 px-lg-5"
           :disabled="$fetchState.pending"
+          @click="getRecipesWith(selected[0])"
         >
           Buscar
         </button>
@@ -57,6 +59,11 @@ export default {
     if (this.$fetchState.timestamp <= Date.now() - 60000) {
       this.$fetch()
     }
+  },
+  methods: {
+    async getRecipesWith(name) {
+      return await this.$store.dispatch('recipes/getRecipesWith', name)
+    },
   },
 }
 </script>
