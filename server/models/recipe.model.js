@@ -1,5 +1,4 @@
 const { Schema, model } = require("mongoose");
-const Ingredient = require("../models/ingredient.model")
 
 const RecipeSchema = new Schema(
   {
