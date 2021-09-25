@@ -1,5 +1,5 @@
 let RecipeService = require("../services/recipe.service");
-let IngredientService = require("../services/ingredient.service")
+let IngredientService = require("../services/ingredient.service");
 
 exports.getRecipes = async function (req, res) {
   try {
@@ -85,8 +85,9 @@ exports.getByName = async function (req, res, next) {
     .catch((err) => next(err));
 };
 
-exports.getByIngredient = async function (req, res, next) {
-  RecipeService.getByIngredient(req.params.ingredient)
+exports.searchByIngredients = async function (req, res, next) {
+  // TODO: validate req.body
+  RecipeService.searchByIngredients(req.body.ingredients)
     .then((recipes) => res.json(recipes))
     .catch((err) => next(err));
-}
+};
