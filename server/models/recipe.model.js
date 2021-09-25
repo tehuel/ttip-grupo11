@@ -12,10 +12,12 @@ const RecipeSchema = new Schema(
     rating: {
       type: Number,
     },
-    ingredients: {
-      type: Array,
-      default: [],
-    },
+    ingredients: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Ingredient",
+      },
+    ],
     imgUrl: {
       type: String,
     },
