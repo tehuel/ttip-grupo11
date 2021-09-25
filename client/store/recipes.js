@@ -5,9 +5,13 @@ export const state = () => ({
 })
 
 export const actions = {
-  async getRecipesWith({ commit }, name) {
-    const recipes = await RecipeService.getRecipesWith(this.$axios, name)
-    commit('set', recipes)
+  async searchRecipes({ commit }, ingredients) {
+    const foundRecipes = await RecipeService.searchRecipes(
+      this.$axios,
+      ingredients
+    )
+    commit('set', foundRecipes)
+    await this.$router.push('/results')
   },
 }
 

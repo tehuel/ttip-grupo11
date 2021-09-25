@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 <template>
   <div>
-    <form>
+    <form @submit.prevent="onSubmitSearchForm">
       <p v-if="$fetchState.pending" class="text-center">Cargando...</p>
       <div v-else>
         <b-form-checkbox-group
@@ -15,7 +15,7 @@
             :key="ingredient.name"
             v-model="selected"
             size="lg"
-            :value="ingredient.name"
+            :value="ingredient.id"
             :aria-describedby="ariaDescribedby"
           >
             {{ ingredient.name }}
@@ -26,9 +26,8 @@
         <button
           id="search-button"
           type="submit"
-          class="btn btn-lg btn-secondary px-3 px-lg-5"
+          class="btn btn-lg btn-secondary px-3 px-lg-5 mt-3"
           :disabled="$fetchState.pending"
-          @click="getRecipesWith(selected[0])"
         >
           Buscar
         </button>
@@ -61,8 +60,9 @@ export default {
     }
   },
   methods: {
-    async getRecipesWith(name) {
-      return await this.$store.dispatch('recipes/getRecipesWith', name)
+    async onSubmitSearchForm() {
+      // le paso todos los ingredientes seleccionados a la acción
+      return await this.$store.dispatch('recipes/searchRecipes', this.selected)
     },
   },
 }

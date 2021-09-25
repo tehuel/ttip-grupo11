@@ -11,8 +11,11 @@ module.exports = {
     })
   },
 
-  getRecipesWith: async (axios, name) => {
-    const recipesResponse = await axios.$get('/recipes/with/' + name)
-    return recipesResponse.data
+  searchRecipes: async (axios, ingredients) => {
+    const recipesResponse = await axios.$post('/recipes/search', {
+      // mando el listado de ingredientes en el body
+      ingredients,
+    })
+    return recipesResponse
   },
 }

@@ -1,6 +1,4 @@
-const ingredientModel = require("../models/ingredient.model");
 let Recipe = require("../models/recipe.model");
-const { findAll, findByName } = require("./ingredient.service");
 
 exports.findAll = async function () {
   try {
@@ -33,9 +31,9 @@ exports.getByName = async function (name) {
   });
 };
 
-exports.getByIngredient = async function (ingredient) {
-  const res = await Recipe.find({
-    "ingredients.name": ingredient,
+exports.searchByIngredients = async function (ingredients) {
+  // busca cualquier receta que tenga al menos uno de los ingredientes
+  return Recipe.find({
+    ingredients: { $in: ingredients },
   });
-  return res;
 };
