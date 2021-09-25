@@ -1,12 +1,12 @@
 const faker = require("faker/locale/es");
 
-const fakeRecipe = () => {
+const fakeRecipe = (ingredients = []) => {
   return {
-    name: faker.fake("{{lorem.word}} {{commerce.color}}").toLowerCase(),
-    description: faker.fake("{{lorem.sentence}}"),
-    rating: faker.fake("{{lorem.sentence}}"),
-    ingredients: [],
-    imgUrl: faker.fake("{{lorem.sentence}}").toLowerCase(),
+    name: faker.lorem.sentence(),
+    description: faker.lorem.sentence(),
+    rating: faker.random.arrayElement([1, 2, 3, 4, 5]),
+    ingredients: ingredients,
+    imgUrl: faker.image.lorempixel.food(800, 600, true),
   };
 };
 

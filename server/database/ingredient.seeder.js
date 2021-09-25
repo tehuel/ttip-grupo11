@@ -9,8 +9,7 @@ const seedIngredients = async () => {
 
   // agrego los ingredientes a la BD
   await Ingredient.collection.deleteMany({});
-  const result = await Ingredient.insertMany(fakeIngredients);
-  console.log("seedIngredients complete", result);
+  return await Ingredient.insertMany(fakeIngredients);
 };
 
 module.exports = seedIngredients;

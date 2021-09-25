@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const config = require("../config.js");
 const ingredientSeeder = require("./ingredient.seeder");
+const recipeSeeder = require("./recipe.seeder");
 
 const seed = async () => {
   try {
@@ -11,7 +12,11 @@ const seed = async () => {
   }
 
   // Ingredients
-  await ingredientSeeder();
+  const ingredients = await ingredientSeeder();
+  console.log("ingredientSeeder", ingredients);
+
+  const recipes = await recipeSeeder(ingredients);
+  console.log("recipeSeeder", recipes);
 
   try {
     await mongoose.disconnect();
