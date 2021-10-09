@@ -11,7 +11,7 @@ const formatRecipe = (RecipeResponse) => ({
 module.exports = {
   getLatestRecipes: async (axios) => {
     const recipesResponse = await axios.$get('/recipes')
-    console.log('getLatestRecipes', recipesResponse)
+    // console.log('getLatestRecipes', recipesResponse)
     return recipesResponse.data.map(formatRecipe)
   },
 
@@ -20,6 +20,7 @@ module.exports = {
       // mando el listado de ingredientes en el body
       ingredients,
     })
+    // console.log('searchRecipes', recipesResponse)
     return recipesResponse.data.map(formatRecipe)
   },
 }
