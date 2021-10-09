@@ -15,6 +15,18 @@
       </div>
     </div>
     <div class="container my-5">
+      <p class="h2">Ultimas Recetas</p>
+      <div class="row">
+        <div
+          v-for="recipe in latestRecipes"
+          :key="recipe._id"
+          class="col-6 col-lg-4 mb-2"
+        >
+          <RecipeCard :recipe="recipe" />
+        </div>
+      </div>
+    </div>
+    <div class="container my-5">
       <p class="h2">Lorem ipsum</p>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus
@@ -26,6 +38,19 @@
   </div>
 </template>
 
+<script>
+export default {
+  async fetch() {
+    await this.$store.dispatch('recipes/getLatestRecipes')
+  },
+  computed: {
+    latestRecipes() {
+      return this.$store.state.recipes.latest
+    },
+  },
+}
+</script>
+
 <style type="text/css">
 .search {
   padding: 6em 0;
@@ -34,7 +59,3 @@
   object-fit: contain;
 }
 </style>
-
-<script>
-export default {}
-</script>
