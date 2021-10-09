@@ -64,7 +64,7 @@ exports.update = async function (req, res) {
 
 exports.delete = async function (req, res) {
   try {
-    // TODO: validate req.params and req.body
+    // TODO: validate req.params
     const { name } = req.params;
 
     await RecipeService.delete(name);
@@ -79,15 +79,32 @@ exports.delete = async function (req, res) {
   }
 };
 
-exports.getByName = async function (req, res, next) {
-  RecipeService.getByName(req.params.name, req.body)
-    .then((recipes) => res.json(recipes))
-    .catch((err) => next(err));
+exports.getByName = async function (req, res) {
+  try {
+    // TODO: validate req.params
+    const { name } = req.params;
+    let recipe = await RecipeService.getByName(name);
+    return res.status(200).json({
+      data: recipe,
+    });
+  } catch (e) {
+    return res.status(400).json({
+      message: e.message,
+    });
+  }
 };
 
-exports.searchByIngredients = async function (req, res, next) {
-  // TODO: validate req.body
-  RecipeService.searchByIngredients(req.body.ingredients)
-    .then((recipes) => res.json(recipes))
-    .catch((err) => next(err));
+exports.searchByIngredients = async function (req, res) {
+  try {
+    // TODO: validate req.body
+    const { ingredients } = req.body;
+    let recipes = await RecipeService.searchByIngredients(ingredients);
+    return res.status(200).json({
+      data: recipes,
+    });
+  } catch (e) {
+    return res.status(400).json({
+      message: e.message,
+    });
+  }
 };
