@@ -1,14 +1,18 @@
+const formatRecipe = (RecipeResponse) => ({
+  id: RecipeResponse._id,
+  name: RecipeResponse.name,
+  description: RecipeResponse.description,
+  ingredients: RecipeResponse.ingredients,
+  rating: RecipeResponse.rating,
+  imgUrl: RecipeResponse.imgUrl,
+  createdAt: new Date(RecipeResponse.createdAt),
+})
+
 module.exports = {
-  getRecipes: async (axios) => {
+  getLatestRecipes: async (axios) => {
     const recipesResponse = await axios.$get('/recipes')
-    return recipesResponse.data.map((recipe) => {
-      // format recipes
-      return {
-        id: recipe._id,
-        name: recipe.name,
-        createdAt: new Date(recipe.createdAt),
-      }
-    })
+    // console.log('getLatestRecipes', recipesResponse)
+    return recipesResponse.data.map(formatRecipe)
   },
 
   searchRecipes: async (axios, ingredients) => {
@@ -16,6 +20,7 @@ module.exports = {
       // mando el listado de ingredientes en el body
       ingredients,
     })
-    return recipesResponse
+    // console.log('searchRecipes', recipesResponse)
+    return recipesResponse.data.map(formatRecipe)
   },
 }
