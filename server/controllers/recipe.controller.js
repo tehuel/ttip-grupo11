@@ -17,12 +17,13 @@ exports.getRecipes = async function (req, res) {
 exports.add = async function (req, res) {
   try {
     // TODO: validate req.body
-    const { name, description, ingredients } = req.body;
+    const { name, description, ingredients, imgUrl } = req.body;
 
     const createdRecipe = await RecipeService.create({
       name,
       description,
       ingredients,
+      imgUrl,
     });
 
     await IngredientService.create(ingredients);
