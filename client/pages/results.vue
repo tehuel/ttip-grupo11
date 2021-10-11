@@ -2,7 +2,6 @@
   <div class="page">
     <div class="container">
       <h1 class="h2 my-5">Resultados</h1>
-      {{ ingredients }}
       <div class="section my-5">
         <div class="row">
           <div v-for="recipe in recipes" :key="recipe._id" class="col-4 mb-2">

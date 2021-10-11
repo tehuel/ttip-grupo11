@@ -1,5 +1,6 @@
 let RecipeService = require("../services/recipe.service");
 let IngredientService = require("../services/ingredient.service");
+let TagService = require("../services/tag.service");
 
 exports.getRecipes = async function (req, res) {
   try {
@@ -17,15 +18,17 @@ exports.getRecipes = async function (req, res) {
 exports.add = async function (req, res) {
   try {
     // TODO: validate req.body
-    const { name, description, ingredients } = req.body;
+    const { name, description, ingredients, tags } = req.body;
 
     const createdRecipe = await RecipeService.create({
       name,
       description,
       ingredients,
+      tags,
     });
 
     await IngredientService.create(ingredients);
+    await TagService.create(tags);
 
     return res.status(201).json({
       message: "Created",
@@ -42,14 +45,18 @@ exports.update = async function (req, res) {
   try {
     // TODO: validate req.params and req.body
     const { name: originalName } = req.params;
-    const { name, description, ingredients } = req.body;
+    const { name, description, ingredients, tags } = req.body;
     //const { ingredients: newIngredients } = req.body;
 
     const updatedRecipe = await RecipeService.update(originalName, {
       name: name,
       description: description,
       ingredients: ingredients,
+      tags: tags,
     });
+
+    await IngredientService.create(ingredients);
+    await TagService.create(tags);
 
     return res.status(200).json({
       message: "Receta modificada.",
@@ -88,6 +95,13 @@ exports.getByName = async function (req, res, next) {
 exports.searchByIngredients = async function (req, res, next) {
   // TODO: validate req.body
   RecipeService.searchByIngredients(req.body.ingredients)
+    .then((recipes) => res.json(recipes))
+    .catch((err) => next(err));
+};
+
+exports.searchByTags = async function (req, res, next) {
+  // TODO: validate req.body
+  RecipeService.searchByTags(req.body.tags)
     .then((recipes) => res.json(recipes))
     .catch((err) => next(err));
 };
