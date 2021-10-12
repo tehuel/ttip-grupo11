@@ -33,7 +33,15 @@ exports.getByName = async function (name) {
 
 exports.searchByIngredients = async function (ingredients) {
   // busca cualquier receta que tenga al menos uno de los ingredientes
+  console.log(ingredients)
   return Recipe.find({
     ingredients: { $in: ingredients },
+  });
+};
+
+exports.searchByTags = async function (tags) {
+  // busca cualquier receta que tenga al menos uno de los ingredientes
+  return Recipe.find({
+    tags: { $in: tags },
   });
 };

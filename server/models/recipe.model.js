@@ -21,6 +21,12 @@ const RecipeSchema = new Schema(
     imgUrl: {
       type: String,
     },
+    tags: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Tag",
+      },
+    ],
   },
   {
     timestamps: true,

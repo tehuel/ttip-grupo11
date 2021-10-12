@@ -15,12 +15,20 @@ module.exports = {
     return recipesResponse.data.map(formatRecipe)
   },
 
-  searchRecipes: async (axios, ingredients) => {
+  searchRecipesByName: async (axios, ingredients) => {
     const recipesResponse = await axios.$post('/recipes/search', {
       // mando el listado de ingredientes en el body
       ingredients,
     })
     // console.log('searchRecipes', recipesResponse)
     return recipesResponse.data.map(formatRecipe)
+  },
+
+  searchRecipesByTag: async (axios, tags) => {
+    const recipesResponse = await axios.$post('/recipes/search', {
+      // mando el listado de tags en el body
+      tags,
+    })
+    return recipesResponse
   },
 }
