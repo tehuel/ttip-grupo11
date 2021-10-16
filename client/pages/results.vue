@@ -3,9 +3,9 @@
     <div class="container">
       <h1 class="h2 my-5">Resultados</h1>
       <div class="section my-5">
-        <div class="row">
+        <div v-if="searchResults" class="row">
           <div
-            v-for="recipe in recipes"
+            v-for="recipe in searchResults"
             :key="recipe._id"
             class="col-6 col-lg-4 mb-2"
           >
@@ -23,7 +23,7 @@ export default {
     ingredients() {
       return this.$store.state.ingredients.list
     },
-    recipes() {
+    searchResults() {
       return this.$store.state.recipes.searchResults
     },
   },
