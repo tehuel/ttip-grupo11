@@ -38,6 +38,7 @@ exports.search = async function (ingredients, tags) {
     tags,
   });
 
+  // agrego condicionalmente las queries de búsqueda
   let query = {};
   if (ingredients.length) {
     query.ingredients = { $in: ingredients };
