@@ -41,6 +41,8 @@
 <script>
 export default {
   async fetch() {
+    await this.$store.dispatch('ingredients/getIngredients')
+    await this.$store.dispatch('tags/getTags')
     await this.$store.dispatch('recipes/getLatestRecipes')
   },
   computed: {

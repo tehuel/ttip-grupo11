@@ -1,4 +1,4 @@
-const TagService = require('../service/ingredient')
+const TagService = require('../service/tag')
 
 export const state = () => ({
   list: [],

@@ -5,6 +5,7 @@ const formatRecipe = (RecipeResponse) => ({
   ingredients: RecipeResponse.ingredients,
   rating: RecipeResponse.rating,
   imgUrl: RecipeResponse.imgUrl,
+  tags: RecipeResponse.tags,
   createdAt: new Date(RecipeResponse.createdAt),
 })
 
