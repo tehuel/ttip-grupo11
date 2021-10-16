@@ -10,6 +10,6 @@ router.put("/:name", RecipeController.update);
 router.delete("/:name", RecipeController.delete);
 router.get("/:name", RecipeController.getByName);
 
-router.post("/search", RecipeController.searchByIngredients);
-router.post("/search", RecipeController.searchByTags);
+router.post("/search", RecipeController.search);
+
 module.exports = router;

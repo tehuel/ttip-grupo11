@@ -12,13 +12,13 @@ export const actions = {
     await this.$router.push('/results')
   },
 
-  async searchRecipes({ commit }, ingredients) {
+  async searchRecipes({ commit }, { ingredients, tags }) {
     // TODO: Handle errors!!
     // TODO: add loading
-    const foundRecipes = await RecipeService.searchRecipesByIngredients(
-      this.$axios,
-      ingredients
-    )
+    const foundRecipes = await RecipeService.searchRecipes(this.$axios, {
+      ingredients,
+      tags,
+    })
     commit('setSearchResults', foundRecipes)
     await this.$router.push('/results')
   },

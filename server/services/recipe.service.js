@@ -31,17 +31,20 @@ exports.getByName = async function (name) {
   });
 };
 
-exports.searchByIngredients = async function (ingredients) {
+exports.search = async function (ingredients, tags) {
   // busca cualquier receta que tenga al menos uno de los ingredientes
-  console.log(ingredients)
-  return Recipe.find({
-    ingredients: { $in: ingredients },
+  console.log("recipe.service.search", {
+    ingredients,
+    tags,
   });
-};
 
-exports.searchByTags = async function (tags) {
-  // busca cualquier receta que tenga al menos uno de los ingredientes
-  return Recipe.find({
-    tags: { $in: tags },
-  });
+  let query = {};
+  if (ingredients.length) {
+    query.ingredients = { $in: ingredients };
+  }
+  if (tags.length) {
+    query.tags = { $in: tags };
+  }
+
+  return Recipe.find(query);
 };

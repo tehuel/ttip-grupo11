@@ -4,23 +4,44 @@
     <form @submit.prevent="onSubmitSearchForm">
       <p v-if="$fetchState.pending" class="text-center">Cargando...</p>
       <div v-else>
-        <b-form-checkbox-group
-          v-slot="{ ariaDescribedby }"
-          name="ingredients"
-          size="lg"
-          class="d-flex justify-content-center flex-wrap"
-        >
-          <b-form-checkbox
-            v-for="ingredient in ingredients"
-            :key="ingredient.name"
-            v-model="selected"
+        <b-form-group label="Ingredientes:">
+          <b-form-checkbox-group
+            v-slot="{ ariaDescribedby }"
+            name="ingredients"
             size="lg"
-            :value="ingredient.id"
-            :aria-describedby="ariaDescribedby"
+            class="d-flex justify-content-center flex-wrap"
           >
-            {{ ingredient.name }}
-          </b-form-checkbox>
-        </b-form-checkbox-group>
+            <b-form-checkbox
+              v-for="ingredient in ingredients"
+              :key="ingredient.name"
+              v-model="selectedIngredients"
+              size="lg"
+              :value="ingredient.id"
+              :aria-describedby="ariaDescribedby"
+            >
+              {{ ingredient.name }}
+            </b-form-checkbox>
+          </b-form-checkbox-group>
+        </b-form-group>
+        <b-form-group label="Etiquetas:">
+          <b-form-checkbox-group
+            v-slot="{ ariaDescribedby }"
+            name="tags"
+            size="lg"
+            class="d-flex justify-content-center flex-wrap"
+          >
+            <b-form-checkbox
+              v-for="tag in tags"
+              :key="tag.name"
+              v-model="selectedTags"
+              size="lg"
+              :value="tag.id"
+              :aria-describedby="ariaDescribedby"
+            >
+              {{ tag.name }}
+            </b-form-checkbox>
+          </b-form-checkbox-group>
+        </b-form-group>
       </div>
       <div class="d-flex w-100 justify-content-end">
         <button
@@ -41,7 +62,8 @@ export default {
   name: 'IngredientsList',
   data() {
     return {
-      selected: [], // Must be an array reference!
+      selectedIngredients: [],
+      selectedTags: [],
     }
   },
   async fetch() {
@@ -51,6 +73,9 @@ export default {
   computed: {
     ingredients() {
       return this.$store.state.ingredients.list
+    },
+    tags() {
+      return this.$store.state.tags.list
     },
   },
   fetchOnServer: false,
@@ -63,7 +88,10 @@ export default {
   methods: {
     async onSubmitSearchForm() {
       // le paso todos los ingredientes seleccionados a la acción
-      return await this.$store.dispatch('recipes/searchRecipes', this.selected)
+      return await this.$store.dispatch('recipes/searchRecipes', {
+        ingredients: this.selectedIngredients,
+        tags: this.selectedTags,
+      })
     },
   },
 }

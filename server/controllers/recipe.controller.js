@@ -102,11 +102,12 @@ exports.getByName = async function (req, res) {
   }
 };
 
-exports.searchByIngredients = async function (req, res) {
+exports.search = async function (req, res) {
   try {
     // TODO: validate req.body
-    const { ingredients } = req.body;
-    let recipes = await RecipeService.searchByIngredients(ingredients);
+    const { ingredients, tags } = req.body;
+    let recipes = await RecipeService.search(ingredients, tags);
+    console.log("recipe.controller.search, recipes", recipes);
     return res.status(200).json({
       data: recipes,
     });
@@ -115,11 +116,4 @@ exports.searchByIngredients = async function (req, res) {
       message: e.message,
     });
   }
-};
-
-exports.searchByTags = async function (req, res, next) {
-  // TODO: validate req.body
-  RecipeService.searchByTags(req.body.tags)
-    .then((recipes) => res.json(recipes))
-    .catch((err) => next(err));
 };

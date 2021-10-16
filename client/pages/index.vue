@@ -6,7 +6,6 @@
           <div class="col col-md-10 col-lg-8">
             <div class="card shadow-lg">
               <div class="card-body">
-                <h1 class="h3">Seleccioná los ingredientes</h1>
                 <SearchForm />
               </div>
             </div>
