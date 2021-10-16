@@ -15,7 +15,7 @@ export const actions = {
   async searchRecipes({ commit }, ingredients) {
     // TODO: Handle errors!!
     // TODO: add loading
-    const foundRecipes = await RecipeService.searchRecipes(
+    const foundRecipes = await RecipeService.searchRecipesByIngredients(
       this.$axios,
       ingredients
     )

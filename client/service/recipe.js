@@ -16,7 +16,7 @@ module.exports = {
     return recipesResponse.data.map(formatRecipe)
   },
 
-  searchRecipesByName: async (axios, ingredients) => {
+  searchRecipesByIngredients: async (axios, ingredients) => {
     const recipesResponse = await axios.$post('/recipes/search', {
       // mando el listado de ingredientes en el body
       ingredients,
