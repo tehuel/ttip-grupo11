@@ -6,8 +6,18 @@ export const state = () => ({
 
 export const actions = {
   async getIngredients({ commit }) {
-    const ingredients = await IngredientService.getIngredients(this.$axios)
-    commit('set', ingredients)
+    try {
+      const ingredients = await IngredientService.getIngredients(this.$axios)
+      commit('set', ingredients)
+    } catch (e) {
+      window.$nuxt.$bvToast.toast('Error obteniendo ingredientes', {
+        title: 'Error',
+        variant: 'danger',
+        appendToast: true,
+        solid: true,
+      })
+      commit('set', [])
+    }
   },
 }
 
