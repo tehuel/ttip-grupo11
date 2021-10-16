@@ -12,6 +12,9 @@
             <RecipeCard :recipe="recipe" />
           </div>
         </div>
+        <div v-else>
+          <b-alert show variant="info">No hay resultados para mostrar</b-alert>
+        </div>
       </div>
     </div>
   </div>
