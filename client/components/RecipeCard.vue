@@ -5,7 +5,14 @@
     <div class="card-body">
       <h2 class="h4">{{ recipe.name }}</h2>
       <p>{{ recipe.description }}</p>
-      <p>Rating: {{ recipe.rating }}</p>
+      <b-form-rating
+        :value="recipe.rating"
+        readonly
+        show-value
+        disabled
+        show-value-max
+        no-border
+      ></b-form-rating>
       <p>Ingredientes:</p>
       <ul>
         <li v-for="ingredientId in recipe.ingredients" :key="ingredientId">
