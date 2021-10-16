@@ -11,6 +11,7 @@ Aplicación para Taller de Trabajo de Inserción Profesional de la UNQ.
 ## Links
 
 - Trello: https://trello.com/b/38ca1dut/ttip-unq-grupo-11
+- Wiki: https://github.com/tehuel/ttip-grupo11/wiki
 
 ## Licencia
 
