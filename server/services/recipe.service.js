@@ -44,7 +44,7 @@ exports.search = async function (ingredients, tags) {
     query.ingredients = { $in: ingredients };
   }
   if (tags.length) {
-    query.tags = { $in: tags };
+    query.tags = { $all: tags };
   }
 
   return Recipe.find(query);
