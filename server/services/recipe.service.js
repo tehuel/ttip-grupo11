@@ -21,6 +21,15 @@ exports.update = async function (name, update) {
   });
 };
 
+exports.rate = async function (name, rating) {
+  return Recipe.findOneAndUpdate({ name: name },
+    {
+      $push: {
+        ratings: rating,
+    },
+  });
+};
+
 exports.delete = async function (name) {
   return Recipe.deleteOne({ name: name });
 };

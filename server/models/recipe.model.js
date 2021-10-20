@@ -9,7 +9,12 @@ const RecipeSchema = new Schema(
     description: {
       type: String,
     },
-    rating: {
+    ratings: [
+      {
+        type: Number,
+      },
+    ],
+    avgRating: {
       type: Number,
     },
     ingredients: [
