@@ -1,7 +1,9 @@
 const validationMiddleware = (schema) => (req, res, next) => {
   const { error, value } = schema.validate(req.body);
   if (error) {
-    res.status(400).json(error);
+    res.status(400).json({
+      errors: error.details,
+    });
   } else {
     req.body = value;
     next();

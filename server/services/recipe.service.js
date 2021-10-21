@@ -32,18 +32,14 @@ exports.getByName = async function (name) {
 };
 
 exports.search = async function (ingredients, tags) {
-  // busca cualquier receta que tenga al menos uno de los ingredientes
-  console.log("recipe.service.search", {
-    ingredients,
-    tags,
-  });
-
   // agrego condicionalmente las queries de búsqueda
   let query = {};
   if (ingredients.length) {
+    // busca cualquier receta que tenga al menos uno de los ingredientes
     query.ingredients = { $in: ingredients };
   }
   if (tags.length) {
+    // busca cualquier receta que tenga TODOS los tags al mismo tiempo
     query.tags = { $all: tags };
   }
 
