@@ -1,8 +1,8 @@
 let Recipe = require("../models/recipe.model");
 
-exports.findAll = async function () {
+exports.findAll = async function (skip, limit) {
   try {
-    return await Recipe.find();
+    return await Recipe.find().skip(skip).limit(limit);
   } catch (e) {
     console.error(e);
     throw Error("Error getting recipes.");

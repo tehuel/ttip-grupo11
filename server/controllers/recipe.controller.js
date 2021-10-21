@@ -4,7 +4,8 @@ let TagService = require("../services/tag.service");
 
 exports.getRecipes = async function (req, res) {
   try {
-    let recipes = await RecipeService.findAll();
+    const { skip, limit } = req.pagination;
+    let recipes = await RecipeService.findAll(skip, limit);
     return res.status(200).json({
       data: recipes,
     });

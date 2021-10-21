@@ -2,9 +2,9 @@ const Recipe = require("../models/recipe.model");
 const RecipeFake = require("../models/recipe.fake");
 const faker = require("faker/locale/es");
 
-const seedRecipes = async (ingredients, tags) => {
+const seedRecipes = async (ingredients = [], tags = [], amount = 20) => {
   // genero un listado de recetas
-  const fakeRecipes = Array(20)
+  const fakeRecipes = Array(amount)
     .fill()
     .map(() => {
       // genero un listado de ingredientes para una receta

@@ -1,11 +1,18 @@
 const express = require("express");
 const router = express.Router();
+const paginationMiddleware = require("express-pagination-middleware");
 
 const RecipeController = require("../controllers/recipe.controller");
 const RecipeValidator = require("../validators/recipe.validator");
+const RecipePagination = paginationMiddleware({
+  sort: {
+    validKeys: ["created", "name"],
+    default: "name",
+  },
+});
 
 // /Recipes endpoints
-router.get("/", RecipeController.getRecipes);
+router.get("/", RecipePagination, RecipeController.getRecipes);
 router.post("/", RecipeController.add);
 router.put("/:name", RecipeController.update);
 router.delete("/:name", RecipeController.delete);

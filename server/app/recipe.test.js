@@ -5,6 +5,7 @@ const { MongoMemoryServer } = require("mongodb-memory-server");
 const app = require("./index");
 
 const Recipe = require("../models/recipe.model");
+const RecipeSeeder = require("../database/recipe.seeder");
 
 describe("/recipe", () => {
   let mongoServer;
@@ -43,16 +44,21 @@ describe("/recipe", () => {
   });
 
   it("GET /recipes with multiple recipes", async () => {
-    // creates a single recipe
-    await Recipe.create({
-      name: "Test Recipe",
-    });
-    await Recipe.create({
-      name: "Another test recipe",
-    });
+    // create 2 recipes
+    await RecipeSeeder([], [], 2);
+
     const res = await request(app).get("/recipes");
     expect(res.statusCode).toBe(200);
     expect(res.body.data).toHaveLength(2);
+  });
+
+  it("GET /recipes with pagination", async () => {
+    // creates fake recipes
+    await RecipeSeeder([], [], 6);
+
+    const res = await request(app).get("/recipes").query({ skip: 5 });
+    expect(res.statusCode).toBe(200);
+    expect(res.body.data).toHaveLength(1);
   });
 
   it("POST /recipes to create recipe", async () => {
