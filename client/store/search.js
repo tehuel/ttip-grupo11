@@ -24,6 +24,6 @@ export const mutations = {
   },
 
   setSearchResults(state, recipesList) {
-    state.searchResults = [...recipesList]
+    state.results = [...recipesList]
   },
 }

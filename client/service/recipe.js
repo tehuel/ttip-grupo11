@@ -23,8 +23,8 @@ module.exports = {
 
   searchRecipes: async (axios, { ingredients, tags }) => {
     const recipesResponse = await axios.$post('/recipes/search', {
-      ingredients,
-      tags,
+      ...(ingredients.length && { ingredients }),
+      ...(tags.length && { tags }),
     })
     // console.log('searchRecipes', recipesResponse)
     return recipesResponse.data.map(formatRecipe)
