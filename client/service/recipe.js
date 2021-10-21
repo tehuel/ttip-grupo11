@@ -10,8 +10,13 @@ const formatRecipe = (RecipeResponse) => ({
 })
 
 module.exports = {
-  getLatestRecipes: async (axios) => {
-    const recipesResponse = await axios.$get('/recipes')
+  getLatestRecipes: async (axios, { skip = 0, limit = 6 }) => {
+    const recipesResponse = await axios.$get('/recipes', {
+      params: {
+        skip,
+        limit,
+      },
+    })
     // console.log('getLatestRecipes', recipesResponse)
     return recipesResponse.data.map(formatRecipe)
   },
