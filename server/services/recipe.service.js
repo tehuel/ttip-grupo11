@@ -25,12 +25,6 @@ exports.delete = async function (name) {
   return Recipe.deleteOne({ name: name });
 };
 
-exports.getByName = async function (name) {
-  return Recipe.find({
-    name: name,
-  });
-};
-
 exports.getById = async function (id) {
   return Recipe.findById(id);
 };
