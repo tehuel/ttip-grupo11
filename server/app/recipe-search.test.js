@@ -71,7 +71,6 @@ describe("/recipe/search", () => {
   it("POST /recipes/search empty", async () => {
     // find recipe
     const res = await request(app).post(`/recipes/search`).send({});
-    console.log(res.body);
     expect(res.statusCode).toBe(400);
     expect(res.body.errors).toHaveLength(1);
   });
@@ -81,7 +80,6 @@ describe("/recipe/search", () => {
     const res = await request(app).post(`/recipes/search`).send({
       invented: true,
     });
-    console.log(res.body);
     expect(res.statusCode).toBe(400);
     expect(res.body.errors).toHaveLength(1);
   });
