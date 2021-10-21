@@ -8,6 +8,7 @@ router.get("/", RecipeController.getRecipes);
 router.post("/", RecipeController.add);
 router.put("/:name", RecipeController.update);
 router.delete("/:name", RecipeController.delete);
+router.get("/:id", RecipeController.getById);
 router.get("/:name", RecipeController.getByName);
 
 router.post("/search", RecipeController.search);

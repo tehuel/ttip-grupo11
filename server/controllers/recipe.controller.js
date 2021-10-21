@@ -102,6 +102,21 @@ exports.getByName = async function (req, res) {
   }
 };
 
+exports.getById = async function (req, res) {
+  try {
+    // TODO: validate req.params
+    const { id } = req.params;
+    let recipe = await RecipeService.getById(id);
+    return res.status(200).json({
+      data: recipe,
+    });
+  } catch (e) {
+    return res.status(400).json({
+      message: e.message,
+    });
+  }
+};
+
 exports.search = async function (req, res) {
   try {
     // TODO: validate req.body

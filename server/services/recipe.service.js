@@ -31,6 +31,10 @@ exports.getByName = async function (name) {
   });
 };
 
+exports.getById = async function (id) {
+  return Recipe.findById(id);
+};
+
 exports.search = async function (ingredients, tags) {
   // busca cualquier receta que tenga al menos uno de los ingredientes
   console.log("recipe.service.search", {
