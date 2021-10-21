@@ -8,7 +8,7 @@
         :key="recipe.id"
         class="transition-col col-6 col-lg-4 mb-2"
       >
-        <RecipeCard :recipe="recipe" />
+        <RecipeCard :recipe="recipe" class="h-100" />
       </div>
     </transition-group>
     <button
