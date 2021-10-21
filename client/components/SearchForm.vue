@@ -88,7 +88,7 @@ export default {
   methods: {
     async onSubmitSearchForm() {
       // le paso todos los ingredientes seleccionados a la acción
-      return await this.$store.dispatch('recipes/searchRecipes', {
+      return await this.$store.dispatch('search/searchRecipes', {
         ingredients: this.selectedIngredients,
         tags: this.selectedTags,
       })

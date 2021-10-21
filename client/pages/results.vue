@@ -27,7 +27,7 @@ export default {
       return this.$store.state.ingredients.list
     },
     searchResults() {
-      return this.$store.state.recipes.searchResults
+      return this.$store.state.search.results
     },
   },
   methods: {
