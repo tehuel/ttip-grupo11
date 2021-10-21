@@ -90,4 +90,27 @@ describe("/recipe", () => {
     expect(res.statusCode).toBe(200);
     expect(res.body.message).toBe("Receta eliminada.");
   });
+
+  it("GET /recipes/:id with a existent recipe", async () => {
+    // creates a single recipe
+    const createdRecipe = await Recipe.create({
+      name: "Test Recipe",
+    });
+    const { _id: recipeId, name: recipeName } = createdRecipe;
+
+    // find recipe
+    const res = await request(app).get(`/recipes/${recipeId}`);
+    expect(res.statusCode).toBe(200);
+    expect(res.body.data.name).toBe(recipeName);
+  });
+
+  it("GET /recipes/:id with a non existent recipe", async () => {
+    // non existent recipe ID
+    const recipeId = 1;
+
+    // find recipe
+    const res = await request(app).get(`/recipes/${recipeId}`);
+    expect(res.statusCode).toBe(400);
+    // expect(res.body.data.name).toBe(recipeName);
+  });
 });
