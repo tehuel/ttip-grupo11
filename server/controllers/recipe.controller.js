@@ -104,10 +104,8 @@ exports.getById = async function (req, res) {
 
 exports.search = async function (req, res) {
   try {
-    // TODO: validate req.body
-    const { ingredients, tags } = req.body;
+    const { ingredients = [], tags = [] } = req.body;
     let recipes = await RecipeService.search(ingredients, tags);
-    console.log("recipe.controller.search, recipes", recipes);
     return res.status(200).json({
       data: recipes,
     });
