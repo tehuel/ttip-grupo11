@@ -26,9 +26,13 @@
 <script>
 export default {
   name: 'RecipeFeed',
+  async fetch() {
+    await this.$store.dispatch('recipes/getLatestRecipes')
+  },
+  fetchOnServer: false,
   computed: {
     loadingRecipes() {
-      return this.$store.state.recipes.loading
+      return this.$fetchState.pending
     },
     recipes() {
       return this.$store.state.recipes.latest
@@ -36,7 +40,7 @@ export default {
   },
   methods: {
     loadMoreRecipes() {
-      return this.$store.dispatch('recipes/getLatestRecipes')
+      this.$fetch()
     },
   },
 }
