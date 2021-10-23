@@ -27,3 +27,9 @@ export const mutations = {
     state.list = [...ingredientsList]
   },
 }
+
+export const getters = {
+  getIngredientById: (state) => (id) => {
+    return state.list.find((ingredient) => ingredient.id === id)
+  },
+}

@@ -27,3 +27,9 @@ export const mutations = {
     state.list = [...tagsList]
   },
 }
+
+export const getters = {
+  getTagById: (state) => (id) => {
+    return state.list.find((tag) => tag.id === id)
+  },
+}

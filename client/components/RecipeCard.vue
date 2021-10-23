@@ -41,20 +41,13 @@ export default {
   data() {
     return {}
   },
-  computed: {
-    ingredients() {
-      return this.$store.state.ingredients.list
-    },
-    tags() {
-      return this.$store.state.tags.list
-    },
-  },
+  computed: {},
   methods: {
     ingredient(id) {
-      return this.ingredients.find((e) => e.id === id)
+      return this.$store.getters['ingredients/getIngredientById'](id)
     },
     tag(id) {
-      return this.tags.find((e) => e.id === id)
+      return this.$store.getters['tags/getTagById'](id)
     },
   },
 }
