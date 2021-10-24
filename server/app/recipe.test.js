@@ -1,32 +1,10 @@
 const request = require("supertest");
-
-const mongoose = require("mongoose");
-const { MongoMemoryServer } = require("mongodb-memory-server");
 const app = require("./index");
 
 const Recipe = require("../models/recipe.model");
 const RecipeSeeder = require("../database/recipe.seeder");
 
 describe("/recipe", () => {
-  let mongoServer;
-  beforeAll(async () => {
-    mongoServer = await MongoMemoryServer.create();
-    const url = mongoServer.getUri();
-    await mongoose.connect(url, { useNewUrlParser: true });
-  });
-  afterEach(async () => {
-    // delete all collections
-    const collections = Object.keys(mongoose.connection.collections);
-    for (const collectionName of collections) {
-      const collection = mongoose.connection.collections[collectionName];
-      await collection.deleteMany();
-    }
-  });
-  afterAll(async () => {
-    await mongoose.disconnect();
-    await mongoServer.stop();
-  });
-
   it("GET /recipes empty list", async () => {
     const res = await request(app).get("/recipes");
     expect(res.statusCode).toBe(200);
