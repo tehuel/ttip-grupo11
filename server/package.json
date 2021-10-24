@@ -13,18 +13,18 @@
     "express": "^4.17.1",
     "express-pagination-middleware": "^1.0.2",
     "joi": "^17.4.2",
-    "mongoose": "^6.0.5"
+    "mongoose": "^6.0.12"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-jest": "^24.4.0",
+    "eslint-plugin-jest": "^24.7.0",
     "eslint-plugin-prettier": "^4.0.0",
     "faker": "^5.5.3",
-    "jest": "^27.1.1",
-    "mongodb-memory-server": "^7.4.0",
-    "nodemon": "^2.0.12",
-    "prettier": "^2.3.2",
+    "jest": "^27.3.1",
+    "mongodb-memory-server": "^7.5.1",
+    "nodemon": "^2.0.14",
+    "prettier": "^2.4.1",
     "supertest": "^6.1.6"
   }
 }
