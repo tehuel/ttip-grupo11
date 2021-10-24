@@ -15,9 +15,9 @@ const RecipePagination = paginationMiddleware({
 router.get("/", RecipePagination, RecipeController.getRecipes);
 router.post("/", RecipeController.add);
 router.put("/:name", RecipeController.update);
-router.put("/rate/:name", RecipeController.rate);
 router.delete("/:name", RecipeController.delete);
 router.get("/:id", RecipeController.getById);
+router.post("/:id/rate", RecipeController.rate);
 
 router.post("/search", RecipeValidator.search, RecipeController.search);
 

@@ -97,4 +97,23 @@ describe("/recipe", () => {
     expect(res.statusCode).toBe(400);
     // expect(res.body.data.name).toBe(recipeName);
   });
+
+  it("POST /recipes/:id/rate to rate recipe", async () => {
+    // creates a single recipe
+    const createdRecipe = await Recipe.create({
+      name: "Test Recipe",
+    });
+    const { _id: recipeId } = createdRecipe;
+
+    await request(app).post(`/recipes/${recipeId}/rate`).send({
+      rating: 5,
+    });
+    const res = await request(app).post(`/recipes/${recipeId}/rate`).send({
+      rating: 4,
+    });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.data.ratings).toHaveLength(2);
+    expect(res.body.data.avgRating).toBe(4.5);
+  });
 });

@@ -74,10 +74,10 @@ exports.update = async function (req, res) {
 exports.rate = async function (req, res) {
   try {
     // TODO: validate req.params and req.body
-    const { name: name } = req.params;
+    const { id } = req.params;
     const { rating } = req.body;
 
-    const ratedRecipe = await RecipeService.rate(name, rating);
+    const ratedRecipe = await RecipeService.rate(id, rating);
 
     return res.status(200).json({
       message: "Receta calificada.",
