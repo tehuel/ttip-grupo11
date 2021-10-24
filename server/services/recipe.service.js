@@ -1,8 +1,8 @@
 let Recipe = require("../models/recipe.model");
 
-exports.findAll = async function () {
+exports.findAll = async function (skip, limit) {
   try {
-    return await Recipe.find();
+    return await Recipe.find().skip(skip).limit(limit);
   } catch (e) {
     console.error(e);
     throw Error("Error getting recipes.");
@@ -34,26 +34,20 @@ exports.delete = async function (name) {
   return Recipe.deleteOne({ name: name });
 };
 
-exports.getByName = async function (name) {
-  return Recipe.find({
-    name: name,
-  });
+exports.getById = async function (id) {
+  return Recipe.findById(id);
 };
 
 exports.search = async function (ingredients, tags) {
-  // busca cualquier receta que tenga al menos uno de los ingredientes
-  console.log("recipe.service.search", {
-    ingredients,
-    tags,
-  });
-
   // agrego condicionalmente las queries de búsqueda
   let query = {};
   if (ingredients.length) {
+    // busca cualquier receta que tenga al menos uno de los ingredientes
     query.ingredients = { $in: ingredients };
   }
   if (tags.length) {
-    query.tags = { $in: tags };
+    // busca cualquier receta que tenga TODOS los tags al mismo tiempo
+    query.tags = { $all: tags };
   }
 
   return Recipe.find(query);

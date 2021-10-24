@@ -14,16 +14,7 @@
       </div>
     </div>
     <div class="container my-5">
-      <p class="h2">Ultimas Recetas</p>
-      <div class="row">
-        <div
-          v-for="recipe in latestRecipes"
-          :key="recipe._id"
-          class="col-6 col-lg-4 mb-2"
-        >
-          <RecipeCard :recipe="recipe" />
-        </div>
-      </div>
+      <RecipeFeed />
     </div>
     <div class="container my-5">
       <p class="h2">Lorem ipsum</p>
@@ -44,11 +35,7 @@ export default {
     await this.$store.dispatch('tags/getTags')
     await this.$store.dispatch('recipes/getLatestRecipes')
   },
-  computed: {
-    latestRecipes() {
-      return this.$store.state.recipes.latest
-    },
-  },
+  fetchOnServer: false,
 }
 </script>
 

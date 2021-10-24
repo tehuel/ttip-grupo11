@@ -1,31 +1,10 @@
 const request = require("supertest");
-
-const mongoose = require("mongoose");
-const { MongoMemoryServer } = require("mongodb-memory-server");
 const app = require("./index");
 
 const Recipe = require("../models/recipe.model");
+const RecipeSeeder = require("../database/recipe.seeder");
 
 describe("/recipe", () => {
-  let mongoServer;
-  beforeAll(async () => {
-    mongoServer = await MongoMemoryServer.create();
-    const url = mongoServer.getUri();
-    await mongoose.connect(url, { useNewUrlParser: true });
-  });
-  afterEach(async () => {
-    // delete all collections
-    const collections = Object.keys(mongoose.connection.collections);
-    for (const collectionName of collections) {
-      const collection = mongoose.connection.collections[collectionName];
-      await collection.deleteMany();
-    }
-  });
-  afterAll(async () => {
-    await mongoose.disconnect();
-    await mongoServer.stop();
-  });
-
   it("GET /recipes empty list", async () => {
     const res = await request(app).get("/recipes");
     expect(res.statusCode).toBe(200);
@@ -43,16 +22,21 @@ describe("/recipe", () => {
   });
 
   it("GET /recipes with multiple recipes", async () => {
-    // creates a single recipe
-    await Recipe.create({
-      name: "Test Recipe",
-    });
-    await Recipe.create({
-      name: "Another test recipe",
-    });
+    // create 2 recipes
+    await RecipeSeeder([], [], 2);
+
     const res = await request(app).get("/recipes");
     expect(res.statusCode).toBe(200);
     expect(res.body.data).toHaveLength(2);
+  });
+
+  it("GET /recipes with pagination", async () => {
+    // creates fake recipes
+    await RecipeSeeder([], [], 6);
+
+    const res = await request(app).get("/recipes").query({ skip: 5 });
+    expect(res.statusCode).toBe(200);
+    expect(res.body.data).toHaveLength(1);
   });
 
   it("POST /recipes to create recipe", async () => {
@@ -89,5 +73,28 @@ describe("/recipe", () => {
 
     expect(res.statusCode).toBe(200);
     expect(res.body.message).toBe("Receta eliminada.");
+  });
+
+  it("GET /recipes/:id with a existent recipe", async () => {
+    // creates a single recipe
+    const createdRecipe = await Recipe.create({
+      name: "Test Recipe",
+    });
+    const { _id: recipeId, name: recipeName } = createdRecipe;
+
+    // find recipe
+    const res = await request(app).get(`/recipes/${recipeId}`);
+    expect(res.statusCode).toBe(200);
+    expect(res.body.data.name).toBe(recipeName);
+  });
+
+  it("GET /recipes/:id with a non existent recipe", async () => {
+    // non existent recipe ID
+    const recipeId = 1;
+
+    // find recipe
+    const res = await request(app).get(`/recipes/${recipeId}`);
+    expect(res.statusCode).toBe(400);
+    // expect(res.body.data.name).toBe(recipeName);
   });
 });

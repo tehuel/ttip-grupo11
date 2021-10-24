@@ -4,7 +4,8 @@ let TagService = require("../services/tag.service");
 
 exports.getRecipes = async function (req, res) {
   try {
-    let recipes = await RecipeService.findAll();
+    const { skip, limit } = req.pagination;
+    let recipes = await RecipeService.findAll(skip, limit);
     return res.status(200).json({
       data: recipes,
     });
@@ -106,11 +107,11 @@ exports.delete = async function (req, res) {
   }
 };
 
-exports.getByName = async function (req, res) {
+exports.getById = async function (req, res) {
   try {
     // TODO: validate req.params
-    const { name } = req.params;
-    let recipe = await RecipeService.getByName(name);
+    const { id } = req.params;
+    let recipe = await RecipeService.getById(id);
     return res.status(200).json({
       data: recipe,
     });
@@ -123,10 +124,8 @@ exports.getByName = async function (req, res) {
 
 exports.search = async function (req, res) {
   try {
-    // TODO: validate req.body
-    const { ingredients, tags } = req.body;
+    const { ingredients = [], tags = [] } = req.body;
     let recipes = await RecipeService.search(ingredients, tags);
-    console.log("recipe.controller.search, recipes", recipes);
     return res.status(200).json({
       data: recipes,
     });

@@ -2,34 +2,19 @@ const RecipeService = require('../service/recipe')
 
 export const state = () => ({
   latest: [],
-  searchResults: [],
 })
 
 export const actions = {
-  async getLatestRecipes({ commit }) {
-    const foundRecipes = await RecipeService.getLatestRecipes(this.$axios)
-    commit('setLatest', foundRecipes)
-    await this.$router.push('/results')
-  },
-
-  async searchRecipes({ commit }, { ingredients, tags }) {
-    // TODO: Handle errors!!
-    // TODO: add loading
-    const foundRecipes = await RecipeService.searchRecipes(this.$axios, {
-      ingredients,
-      tags,
+  async getLatestRecipes({ commit, state }) {
+    const foundRecipes = await RecipeService.getLatestRecipes(this.$axios, {
+      skip: state.latest.length,
     })
-    commit('setSearchResults', foundRecipes)
-    await this.$router.push('/results')
+    commit('setLatest', foundRecipes)
   },
 }
 
 export const mutations = {
   setLatest(state, recipesList) {
-    state.latest = [...recipesList]
-  },
-
-  setSearchResults(state, recipesList) {
-    state.searchResults = [...recipesList]
+    state.latest = [...state.latest, ...recipesList]
   },
 }
