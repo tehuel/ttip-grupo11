@@ -4,6 +4,7 @@ const cors = require("cors");
 const IngredientRoute = require("../routes/ingredient.route");
 const RecipeRoute = require("../routes/recipe.route");
 const TagRoute = require("../routes/tag.route");
+const UserRoute = require("../routes/user.route");
 
 const app = express();
 
@@ -19,5 +20,6 @@ app.get("/", (_req, res) => {
 app.use("/ingredients", IngredientRoute);
 app.use("/recipes", RecipeRoute);
 app.use("/tags", TagRoute);
+app.use("/users", UserRoute);
 
 module.exports = app;
