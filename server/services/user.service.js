@@ -6,12 +6,12 @@ exports.authenticate = async function ({ email, password }) {
   const user = await User.findOne({ email });
   if (user && bcrypt.compareSync(password, user.hash)) {
     const { hash, ...userWithoutHash } = user.toObject();
-    const token = jwt.sign({ sub: user.id }, process.env.TOKEN, {
-      expiresIn: process.env.TOKEN_TIMEOUT,
-    });
+   // const token = jwt.sign({ sub: user.id }, process.env.TOKEN, {
+   //   expiresIn: process.env.TOKEN_TIMEOUT,
+   // });
     return {
       ...userWithoutHash,
-      token,
+      //token,
     };
   }
 };
