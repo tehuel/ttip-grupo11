@@ -21,6 +21,19 @@ exports.update = async function (name, update) {
   });
 };
 
+const calculateAverage = (list) => {
+  const result = list.reduce((a, b) => a + b, 0) / list.length;
+  return result;
+};
+
+exports.rate = async function (id, rating) {
+  const recipe = await Recipe.findById(id);
+  recipe.ratings.push(rating);
+  recipe.avgRating = calculateAverage(recipe.ratings);
+  recipe.save();
+  return recipe;
+};
+
 exports.delete = async function (name) {
   return Recipe.deleteOne({ name: name });
 };
