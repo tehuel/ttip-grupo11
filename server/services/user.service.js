@@ -6,12 +6,12 @@ exports.authenticate = async function ({ email, password }) {
   const user = await User.findOne({ email });
   if (user && bcrypt.compareSync(password, user.hash)) {
     const { hash, ...userWithoutHash } = user.toObject();
-   // const token = jwt.sign({ sub: user.id }, process.env.TOKEN, {
-   //   expiresIn: process.env.TOKEN_TIMEOUT,
-   // });
+    const token = jwt.sign({ sub: user.id }, process.env.TOKEN, {
+      expiresIn: process.env.TOKEN_TIMEOUT,
+    });
     return {
       ...userWithoutHash,
-      //token,
+      token,
     };
   }
 };
@@ -30,7 +30,7 @@ exports.existsUserWithEmail = async function (email) {
 
 exports.create = async function (userParam) {
   // validate
-  if (await User.existsUserWithEmail(userParam.email)) {
+  if (await User.findOne(userParam.email)) {
     throw "El email [" + userParam.email + "] ya existe";
   }
   if (!userParam.password) {
@@ -71,6 +71,6 @@ exports.update = async function (id, userParam) {
   await user.save();
 };
 
-exports.delete = async function (id) {
+exports._delete = async function (id) {
   await User.findOneAndDelete(id);
 };

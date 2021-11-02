@@ -11,6 +11,6 @@ router.get("/current", UserController.getCurrent);
 router.get("/:id", UserController.getById);
 router.get("/check_availability/:email", UserController.checkAvailability);
 router.put("/:id", UserController.update);
-router.delete("/:id", UserController._delete);
+router.delete("/:id", UserController.delete);
 
 module.exports = router;
