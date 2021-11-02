@@ -1,16 +1,9 @@
 const expressJwt = require("express-jwt");
 const userService = require("../services/user.service");
-
-// Vencimiento de token
-process.env.TOKEN_TIMEOUT = "48h";
-
-// SEED de autenticación
-process.env.TOKEN = process.env.TOKEN || "Xxx333xxX";
-
-module.exports = jwt;
+const config = require("../config.js");
 
 function jwt() {
-  const secret = process.env.TOKEN;
+  const secret = config.TOKEN_SECRET;
   return expressJwt({ secret, isRevoked }).unless({
     path: [
       // public routes that don't require authentication
@@ -35,3 +28,5 @@ async function isRevoked(req, payload, done) {
 
   done();
 }
+
+module.exports = jwt;

@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const config = require("../config");
 let User = require("../models/user.model");
 
 exports.authenticate = async function ({ email, password }) {
@@ -7,7 +8,7 @@ exports.authenticate = async function ({ email, password }) {
   if (user && bcrypt.compareSync(password, user.hash)) {
     const { hash, ...userWithoutHash } = user.toObject();
     const token = jwt.sign({ sub: user.id }, process.env.TOKEN, {
-      expiresIn: process.env.TOKEN_TIMEOUT,
+      expiresIn: config.TOKEN_TIMEOUT,
     });
     return {
       ...userWithoutHash,
