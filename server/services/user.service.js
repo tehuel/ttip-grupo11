@@ -31,22 +31,23 @@ exports.existsUserWithEmail = async function (email) {
 
 exports.create = async function (userParam) {
   // validate
-  if (await User.findOne(userParam.email)) {
+  if (await User.findOne({ email: userParam.email })) {
     throw "El email [" + userParam.email + "] ya existe";
   }
   if (!userParam.password) {
     throw "La contraseña es requerida";
   }
 
-  const user = new User(userParam);
+  const user = await User.create({
+    email: userParam.email,
+    password: bcrypt.hashSync(userParam.password),
+  });
 
-  // hash password
-  if (userParam.password) {
-    user.hash = bcrypt.hashSync(userParam.password, 10);
-  }
-  await user.save();
+  // borro la contraseña para no devolverla en la respuesta
+  const responseUser = user.toJSON();
+  delete responseUser.password;
 
-  return user;
+  return responseUser;
 };
 
 exports.update = async function (id, userParam) {
