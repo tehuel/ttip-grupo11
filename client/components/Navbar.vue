@@ -19,6 +19,13 @@
         <b-navbar-nav class="ml-auto">
           <template v-if="isAuthenticated">
             <b-nav-item-dropdown :text="userEmail" right>
+              <NuxtLink
+                class="dropdown-item"
+                active-class="active"
+                to="/profile"
+              >
+                Perfil de Usuario
+              </NuxtLink>
               <b-dropdown-item @click="onUserLogout">
                 Cerrar Sesión
               </b-dropdown-item>
