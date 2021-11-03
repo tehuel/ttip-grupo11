@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const jwt = require("./utils/jwt");
+const jwt = require("../utils/jwt");
 const IngredientRoute = require("../routes/ingredient.route");
 const RecipeRoute = require("../routes/recipe.route");
 const TagRoute = require("../routes/tag.route");
