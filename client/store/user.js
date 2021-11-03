@@ -21,6 +21,15 @@ export const actions = {
 
     await this.$router.push('/')
   },
+  async register({ commit }, { email, password }) {
+    // TODO: Handle errors!!
+    // TODO: add loading
+    await UserService.register(this.$axios, {
+      email,
+      password,
+    })
+    await this.$router.push('/')
+  },
   async logout({ commit }) {
     commit('setAuthenticated', { email: null, token: null })
     await this.$router.push('/')

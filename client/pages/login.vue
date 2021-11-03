@@ -58,21 +58,9 @@ export default {
       },
     }
   },
-  async fetch() {
-    // await this.$store.dispatch('ingredients/getIngredients')
-    // await this.$store.dispatch('tags/getTags')
-    // await this.$store.dispatch('recipes/getLatestRecipes')
-  },
-  // fetchOnServer: false,
   methods: {
-    onSubmitLoginForm() {
-      console.log('login', this.form)
-      this.$store.dispatch('user/authenticate', this.form)
-      // le paso todos los ingredientes seleccionados a la acción
-      // return await this.$store.dispatch('search/searchRecipes', {
-      //   ingredients: this.selectedIngredients,
-      //   tags: this.selectedTags,
-      // })
+    async onSubmitLoginForm() {
+      await this.$store.dispatch('user/authenticate', this.form)
     },
   },
 }

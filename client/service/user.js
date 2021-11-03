@@ -6,4 +6,11 @@ module.exports = {
     })
     return authenticateResponse
   },
+  register: async (axios, { email, password }) => {
+    const registerResponse = await axios.$post('/users/register', {
+      email,
+      password,
+    })
+    return registerResponse
+  },
 }
