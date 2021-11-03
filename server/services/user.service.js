@@ -5,13 +5,17 @@ let User = require("../models/user.model");
 
 exports.authenticate = async function ({ email, password }) {
   const user = await User.findOne({ email });
-  if (user && bcrypt.compareSync(password, user.hash)) {
-    const { hash, ...userWithoutHash } = user.toObject();
-    const token = jwt.sign({ sub: user.id }, process.env.TOKEN, {
+  if (user && bcrypt.compareSync(password, user.password)) {
+    const token = jwt.sign({ sub: user.id }, config.TOKEN_SECRET, {
       expiresIn: config.TOKEN_TIMEOUT,
     });
+
+    // borro la contraseña para no devolverla en la respuesta
+    const responseUser = user.toJSON();
+    delete responseUser.password;
+
     return {
-      ...userWithoutHash,
+      ...responseUser,
       token,
     };
   }
