@@ -25,9 +25,9 @@ exports.authenticate = async function ({ email, password }) {
 //   return await User.find().select("-hash");
 // };
 
-// exports.getById = async function (id) {
-//   return await User.findById(id).select("-hash");
-// };
+exports.getById = async function (id) {
+  return User.findById(id).select("-password");
+};
 
 // exports.existsUserWithEmail = async function (email) {
 //   return await User.findOne({ email });
