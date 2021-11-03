@@ -8,7 +8,15 @@
               <h1 class="h2 text-center">Registrar Nuevo Usuario</h1>
               <template v-if="error">
                 <b-alert show variant="danger" class="my-5">
-                  Hubo un error en el registro.
+                  <p>Hubo un error en el registro.</p>
+                  <hr />
+                  <b-button
+                    variant="danger"
+                    block
+                    @click.stop.prevent="resetError"
+                  >
+                    Reintentar
+                  </b-button>
                 </b-alert>
               </template>
               <template v-else>
@@ -73,6 +81,9 @@ export default {
       },
     }
   },
+  activated() {
+    this.resetError()
+  },
   methods: {
     async onSubmitRegisterForm() {
       try {
@@ -82,6 +93,9 @@ export default {
         // this.$nuxt.error('eee')
         this.error = true
       }
+    },
+    resetError() {
+      this.error = null
     },
   },
 }
