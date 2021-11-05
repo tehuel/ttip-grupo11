@@ -16,6 +16,15 @@ export const actions = {
     commit('setSearchResults', foundRecipes)
     await this.$router.push('/results')
   },
+  async searchRecipesByName({ commit }, { name }) {
+    // TODO: Handle errors!!
+    // TODO: add loading
+    const foundRecipes = await RecipeService.searchRecipesByName(
+      this.$axios,
+      name
+    )
+    commit('setSearchResults', foundRecipes)
+  },
 }
 
 export const mutations = {
