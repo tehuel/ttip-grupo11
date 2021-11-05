@@ -42,6 +42,10 @@ exports.getById = async function (id) {
   return Recipe.findById(id);
 };
 
+exports.getByName = async function (name) {
+  return Recipe.find({ name: { $regex: name } });
+};
+
 exports.search = async function (ingredients, tags) {
   // agrego condicionalmente las queries de búsqueda
   let query = {};

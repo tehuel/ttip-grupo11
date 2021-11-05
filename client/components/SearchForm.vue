@@ -1,6 +1,12 @@
 /* eslint-disable prettier/prettier */
 <template>
   <div>
+    <input
+      v-model="titleSearch"
+      type="text"
+      placeholder="Buscar por nombre"
+      @keyup="submitSearch"
+    />
     <form @submit.prevent="onSubmitSearchForm">
       <p v-if="$fetchState.pending" class="text-center">Cargando...</p>
       <div v-else>
@@ -62,6 +68,7 @@ export default {
   name: 'IngredientsList',
   data() {
     return {
+      titleSearch: '',
       selectedIngredients: [],
       selectedTags: [],
     }
@@ -91,6 +98,12 @@ export default {
       return await this.$store.dispatch('search/searchRecipes', {
         ingredients: this.selectedIngredients,
         tags: this.selectedTags,
+      })
+    },
+    async submitSearch() {
+      // le paso el nombre del input a la acción
+      return await this.$store.dispatch('search/searchRecipesByName', {
+        name: this.titleSearch,
       })
     },
   },
