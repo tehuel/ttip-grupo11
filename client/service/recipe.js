@@ -30,8 +30,10 @@ module.exports = {
     return recipesResponse.data.map(formatRecipe)
   },
 
-  searchRecipesByName: async (axios, { name }) => {
-    const recipesResponse = await axios.$get('/recipes/get/:' + name)
+  searchRecipesByName: async (axios, name) => {
+    const recipesResponse = await axios.$get(
+      '/recipes/get/:' + JSON.stringify(name)
+    )
     console.log(recipesResponse)
     return recipesResponse.data.map(formatRecipe)
   },
