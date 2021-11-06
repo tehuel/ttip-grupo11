@@ -3,7 +3,7 @@ const router = express.Router();
 
 const TagController = require("../controllers/tag.controller");
 
-// /tags endpoints
+// "/tags" endpoints
 router.get("/", TagController.getTags);
 router.post("/", TagController.add);
 router.put("/:name", TagController.update);
