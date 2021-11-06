@@ -6,4 +6,6 @@ module.exports = {
   HOST: process.env.HOST || "127.0.0.1",
   PORT: process.env.PORT || 3000,
   MONGO_URL: process.env.MONGO_URL,
+  TOKEN_SECRET: process.env.TOKEN_SECRET,
+  TOKEN_TIMEOUT: process.env.TOKEN_TIMEOUT,
 };

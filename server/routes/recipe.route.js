@@ -11,7 +11,7 @@ const RecipePagination = paginationMiddleware({
   },
 });
 
-// /Recipes endpoints
+// "/recipes" endpoints
 router.get("/", RecipePagination, RecipeController.getRecipes);
 router.post("/", RecipeController.add);
 router.put("/:name", RecipeController.update);
