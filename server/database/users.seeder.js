@@ -1,7 +1,6 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/user.model");
 const faker = require("faker/locale/es");
-const Comment = require("../models/comment.model");
 
 const seedUsers = async (amount = 20) => {
   await User.collection.deleteMany({});
@@ -9,6 +8,7 @@ const seedUsers = async (amount = 20) => {
 
   // agrego un usuario admin a la DB
   await User.create({
+    name: "Admin",
     email: "admin@example.com",
     password: passwordHash,
   });
@@ -18,11 +18,13 @@ const seedUsers = async (amount = 20) => {
     .fill()
     .map(() => {
       return {
-        email: faker.internet.exampleEmail,
+        name: `${faker.name.firstName()} ${faker.name.lastName()}`,
+        image: faker.internet.avatar(),
+        email: faker.internet.exampleEmail(),
         password: passwordHash,
       };
     });
-  return await Comment.insertMany(fakeUsers);
+  return await User.insertMany(fakeUsers);
 };
 
 module.exports = seedUsers;
