@@ -1,26 +1,39 @@
 <template>
   <div class="page">
-    <div class="container my-5">
-      <template v-if="recipe">
-        <img :src="recipe.imgUrl" class="card-img-top" :alt="recipe.name" />
+    <template v-if="recipe">
+      <img
+        :src="recipe.imgUrl"
+        :alt="recipe.name"
+        style="
+          display: block;
+          height: 100%;
+          max-height: 50vh;
+          width: 100%;
+          object-fit: contain;
+        "
+      />
+      <div class="container my-5">
         <h1 class="h2 text-center">{{ recipe.name }}</h1>
         <p class="lead">{{ recipe.description }}</p>
         <b-card>
           <b-card-body>
-            <h2 class="h2">Comentarios</h2>
-            <pre>{{ comments }}</pre>
+            <h2 class="h3">Comentarios</h2>
+            <template v-if="comments.length">
+              <pre>{{ comments }}</pre>
+            </template>
+            <p v-else>Todavía no hay comentarios para esta receta.</p>
             <hr />
 
             <template v-if="$store.state.user.token">
               <CommentForm :recipe="recipe.id"></CommentForm>
             </template>
             <p v-else>
-              Tenés que iniciar sesión para poder agregar comentarios
+              Tenés que iniciar sesión para poder agregar comentarios.
             </p>
           </b-card-body>
         </b-card>
-      </template>
-    </div>
+      </div>
+    </template>
   </div>
 </template>
 
