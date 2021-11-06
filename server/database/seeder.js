@@ -4,6 +4,7 @@ const usersSeeder = require("./users.seeder");
 const ingredientSeeder = require("./ingredient.seeder");
 const tagSeeder = require("./tag.seeder");
 const recipeSeeder = require("./recipe.seeder");
+const commentSeeder = require("./comment.seeder");
 
 const seed = async () => {
   try {
@@ -27,6 +28,9 @@ const seed = async () => {
 
   const recipes = await recipeSeeder(ingredients, tags);
   console.log("recipeSeeder", recipes);
+
+  const comments = await commentSeeder(recipes, users);
+  console.log("commentSeeder", comments);
 
   try {
     await mongoose.disconnect();
