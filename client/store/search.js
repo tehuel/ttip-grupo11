@@ -6,10 +6,11 @@ export const state = () => ({
 })
 
 export const actions = {
-  async searchRecipes({ commit }, { ingredients, tags }) {
+  async searchRecipes({ commit }, { name, ingredients, tags }) {
     // TODO: Handle errors!!
     // TODO: add loading
     const foundRecipes = await RecipeService.searchRecipes(this.$axios, {
+      name,
       ingredients,
       tags,
     })

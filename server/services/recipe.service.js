@@ -42,9 +42,17 @@ exports.getById = async function (id) {
   return Recipe.findById(id);
 };
 
-exports.search = async function (ingredients, tags) {
+exports.getByName = async function (name) {
+  return Recipe.find({ name: { $regex: name } });
+};
+
+exports.search = async function (name, ingredients, tags) {
   // agrego condicionalmente las queries de búsqueda
   let query = {};
+  if (name) {
+    // busca cualquier receta por el nombre
+    query.name = { $regex: name };
+  }
   if (ingredients.length) {
     // busca cualquier receta que tenga al menos uno de los ingredientes
     query.ingredients = { $in: ingredients };
