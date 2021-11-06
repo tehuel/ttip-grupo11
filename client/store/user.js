@@ -1,4 +1,3 @@
-// const RecipeService = require('../service/recipe')
 const UserService = require('../service/user')
 
 export const state = () => ({
@@ -8,16 +7,25 @@ export const state = () => ({
 
 export const actions = {
   async authenticate({ commit }, { email, password }) {
-    // TODO: Handle errors!!
     // TODO: add loading
-    const authenticatedUser = await UserService.authenticate(this.$axios, {
-      email,
-      password,
-    })
-    const { token } = authenticatedUser
-
-    // guardo el token y el email en state
-    commit('setAuthenticated', { email, token })
+    try {
+      const authenticatedUser = await UserService.authenticate(this.$axios, {
+        email,
+        password,
+      })
+      const { token } = authenticatedUser
+      // guardo el token y el email en state
+      commit('setAuthenticated', { email, token })
+    } catch (e) {
+      window &&
+        window.$nuxt.$bvToast.toast('Error iniciando sesión', {
+          title: 'Error',
+          variant: 'danger',
+          appendToast: true,
+          solid: true,
+        })
+      commit('logout')
+    }
 
     await this.$router.push('/')
   },
