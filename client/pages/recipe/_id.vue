@@ -8,7 +8,15 @@
         <b-card>
           <b-card-body>
             <h2 class="h2">Comentarios</h2>
+            <pre>{{ comments }}</pre>
             <hr />
+
+            <template v-if="$store.state.user.token">
+              <CommentForm :recipe="recipe.id"></CommentForm>
+            </template>
+            <p v-else>
+              Tenés que iniciar sesión para poder agregar comentarios
+            </p>
           </b-card-body>
         </b-card>
       </template>
@@ -22,11 +30,17 @@ export default {
     await this.$store.dispatch('recipes/getSingleRecipe', {
       id: this.$route.params.id,
     })
+    await this.$store.dispatch('comments/getComments', {
+      recipe: this.$route.params.id,
+    })
   },
   fetchOnServer: false,
   computed: {
     recipe() {
       return this.$store.state.recipes.single
+    },
+    comments() {
+      return this.$store.state.comments.list
     },
   },
 }

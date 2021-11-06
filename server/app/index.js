@@ -1,10 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 const jwt = require("../utils/jwt");
+
 const IngredientRoute = require("../routes/ingredient.route");
 const RecipeRoute = require("../routes/recipe.route");
 const TagRoute = require("../routes/tag.route");
 const UserRoute = require("../routes/user.route");
+const CommentRoute = require("../routes/comment.route");
 
 const app = express();
 
@@ -21,5 +23,6 @@ app.use("/ingredients", IngredientRoute);
 app.use("/recipes", RecipeRoute);
 app.use("/tags", TagRoute);
 app.use("/users", UserRoute);
+app.use("/comments", CommentRoute);
 
 module.exports = app;
