@@ -1,7 +1,9 @@
 /* eslint-disable prettier/prettier */
 <template>
   <div class="card">
-    <img :src="recipe.imgUrl" class="card-img-top" :alt="recipe.name" />
+    <NuxtLink :to="{ name: 'recipe-id', params: { id: recipe.id } }">
+      <img :src="recipe.imgUrl" class="card-img-top" :alt="recipe.name" />
+    </NuxtLink>
     <div class="card-body">
       <h2 class="h4">{{ recipe.name }}</h2>
       <p>{{ recipe.description }}</p>

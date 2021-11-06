@@ -1,8 +1,14 @@
 const Comment = require("../models/comment.model");
 
-exports.findAll = async function (skip, limit) {
+exports.findAll = async function (skip, limit, recipe) {
   try {
-    return await Comment.find().skip(skip).limit(limit);
+    // agrego condicionalmente las queries
+    let query = {};
+    if (recipe) {
+      // busca comentarios para una receta específica
+      query.recipe = recipe;
+    }
+    return await Comment.find(query).skip(skip).limit(limit);
   } catch (e) {
     console.error(e);
     throw Error("Error getting comments.");

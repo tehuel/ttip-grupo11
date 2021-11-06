@@ -3,7 +3,9 @@ let CommentService = require("../services/comment.service");
 exports.getComments = async function (req, res) {
   try {
     const { skip, limit } = req.pagination;
-    let comments = await CommentService.findAll(skip, limit);
+    const { recipe = null } = req.query;
+    console.log("getComments", recipe);
+    let comments = await CommentService.findAll(skip, limit, recipe);
     return res.status(200).json({
       data: comments,
     });
@@ -17,7 +19,8 @@ exports.getComments = async function (req, res) {
 exports.add = async function (req, res) {
   try {
     // TODO: validate req.body
-    const { recipe, user, text } = req.body;
+    const { sub: user } = req.user;
+    const { recipe, text } = req.body;
 
     const createdComment = await CommentService.create({
       recipe,
