@@ -21,20 +21,15 @@ module.exports = {
     return recipesResponse.data.map(formatRecipe)
   },
 
-  searchRecipes: async (axios, { ingredients, tags }) => {
+  searchRecipes: async (axios, { name, ingredients, tags }) => {
     const recipesResponse = await axios.$post('/recipes/search', {
+      // agrego condicionalmente los parámetros de busqueda
+      // (no se agregan los que están vacíos)
+      ...(name.length && { name }),
       ...(ingredients.length && { ingredients }),
       ...(tags.length && { tags }),
     })
     // console.log('searchRecipes', recipesResponse)
-    return recipesResponse.data.map(formatRecipe)
-  },
-
-  searchRecipesByName: async (axios, name) => {
-    const recipesResponse = await axios.$get(
-      '/recipes/get/:' + JSON.stringify(name)
-    )
-    console.log(recipesResponse)
     return recipesResponse.data.map(formatRecipe)
   },
 }

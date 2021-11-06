@@ -139,8 +139,8 @@ exports.getByName = async function (req, res) {
 
 exports.search = async function (req, res) {
   try {
-    const { ingredients = [], tags = [] } = req.body;
-    let recipes = await RecipeService.search(ingredients, tags);
+    const { name, ingredients = [], tags = [] } = req.body;
+    let recipes = await RecipeService.search(name, ingredients, tags);
     return res.status(200).json({
       data: recipes,
     });
