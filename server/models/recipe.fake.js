@@ -6,7 +6,7 @@ const fakeRecipe = (ingredients = [], tags = []) => {
     description: faker.lorem.sentence(),
     rating: faker.random.arrayElement([1, 2, 3, 4, 5]),
     ingredients: ingredients,
-    imgUrl: faker.image.lorempixel.food(800, 600, true),
+    imgUrl: faker.image.unsplash.image(800, 600, "food"),
     tags: tags,
   };
 };
