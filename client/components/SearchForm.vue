@@ -1,15 +1,12 @@
 /* eslint-disable prettier/prettier */
 <template>
   <div>
-    <input
-      v-model="titleSearch"
-      type="text"
-      placeholder="Buscar por nombre"
-      @keyup="submitSearch"
-    />
     <form @submit.prevent="onSubmitSearchForm">
       <p v-if="$fetchState.pending" class="text-center">Cargando...</p>
       <div v-else>
+        <b-form-group label="Nombre:">
+          <b-form-input v-model="titleSearch" type="text" />
+        </b-form-group>
         <b-form-group label="Ingredientes:">
           <b-form-checkbox-group
             v-slot="{ ariaDescribedby }"
@@ -94,16 +91,11 @@ export default {
   },
   methods: {
     async onSubmitSearchForm() {
-      // le paso todos los ingredientes seleccionados a la acción
+      // le paso todos los parámetros de búsqueda seleccionados a la acción
       return await this.$store.dispatch('search/searchRecipes', {
+        name: this.titleSearch,
         ingredients: this.selectedIngredients,
         tags: this.selectedTags,
-      })
-    },
-    async submitSearch() {
-      // le paso el nombre del input a la acción
-      return await this.$store.dispatch('search/searchRecipesByName', {
-        name: this.titleSearch,
       })
     },
   },
