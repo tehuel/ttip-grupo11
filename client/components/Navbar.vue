@@ -1,5 +1,5 @@
 <template>
-  <b-navbar toggleable="lg" type="dark" variant="primary">
+  <b-navbar toggleable="md" type="dark" variant="primary">
     <div class="container">
       <NuxtLink class="navbar-brand" active-class="nav-link-active" to="/">
         <img

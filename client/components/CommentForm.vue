@@ -35,7 +35,6 @@ export default {
   methods: {
     async onSubmitCommentForm() {
       const userToken = this.$store.state.user.token
-      console.log('token: ', userToken)
       await this.$store.dispatch('comments/addComment', {
         recipe: this.recipe,
         text: this.comment,
