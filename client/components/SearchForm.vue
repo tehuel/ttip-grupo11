@@ -77,6 +77,8 @@ export default {
   },
   fetchOnServer: false,
   activated() {
+    // empty search params
+    this.$store.commit('search/resetSearchParams')
     // Call fetch again if last fetch more than 60 sec ago
     if (this.$fetchState.timestamp <= Date.now() - 60000) {
       this.$fetch()
