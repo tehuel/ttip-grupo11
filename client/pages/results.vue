@@ -2,7 +2,7 @@
   <div id="results-page">
     <template v-if="searchParamsIsInitialized">
       <ContainersSection title="Resultados de Busqueda">
-        <div v-if="searchResults" class="row">
+        <div v-if="searchResults.length" class="row">
           <div
             v-for="recipe in searchResults"
             :key="recipe._id"
