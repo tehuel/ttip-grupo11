@@ -17,8 +17,9 @@ const seedUsers = async (amount = 20) => {
   const fakeUsers = Array(amount)
     .fill()
     .map(() => {
+      const fakeCompleteName = `${faker.name.firstName()} ${faker.name.lastName()}`;
       return {
-        name: `${faker.name.firstName()} ${faker.name.lastName()}`,
+        name: fakeCompleteName,
         image: faker.internet.avatar(),
         email: faker.internet.exampleEmail(),
         password: passwordHash,
