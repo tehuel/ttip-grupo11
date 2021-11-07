@@ -1,7 +1,6 @@
 const RecipeService = require('../service/recipe')
 
 export const state = () => ({
-  loading: false,
   results: [],
 })
 
@@ -20,10 +19,6 @@ export const actions = {
 }
 
 export const mutations = {
-  setLoading(state, loadingState) {
-    state.loading = loadingState
-  },
-
   setSearchResults(state, recipesList) {
     state.results = [...recipesList]
   },
