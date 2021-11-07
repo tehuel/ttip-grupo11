@@ -21,18 +21,20 @@ exports.authenticate = async function ({ email, password }) {
   }
 };
 
-exports.create = async function (userParam) {
+exports.create = async function ({ name, image, email, password }) {
   // validate
-  if (await User.findOne({ email: userParam.email })) {
-    throw "El email [" + userParam.email + "] ya existe";
+  if (await User.findOne({ email })) {
+    throw "El email [" + email + "] ya existe";
   }
-  if (!userParam.password) {
+  if (!password) {
     throw "La contraseña es requerida";
   }
 
   const user = await User.create({
-    email: userParam.email,
-    password: bcrypt.hashSync(userParam.password),
+    name,
+    image,
+    email,
+    password: bcrypt.hashSync(password),
   });
 
   // borro la contraseña para no devolverla en la respuesta
