@@ -20,3 +20,15 @@ html, body, div#__nuxt, div#__layout {
 .page-leave-to {
   opacity: 0;
 }
+
+.comment-card {
+  &:not(:last-of-type) {
+    border-bottom: 1px solid #efefef;
+  }
+
+  .comment-thumbnail {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+  }
+}

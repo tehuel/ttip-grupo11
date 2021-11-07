@@ -13,7 +13,7 @@ export const actions = {
         email,
         password,
       })
-      const { token } = authenticatedUser
+      const { token } = authenticatedUser.data
       // guardo el token y el email en state
       commit('setAuthenticated', { email, token })
     } catch (e) {

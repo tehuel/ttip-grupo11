@@ -8,7 +8,10 @@ exports.findAll = async function (skip, limit, recipe) {
       // busca comentarios para una receta específica
       query.recipe = recipe;
     }
-    return await Comment.find(query).skip(skip).limit(limit);
+    return await Comment.find(query)
+      .skip(skip)
+      .limit(limit)
+      .populate("user", ["email", "image", "name"]);
   } catch (e) {
     console.error(e);
     throw Error("Error getting comments.");

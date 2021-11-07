@@ -9,28 +9,33 @@
           height: 100%;
           max-height: 50vh;
           width: 100%;
-          object-fit: contain;
+          object-fit: cover;
         "
       />
       <div class="container my-5">
         <h1 class="h2 text-center">{{ recipe.name }}</h1>
         <p class="lead">{{ recipe.description }}</p>
-        <b-card>
-          <b-card-body>
+        <b-card no-body>
+          <b-card-body class="p-3">
             <h2 class="h3">Comentarios</h2>
             <template v-if="comments.length">
-              <pre>{{ comments }}</pre>
+              <CommentCard
+                v-for="comment in comments"
+                :key="comment.id"
+                :comment="comment"
+              ></CommentCard>
             </template>
             <p v-else>Todavía no hay comentarios para esta receta.</p>
-            <hr />
-
+          </b-card-body>
+          <b-card-footer>
             <template v-if="$store.state.user.token">
               <CommentForm :recipe="recipe.id"></CommentForm>
             </template>
-            <p v-else>
-              Tenés que iniciar sesión para poder agregar comentarios.
+            <p v-else class="m-0">
+              Tenés que <NuxtLink to="/login">iniciar sesión</NuxtLink> para
+              poder agregar comentarios.
             </p>
-          </b-card-body>
+          </b-card-footer>
         </b-card>
       </div>
     </template>

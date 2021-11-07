@@ -1,9 +1,16 @@
-const formatComment = (CommentResponse) => ({
-  id: CommentResponse._id,
-  text: CommentResponse.text,
-  recipe: CommentResponse.recipe,
-  user: CommentResponse.user,
-  createdAt: new Date(CommentResponse.createdAt),
+const formatUser = ({ _id, email, image, name }) => ({
+  id: _id,
+  email,
+  image,
+  name,
+})
+
+const formatComment = ({ _id, text, recipe, user, createdAt }) => ({
+  id: _id,
+  text,
+  recipe,
+  user: formatUser(user),
+  createdAt: new Date(createdAt),
 })
 
 module.exports = {
