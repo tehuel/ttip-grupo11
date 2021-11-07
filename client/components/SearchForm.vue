@@ -8,23 +8,17 @@
           <b-form-input v-model="titleSearch" type="text" />
         </b-form-group>
         <b-form-group label="Ingredientes:">
-          <b-form-checkbox-group
-            v-slot="{ ariaDescribedby }"
-            name="ingredients"
-            size="lg"
-            class="d-flex justify-content-center flex-wrap"
-          >
-            <b-form-checkbox
-              v-for="ingredient in ingredients"
-              :key="ingredient.name"
-              v-model="selectedIngredients"
-              size="lg"
-              :value="ingredient.id"
-              :aria-describedby="ariaDescribedby"
-            >
-              {{ ingredient.name }}
-            </b-form-checkbox>
-          </b-form-checkbox-group>
+          <tags-input
+            v-model="selectedIngredients"
+            element-id="ingredients"
+            :existing-tags="ingredients"
+            id-field="id"
+            text-field="name"
+            :typeahead="true"
+            :typeahead-hide-discard="true"
+            placeholder="Ingrese nombre de ingredientes..."
+            :only-existing-tags="true"
+          ></tags-input>
         </b-form-group>
         <b-form-group label="Etiquetas:">
           <b-form-checkbox-group
@@ -37,7 +31,6 @@
               v-for="tag in tags"
               :key="tag.name"
               v-model="selectedTags"
-              size="lg"
               :value="tag.id"
               :aria-describedby="ariaDescribedby"
             >
@@ -91,10 +84,11 @@ export default {
   },
   methods: {
     async onSubmitSearchForm() {
+      const ingredientsIdsList = this.selectedIngredients.map((i) => i.id)
       // le paso todos los parámetros de búsqueda seleccionados a la acción
       return await this.$store.dispatch('search/searchRecipes', {
         name: this.titleSearch,
-        ingredients: this.selectedIngredients,
+        ingredients: ingredientsIdsList,
         tags: this.selectedTags,
       })
     },
