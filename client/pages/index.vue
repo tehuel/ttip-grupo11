@@ -13,9 +13,11 @@
         </div>
       </div>
     </div>
-    <div class="container my-5">
+
+    <ContainersSection title="Ultimas Recetas">
       <RecipeFeed />
-    </div>
+    </ContainersSection>
+
     <div class="container my-5">
       <p class="h2">Lorem ipsum</p>
       <p>

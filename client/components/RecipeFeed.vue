@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 <template>
   <div>
-    <h2 class="h2">Ultimas Recetas</h2>
     <transition-group name="list" tag="div" class="row">
       <div
         v-for="recipe in recipes"
