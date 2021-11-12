@@ -32,11 +32,12 @@ const RecipeSchema = new Schema(
     },
     ingredients: [
       {
+        _id: false,
+        quantity: String,
         ingredient: {
           type: Schema.Types.ObjectId,
           ref: Ingredient,
         },
-        quantity: String,
       },
     ],
     image: {
