@@ -2,16 +2,41 @@ const Recipe = require("../models/recipe.model");
 const RecipeFake = require("../models/recipe.fake");
 const faker = require("faker/locale/es");
 
-const seedRecipes = async (ingredients = [], tags = [], amount = 20) => {
+const units = [
+  "kilo(s)",
+  "litro(s)",
+  "gramo(s)",
+  "taza(s)",
+  "unidad(es)",
+  "cucharada(s)",
+  "cucharadita(s)",
+  "pizca(s)",
+];
+
+const seedRecipes = async (
+  users = [],
+  ingredients = [],
+  tags = [],
+  amount = 20
+) => {
   // genero un listado de recetas
   const fakeRecipes = Array(amount)
     .fill()
     .map(() => {
+      // selecciono un usuario
+      const selectedUser = faker.random.arrayElement(users);
+
       // genero un listado de ingredientes para una receta
-      const selectedIngredients = faker.random.arrayElements(
-        ingredients,
-        faker.datatype.number({ min: 2, max: 5 })
-      );
+      const selectedIngredients = faker.random
+        .arrayElements(ingredients, faker.datatype.number({ min: 2, max: 5 }))
+        .map((ingredient) => {
+          const selectedUnit = faker.random.arrayElement(units);
+          const selectedAmount = faker.datatype.number({ min: 1, max: 10 });
+          return {
+            quantity: `${selectedAmount} ${selectedUnit}`,
+            ingredient,
+          };
+        });
 
       // genero un listado de tags para una receta
       const selectedTags = faker.random.arrayElements(
@@ -20,7 +45,7 @@ const seedRecipes = async (ingredients = [], tags = [], amount = 20) => {
       );
 
       // genero una receta
-      return RecipeFake(selectedIngredients, selectedTags);
+      return RecipeFake(selectedUser, selectedIngredients, selectedTags);
     });
 
   // agrego las recetas a la BD

@@ -26,7 +26,7 @@ const seed = async () => {
   const tags = await tagSeeder();
   console.log("tagSeeder", tags);
 
-  const recipes = await recipeSeeder(ingredients, tags);
+  const recipes = await recipeSeeder(users, ingredients, tags);
   console.log("recipeSeeder", recipes);
 
   const comments = await commentSeeder(recipes, users);
