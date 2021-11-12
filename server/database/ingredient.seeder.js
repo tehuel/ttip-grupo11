@@ -1,6 +1,7 @@
 const Ingredient = require("../models/ingredient.model");
+const faker = require("faker/locale/es");
 
-const seedIngredients = async () => {
+const seedIngredients = async (amount = 20) => {
   // genero un listado de ingredientes
   const ingredients = [
     "Aceite de soja",
@@ -15,7 +16,7 @@ const seedIngredients = async () => {
     "Miel",
     "Ajo",
     "Papa",
-    "Lechugas",
+    "Lechuga",
     "Acelga",
     "Alcaparra",
     "Batata",
@@ -47,9 +48,11 @@ const seedIngredients = async () => {
     name: i,
   }));
 
+  const selectedIngredients = faker.random.arrayElements(ingredients, amount);
+
   // agrego los ingredientes a la BD
   await Ingredient.collection.deleteMany({});
-  return await Ingredient.insertMany(ingredients);
+  return await Ingredient.insertMany(selectedIngredients);
 };
 
 module.exports = seedIngredients;

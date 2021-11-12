@@ -28,13 +28,13 @@ const seedRecipes = async (
 
       // genero un listado de ingredientes para una receta
       const selectedIngredients = faker.random
-        .arrayElements(ingredients, faker.datatype.number({ min: 2, max: 5 }))
+        .arrayElements(ingredients, faker.datatype.number({ min: 1, max: 4 }))
         .map((ingredient) => {
           const selectedUnit = faker.random.arrayElement(units);
           const selectedAmount = faker.datatype.number({ min: 1, max: 10 });
           return {
             quantity: `${selectedAmount} ${selectedUnit}`,
-            ingredient,
+            ingredient: ingredient,
           };
         });
 

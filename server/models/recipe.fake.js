@@ -1,15 +1,31 @@
 const faker = require("faker/locale/es");
+const { generate } = require("faker/vendor/user-agent");
+
+const recipeName = [
+  "Torta",
+  "Tortilla",
+  "Revuelto",
+  "Ensalada",
+  "Asado",
+  "Postre",
+  "Galletitas",
+  "Dulce",
+  "Sorpresa",
+  "Relleno",
+];
 
 const fakeRecipe = (user = null, ingredients = [], tags = []) => {
   const generateStep = () => {
+    const possibleTitles = [faker.lorem.sentence(), null];
+    const possibleImages = [faker.image.unsplash.image(), null];
     return {
-      title: faker.lorem.sentence(),
+      title: faker.random.arrayElement(possibleTitles),
       description: faker.lorem.sentence(),
-      image: faker.image.unsplash.image(),
+      image: faker.random.arrayElement(possibleImages),
     };
   };
   const generateInstructions = () => {
-    const stepsQuantity = faker.datatype.number({ min: 1, max: 6 });
+    const stepsQuantity = faker.datatype.number({ min: 2, max: 6 });
     return Array(stepsQuantity)
       .fill()
       .map(() => {
@@ -17,8 +33,14 @@ const fakeRecipe = (user = null, ingredients = [], tags = []) => {
       });
   };
 
+  const generateName = () => {
+    const selectedName = faker.random.arrayElement(recipeName);
+    const randomWords = faker.lorem.words(2);
+    return `${selectedName} ${randomWords}`;
+  };
+
   return {
-    name: faker.lorem.sentence(),
+    name: generateName(),
     user: user,
     description: faker.lorem.sentence(),
     instructions: generateInstructions(),

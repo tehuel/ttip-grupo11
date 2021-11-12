@@ -6,6 +6,14 @@ const tagSeeder = require("./tag.seeder");
 const recipeSeeder = require("./recipe.seeder");
 const commentSeeder = require("./comment.seeder");
 
+const CONFIGS = {
+  USERS: 10,
+  INGREDIENTS: 10,
+  TAGS: 5,
+  RECIPES: 10,
+  COMMENTS: 50,
+};
+
 const seed = async () => {
   try {
     await mongoose.connect(config.MONGO_URL, { useNewUrlParser: true });
@@ -15,21 +23,21 @@ const seed = async () => {
   }
 
   // Users
-  const users = await usersSeeder();
+  const users = await usersSeeder(CONFIGS.USERS);
   console.log("usersSeeder", users);
 
   // Ingredients
-  const ingredients = await ingredientSeeder();
+  const ingredients = await ingredientSeeder(CONFIGS.INGREDIENTS);
   console.log("ingredientSeeder", ingredients);
 
   // Tags
-  const tags = await tagSeeder();
+  const tags = await tagSeeder(CONFIGS.TAGS);
   console.log("tagSeeder", tags);
 
-  const recipes = await recipeSeeder(users, ingredients, tags);
+  const recipes = await recipeSeeder(users, ingredients, tags, CONFIGS.RECIPES);
   console.log("recipeSeeder", recipes);
 
-  const comments = await commentSeeder(recipes, users);
+  const comments = await commentSeeder(recipes, users, CONFIGS.COMMENTS);
   console.log("commentSeeder", comments);
 
   try {
