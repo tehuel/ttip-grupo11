@@ -8,7 +8,7 @@ const FavPagination = paginationMiddleware({
 });
 
 // "/user" endpoints
-router.get("/", FavPagination, FavController.getComments);
+router.get("/", FavPagination, FavController.getFavs);
 router.post("/", FavController.add);
 
 module.exports = router;
