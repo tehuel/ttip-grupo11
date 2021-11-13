@@ -8,7 +8,7 @@
       <h2 class="h4">{{ recipe.name }}</h2>
       <p>{{ recipe.description }}</p>
       <b-form-rating
-        :value="recipe.rating"
+        :value="recipe.avgRating"
         readonly
         show-value
         disabled
