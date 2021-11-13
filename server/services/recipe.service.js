@@ -55,7 +55,7 @@ exports.search = async function (name, ingredients, tags) {
   }
   if (ingredients.length) {
     // busca cualquier receta que tenga al menos uno de los ingredientes
-    query.ingredients = { $in: ingredients };
+    query["ingredients.ingredient"] = { $in: ingredients };
   }
   if (tags.length) {
     // busca cualquier receta que tenga TODOS los tags al mismo tiempo

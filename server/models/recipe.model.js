@@ -17,6 +17,7 @@ const RecipeSchema = new Schema(
     },
     instructions: [
       {
+        _id: false,
         title: { type: String },
         description: { type: String },
         image: { type: String },
