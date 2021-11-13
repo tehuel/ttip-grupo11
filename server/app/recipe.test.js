@@ -23,7 +23,7 @@ describe("/recipe", () => {
 
   it("GET /recipes with multiple recipes", async () => {
     // create 2 recipes
-    await RecipeSeeder([], [], 2);
+    await RecipeSeeder([], [], [], 2);
 
     const res = await request(app).get("/recipes");
     expect(res.statusCode).toBe(200);
@@ -32,7 +32,7 @@ describe("/recipe", () => {
 
   it("GET /recipes with pagination", async () => {
     // creates fake recipes
-    await RecipeSeeder([], [], 6);
+    await RecipeSeeder([], [], [], 6);
 
     const res = await request(app).get("/recipes").query({ skip: 5 });
     expect(res.statusCode).toBe(200);
