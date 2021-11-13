@@ -6,21 +6,26 @@ const Ingredient = require("../models/ingredient.model");
 const Tag = require("../models/tag.model");
 
 describe("/recipe/search", () => {
-  it("POST /recipes/search with ingredient", async () => {
+  it("POST /recipes/search with single ingredient", async () => {
     // creates a single recipe
     const createdIngredient = await Ingredient.create({
       name: "Test Ingredient",
     });
-    const ingredientsList = [createdIngredient._id];
+    const createdIngredientEntry = {
+      ingredient: createdIngredient,
+      quantity: "1 unidad",
+    };
     const createdRecipe = await Recipe.create({
       name: "Test Recipe",
-      ingredients: ingredientsList,
+      ingredients: [createdIngredientEntry],
     });
 
     // search recipe
-    const res = await request(app).post(`/recipes/search`).send({
-      ingredients: ingredientsList,
-    });
+    const res = await request(app)
+      .post(`/recipes/search`)
+      .send({
+        ingredients: [createdIngredient._id],
+      });
     expect(res.statusCode).toBe(200);
     expect(res.body.data).toHaveLength(1);
     expect(res.body.data[0].name).toBe(createdRecipe.name);
