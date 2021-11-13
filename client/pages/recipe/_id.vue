@@ -20,25 +20,29 @@
             <h2 class="h3">Instrucciones</h2>
             <template v-for="(step, index) in recipe.instructions">
               <div :key="step" class="recipe-step my-2 py-2 border-bottom">
-                <h3 class="h4">
+                <h3 class="h4 py-2 sticky-top bg-white">
                   Paso {{ index + 1 }}{{ step.title ? `: ${step.title}` : '' }}
                 </h3>
                 <div class="recipe-step-content">
-                  <img v-if="step.image" :src="step.image" />
+                  <b-img v-if="step.image" fluid-grow :src="step.image" />
                   <p>{{ step.description }}</p>
                 </div>
               </div>
             </template>
           </div>
           <div class="col col-lg-4">
-            <b-card class="mb-2">
+            <b-card class="mb-2 sticky-top">
               <h2 class="lead">Ficha Técnica</h2>
               <p>Creada el {{ recipe.createdAt }} por {{ recipe.user }}</p>
               <pre>{{ recipe.ingredients }}</pre>
             </b-card>
           </div>
         </div>
-        <RecipeComments></RecipeComments>
+      </div>
+      <div class="py-5 bg-light border-top">
+        <div class="container my-2">
+          <RecipeComments></RecipeComments>
+        </div>
       </div>
     </template>
   </div>
