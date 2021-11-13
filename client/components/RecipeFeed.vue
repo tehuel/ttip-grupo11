@@ -10,11 +10,15 @@
         <RecipeCard :recipe="recipe" class="h-100" />
       </div>
     </transition-group>
+    <b-alert v-if="allRecipes" variant="light" show>
+      No hay más recetas para mostrar
+    </b-alert>
     <button
+      v-else
       id="load-more-button"
       type="button"
       class="btn btn-lg btn-secondary px-3 px-lg-5 mt-3"
-      :disabled="loadingRecipes"
+      :disabled="loadingRecipes || allRecipes"
       @click="loadMoreRecipes"
     >
       {{ loadingRecipes ? 'Cargando...' : 'Cargar Más' }}
@@ -25,8 +29,19 @@
 <script>
 export default {
   name: 'RecipeFeed',
+  data() {
+    return {
+      lastLength: false,
+      allRecipes: false,
+    }
+  },
   async fetch() {
     await this.$store.dispatch('recipes/getLatestRecipes')
+
+    // consulto si no hay más recetas para traer
+    const newLength = this.$store.state.recipes.latest.length
+    this.allRecipes = newLength === this.lastLength
+    this.lastLength = newLength
   },
   fetchOnServer: false,
   computed: {

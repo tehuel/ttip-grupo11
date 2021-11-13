@@ -17,16 +17,6 @@
     <ContainersSection title="Ultimas Recetas">
       <RecipeFeed />
     </ContainersSection>
-
-    <div class="container my-5">
-      <p class="h2">Lorem ipsum</p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus
-        amet, delectus ea eius eum illo inventore iusto laudantium modi
-        molestias, possimus ratione sed similique tempore tenetur vel, voluptas.
-        Deserunt, dolore.
-      </p>
-    </div>
   </div>
 </template>
 
@@ -35,7 +25,6 @@ export default {
   async fetch() {
     await this.$store.dispatch('ingredients/getIngredients')
     await this.$store.dispatch('tags/getTags')
-    await this.$store.dispatch('recipes/getLatestRecipes')
   },
   fetchOnServer: false,
 }
