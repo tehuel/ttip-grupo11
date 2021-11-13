@@ -36,3 +36,17 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.comment-card {
+  &:not(:last-of-type) {
+    border-bottom: 1px solid #efefef;
+  }
+
+  .comment-thumbnail {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+  }
+}
+</style>
