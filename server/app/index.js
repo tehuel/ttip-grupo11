@@ -7,7 +7,7 @@ const RecipeRoute = require("../routes/recipe.route");
 const TagRoute = require("../routes/tag.route");
 const UserRoute = require("../routes/user.route");
 const CommentRoute = require("../routes/comment.route");
-
+const FavRoute = require("../routes/fav.route");
 const app = express();
 
 app.use(cors());
@@ -24,5 +24,6 @@ app.use("/recipes", RecipeRoute);
 app.use("/tags", TagRoute);
 app.use("/users", UserRoute);
 app.use("/comments", CommentRoute);
+app.use("/favs", FavRoute);
 
 module.exports = app;
