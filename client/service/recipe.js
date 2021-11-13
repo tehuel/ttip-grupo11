@@ -1,10 +1,13 @@
 const formatRecipe = (RecipeResponse) => ({
   id: RecipeResponse._id,
   name: RecipeResponse.name,
+  user: RecipeResponse.user,
   description: RecipeResponse.description,
+  instructions: RecipeResponse.instructions,
   ingredients: RecipeResponse.ingredients,
-  rating: RecipeResponse.rating,
-  imgUrl: RecipeResponse.imgUrl,
+  ratings: RecipeResponse.ratings,
+  avgRating: RecipeResponse.avgRating,
+  image: RecipeResponse.image,
   tags: RecipeResponse.tags,
   createdAt: new Date(RecipeResponse.createdAt),
 })

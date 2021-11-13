@@ -2,13 +2,13 @@
 <template>
   <div class="card">
     <NuxtLink :to="{ name: 'recipe-id', params: { id: recipe.id } }">
-      <img :src="recipe.imgUrl" class="card-img-top" :alt="recipe.name" />
+      <img :src="recipe.image" class="card-img-top" :alt="recipe.name" />
     </NuxtLink>
     <div class="card-body">
       <h2 class="h4">{{ recipe.name }}</h2>
       <p>{{ recipe.description }}</p>
       <b-form-rating
-        :value="recipe.rating"
+        :value="recipe.avgRating"
         readonly
         show-value
         disabled
@@ -17,8 +17,8 @@
       ></b-form-rating>
       <p>Ingredientes:</p>
       <ul>
-        <li v-for="ingredientId in recipe.ingredients" :key="ingredientId">
-          {{ ingredient(ingredientId) ? ingredient(ingredientId).name : '' }}
+        <li v-for="ingredient in recipe.ingredients" :key="ingredient">
+          {{ getFormattedIngredient(ingredient) }}
         </li>
       </ul>
       <p>Tags:</p>
@@ -45,8 +45,12 @@ export default {
   },
   computed: {},
   methods: {
-    ingredient(id) {
+    getIngredientById(id) {
       return this.$store.getters['ingredients/getIngredientById'](id)
+    },
+    getFormattedIngredient(ingredient) {
+      const name = this.getIngredientById(ingredient.ingredient)?.name
+      return `${name}, ${ingredient.quantity}`
     },
     tag(id) {
       return this.$store.getters['tags/getTagById'](id)

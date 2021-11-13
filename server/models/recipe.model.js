@@ -1,14 +1,28 @@
 const { Schema, model } = require("mongoose");
+const User = require("./user.model");
+const Ingredient = require("./ingredient.model");
+const Tag = require("./tag.model");
 
 const RecipeSchema = new Schema(
   {
     name: {
       type: String,
-      unique: true,
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: User,
     },
     description: {
       type: String,
     },
+    instructions: [
+      {
+        _id: false,
+        title: { type: String },
+        description: { type: String },
+        image: { type: String },
+      },
+    ],
     ratings: [
       {
         type: Number,
@@ -19,17 +33,21 @@ const RecipeSchema = new Schema(
     },
     ingredients: [
       {
-        type: Schema.Types.ObjectId,
-        ref: "Ingredient",
+        _id: false,
+        quantity: String,
+        ingredient: {
+          type: Schema.Types.ObjectId,
+          ref: Ingredient,
+        },
       },
     ],
-    imgUrl: {
+    image: {
       type: String,
     },
     tags: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Tag",
+        ref: Tag,
       },
     ],
   },

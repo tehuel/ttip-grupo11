@@ -3,9 +3,8 @@ const config = require("../config.js");
 // const userService = require("../services/user.service");
 
 function jwt() {
-  const secret = config.TOKEN_SECRET || "secret";
   return expressJwt({
-    secret,
+    secret: config.TOKEN_SECRET,
     algorithms: ["HS256"],
     credentialsRequired: false,
   });
