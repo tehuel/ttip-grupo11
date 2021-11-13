@@ -7,18 +7,14 @@
     <div class="card-body">
       <h2 class="h4">{{ recipe.name }}</h2>
       <p>{{ recipe.description }}</p>
-      <b-form-rating
-        :value="recipe.avgRating"
-        readonly
-        show-value
-        disabled
-        show-value-max
-        no-border
-      ></b-form-rating>
+
+      <RecipeRatingForm :recipe="recipe"></RecipeRatingForm>
+
       <p>Ingredientes:</p>
       <RecipeIngredientsList
         :ingredients="recipe.ingredients"
       ></RecipeIngredientsList>
+
       <p>Tags:</p>
       <ul>
         <li v-for="tagId in recipe.tags" :key="tagId">

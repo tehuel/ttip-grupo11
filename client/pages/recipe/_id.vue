@@ -34,6 +34,9 @@
             <b-card class="mb-2 sticky-top">
               <h2 class="lead">Ficha Técnica</h2>
               <p>Creada el {{ formattedDate }} por {{ recipe.user }}</p>
+
+              <RecipeRatingForm :recipe="recipe"></RecipeRatingForm>
+
               <p class="lead mt-3">Ingredientes:</p>
               <RecipeIngredientsList
                 :ingredients="recipe.ingredients"
