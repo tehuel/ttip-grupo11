@@ -34,7 +34,10 @@
             <b-card class="mb-2 sticky-top">
               <h2 class="lead">Ficha Técnica</h2>
               <p>Creada el {{ recipe.createdAt }} por {{ recipe.user }}</p>
-              <pre>{{ recipe.ingredients }}</pre>
+              <p class="lead mt-3">Ingredientes:</p>
+              <RecipeIngredientsList
+                :ingredients="recipe.ingredients"
+              ></RecipeIngredientsList>
             </b-card>
           </div>
         </div>

@@ -16,11 +16,9 @@
         no-border
       ></b-form-rating>
       <p>Ingredientes:</p>
-      <ul>
-        <li v-for="ingredient in recipe.ingredients" :key="ingredient">
-          {{ getFormattedIngredient(ingredient) }}
-        </li>
-      </ul>
+      <RecipeIngredientsList
+        :ingredients="recipe.ingredients"
+      ></RecipeIngredientsList>
       <p>Tags:</p>
       <ul>
         <li v-for="tagId in recipe.tags" :key="tagId">
@@ -45,13 +43,6 @@ export default {
   },
   computed: {},
   methods: {
-    getIngredientById(id) {
-      return this.$store.getters['ingredients/getIngredientById'](id)
-    },
-    getFormattedIngredient(ingredient) {
-      const name = this.getIngredientById(ingredient.ingredient)?.name
-      return `${name}, ${ingredient.quantity}`
-    },
     tag(id) {
       return this.$store.getters['tags/getTagById'](id)
     },
