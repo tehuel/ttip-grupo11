@@ -51,6 +51,21 @@ describe("/recipe/search", () => {
     expect(res.body.data[0].name).toBe(createdRecipe.name);
   });
 
+  it("POST /recipes/search with name", async () => {
+    // creates a single recipe
+    const createdRecipe = await Recipe.create({
+      name: "Test Recipe",
+    });
+
+    // search recipe
+    const res = await request(app).post(`/recipes/search`).send({
+      name: "Test Recipe",
+    });
+    expect(res.statusCode).toBe(200);
+    expect(res.body.data).toHaveLength(1);
+    expect(res.body.data[0].name).toBe(createdRecipe.name);
+  });
+
   it("POST /recipes/search empty", async () => {
     // find recipe
     const res = await request(app).post(`/recipes/search`).send({});
