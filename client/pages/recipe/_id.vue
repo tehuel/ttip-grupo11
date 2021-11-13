@@ -33,7 +33,7 @@
           <div class="col col-lg-4">
             <b-card class="mb-2 sticky-top">
               <h2 class="lead">Ficha Técnica</h2>
-              <p>Creada el {{ recipe.createdAt }} por {{ recipe.user }}</p>
+              <p>Creada el {{ formattedDate }} por {{ recipe.user }}</p>
               <p class="lead mt-3">Ingredientes:</p>
               <RecipeIngredientsList
                 :ingredients="recipe.ingredients"
@@ -70,6 +70,13 @@ export default {
     },
     comments() {
       return this.$store.state.comments.list
+    },
+    formattedDate() {
+      const formatter = new Intl.DateTimeFormat('es-AR', {
+        dateStyle: 'full',
+        timeStyle: 'short',
+      })
+      return formatter.format(this.recipe.createdAt)
     },
   },
 }
