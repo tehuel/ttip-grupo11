@@ -12,9 +12,17 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <NuxtLink class="nav-link" active-class="active" to="/about"
-            >Acerca de</NuxtLink
+          <NuxtLink class="nav-link" active-class="active" to="/about">
+            Acerca de
+          </NuxtLink>
+          <NuxtLink
+            v-if="isAuthenticated"
+            class="nav-link"
+            active-class="active"
+            to="/recipe/create"
           >
+            Crear Receta
+          </NuxtLink>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <template v-if="isAuthenticated">
