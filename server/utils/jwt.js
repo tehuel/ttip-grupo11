@@ -14,10 +14,6 @@ function jwt() {
   //     "/users/authenticate",
   //     "/users/register",
   //     /\/users\/check_availability/i,
-  //     "/shops/",
-  //     /\/shops/i,
-  //     "/products/",
-  //     /\/products\/shop/i,
   //   ],
   // });
 }
