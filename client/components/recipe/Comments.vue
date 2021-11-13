@@ -1,5 +1,5 @@
 <template>
-  <b-card no-body>
+  <b-card no-body class="recipe-comments">
     <b-card-body class="p-3">
       <h2 class="h3">Comentarios</h2>
       <template v-if="comments.length">

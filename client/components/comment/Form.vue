@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="comment-form">
     <form @submit.prevent="onSubmitCommentForm">
       <b-form-group label="Comentario:">
         <b-form-textarea
