@@ -47,7 +47,6 @@
 
 <script>
 export default {
-  name: 'Navbar',
   computed: {
     isAuthenticated() {
       return Boolean(this.$store.state.user.token)

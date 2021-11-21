@@ -16,7 +16,6 @@
 
 <script>
 export default {
-  name: 'CommentCard',
   props: ['comment'],
   computed: {
     formattedDate() {

@@ -24,7 +24,6 @@
 
 <script>
 export default {
-  name: 'CommentForm',
   props: ['recipe'],
   data() {
     return {

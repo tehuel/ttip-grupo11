@@ -26,7 +26,6 @@
 
 <script>
 export default {
-  name: 'RecipeCard',
   props: {
     recipe: {
       type: Object,

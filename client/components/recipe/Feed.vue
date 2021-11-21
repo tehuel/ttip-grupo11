@@ -27,7 +27,6 @@
 
 <script>
 export default {
-  name: 'RecipeFeed',
   data() {
     return {
       lastLength: false,
