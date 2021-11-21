@@ -48,6 +48,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
+    ['nuxt-storm', { nested: true }],
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

@@ -17,7 +17,6 @@
 
 <script>
 export default {
-  name: 'RecipeRatingForm',
   props: ['recipe'],
   data() {
     return {

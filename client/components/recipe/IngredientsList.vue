@@ -14,7 +14,6 @@
 
 <script>
 export default {
-  name: 'RecipeIngredientsList',
   props: {
     ingredients: {
       type: Array,

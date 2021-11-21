@@ -1,6 +1,5 @@
-/* eslint-disable prettier/prettier */
 <template>
-  <div>
+  <div class="recipe-feed">
     <transition-group name="list" tag="div" class="row">
       <div
         v-for="recipe in recipes"
@@ -28,7 +27,6 @@
 
 <script>
 export default {
-  name: 'RecipeFeed',
   data() {
     return {
       lastLength: false,
