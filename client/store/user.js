@@ -47,7 +47,7 @@ export const actions = {
     }
   },
   async logout({ commit }) {
-    commit('setAuthenticated', { email: null, token: null })
+    commit('logout')
     await this.$router.push('/')
   },
 }
@@ -56,9 +56,17 @@ export const mutations = {
   setAuthenticated(state, { email, token }) {
     state.email = email
     state.token = token
+    if (process.client) {
+      localStorage.setItem('userEmail', email)
+      localStorage.setItem('userToken', token)
+    }
   },
   logout(state) {
     state.email = null
     state.token = null
+    if (process.client) {
+      localStorage.removeItem('userEmail')
+      localStorage.removeItem('userToken')
+    }
   },
 }
