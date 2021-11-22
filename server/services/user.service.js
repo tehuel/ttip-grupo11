@@ -47,3 +47,9 @@ exports.create = async function ({ name, image, email, password }) {
 exports.getById = async function (id) {
   return User.findById(id).select("-password");
 };
+
+exports.addToFav = async function (recipe) {
+  const user = await User.findById(id);
+  user.favRecipes.push(recipe.id);
+  await User.save();
+};
