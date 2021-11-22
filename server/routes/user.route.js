@@ -7,5 +7,5 @@ const UserController = require("../controllers/user.controller");
 router.post("/authenticate", UserController.authenticate);
 router.post("/register", UserController.register);
 router.get("/current", UserController.getCurrent);
-
+router.post("/addToFav", UserController.addToFav);
 module.exports = router;
