@@ -29,14 +29,22 @@ export const actions = {
 
     await this.$router.push('/')
   },
-  async register({ commit }, { email, password }) {
-    // TODO: Handle errors!!
+  async register({ dispatch, commit }, { email, password }) {
     // TODO: add loading
-    await UserService.register(this.$axios, {
-      email,
-      password,
-    })
-    await this.$router.push('/')
+    try {
+      const registerResponse = await UserService.register(this.$axios, {
+        email,
+        password,
+      })
+      if (registerResponse.message === 'Created') {
+        dispatch('authenticate', {
+          email,
+          password,
+        })
+      }
+    } catch (e) {
+      throw new Error('Error registrando usuario')
+    }
   },
   async logout({ commit }) {
     commit('setAuthenticated', { email: null, token: null })
