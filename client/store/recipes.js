@@ -19,6 +19,13 @@ export const actions = {
     })
     commit('setSingle', foundRecipe)
   },
+  async create({ commit, state }, { recipe, userToken }) {
+    const createdRecipe = await RecipeService.createRecipe(this.$axios, {
+      recipe,
+      userToken,
+    })
+    return createdRecipe
+  },
 }
 
 export const mutations = {

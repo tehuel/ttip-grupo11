@@ -38,4 +38,14 @@ module.exports = {
     // console.log('searchRecipes', recipesResponse)
     return recipesResponse.data.map(formatRecipe)
   },
+  createRecipe: async (axios, { recipe, userToken }) => {
+    const createdRecipe = await axios.$post(
+      '/recipes',
+      { recipe },
+      {
+        headers: { Authorization: `Bearer ${userToken}` },
+      }
+    )
+    return formatRecipe(createdRecipe.data)
+  },
 }

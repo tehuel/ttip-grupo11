@@ -30,3 +30,15 @@ exports.getByName = async function (name) {
     name: name,
   });
 };
+
+exports.getOrCreate = async function (name) {
+  const found = await Ingredient.findOne({
+    name,
+  });
+  return (
+    found ||
+    Ingredient.create({
+      name,
+    })
+  );
+};
