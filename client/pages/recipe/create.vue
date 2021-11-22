@@ -33,34 +33,53 @@
 
         <hr />
         <h2>Ingredientes</h2>
-        <ul>
-          <li
+        <b-list-group class="mb-2">
+          <b-list-group-item
             v-for="(ingredient, index) in ingredients"
             :key="ingredient"
-            class="d-flex"
+            class="pr-0"
           >
-            <b-form-group label="Cantidad:">
-              <b-form-input v-model="ingredients[index].quantity" type="text" />
-            </b-form-group>
-
-            <b-form-input
-              v-model="ingredients[index].ingredient"
-              list="ingredients-list"
-            ></b-form-input>
-            <datalist id="ingredients-list">
-              <option v-for="ingredient in ingredientsList" :key="ingredient">
-                {{ ingredient.name }}
-              </option>
-            </datalist>
-            <b-btn
-              v-if="ingredients.length > 1"
-              variant="outline-danger"
-              @click="deleteIngredient(index)"
-            >
-              Eliminar
-            </b-btn>
-          </li>
-        </ul>
+            <div class="row no-gutters">
+              <div class="col">
+                <b-form-group label="Ingrediente:" label-cols-sm="3">
+                  <b-form-input
+                    v-model="ingredients[index].ingredient"
+                    type="text"
+                    list="ingredients-list"
+                  />
+                  <datalist id="ingredients-list">
+                    <option
+                      v-for="ingredient in ingredientsList"
+                      :key="ingredient"
+                    >
+                      {{ ingredient.name }}
+                    </option>
+                  </datalist>
+                </b-form-group>
+                <b-form-group
+                  label="Cantidad:"
+                  label-cols-sm="3"
+                  description="Ej: 3 unidades, 4 gotas, 200 gramos, etc..."
+                >
+                  <b-form-input
+                    v-model="ingredients[index].quantity"
+                    type="text"
+                  />
+                </b-form-group>
+              </div>
+              <div class="col-auto mx-2">
+                <b-btn
+                  :disabled="ingredients.length <= 1"
+                  variant="danger"
+                  size="sm"
+                  @click="deleteIngredient(index)"
+                >
+                  x
+                </b-btn>
+              </div>
+            </div>
+          </b-list-group-item>
+        </b-list-group>
         <b-btn @click="addIngredient">Agregar Ingrediente</b-btn>
         <hr />
         <h2>Instrucciones</h2>
