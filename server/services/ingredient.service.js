@@ -9,9 +9,9 @@ exports.findAll = async function () {
   }
 };
 
-exports.create = async function (ingredientData) {
+exports.create = async function ({ name }) {
   await Ingredient.ensureIndexes();
-  return await Ingredient.create(ingredientData);
+  return await Ingredient.create({ name });
 };
 
 exports.update = async function (name, update) {
