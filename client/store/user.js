@@ -16,6 +16,13 @@ export const actions = {
       const { token } = authenticatedUser.data
       // guardo el token y el email en state
       commit('setAuthenticated', { email, token })
+      window &&
+        window.$nuxt.$bvToast.toast('Sesión Iniciada correctamente', {
+          title: 'Bienvenido',
+          variant: 'success',
+          appendToast: true,
+          solid: true,
+        })
     } catch (e) {
       window &&
         window.$nuxt.$bvToast.toast('Error iniciando sesión', {
