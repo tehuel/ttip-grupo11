@@ -45,6 +45,16 @@ describe("/ingredient", () => {
     expect(res.body.data.name).toBe("Test Ingredient");
   });
 
+  it("POST /ingredients error on empty ingredient", async () => {
+    // creates a single ingredient
+    const emptyIngredientData = {};
+    const res = await request(app)
+      .post("/ingredients")
+      .send(emptyIngredientData);
+    expect(res.statusCode).toBe(400);
+    expect(res.body.errors).toHaveLength(1);
+  });
+
   it("POST /ingredients error repeated ingredient", async () => {
     // creates a single ingredient
     const newIngredientData = {
