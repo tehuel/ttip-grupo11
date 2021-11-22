@@ -60,12 +60,11 @@ exports.getCurrent = async function (req, res) {
 
 exports.addToFav = async function (req, res) {
   try {
-    const { sub: userId } = req.user;
-    let user = await UserService.getById(userId);
-    const { recipe } = req.body;
-    await UserService.addToFav(userId, recipe);
+    const { user, recipe } = req.body;
+    let updatedUser = await UserService.getById(user);
+    await UserService.addToFav(user, recipe);
     return res.status(200).json({
-      data: user,
+      data: updatedUser,
     });
   } catch (e) {
     return res.status(400).json({
