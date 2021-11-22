@@ -49,10 +49,10 @@
                   />
                   <datalist id="ingredients-list">
                     <option
-                      v-for="ingredient in ingredientsList"
-                      :key="ingredient"
+                      v-for="ingredientOption in ingredientsList"
+                      :key="ingredientOption"
                     >
-                      {{ ingredient.name }}
+                      {{ ingredientOption.name }}
                     </option>
                   </datalist>
                 </b-form-group>
@@ -81,6 +81,7 @@
           </b-list-group-item>
         </b-list-group>
         <b-btn @click="addIngredient">Agregar Ingrediente</b-btn>
+
         <hr />
         <h2>Instrucciones</h2>
         <ul v-if="instructions">
@@ -121,7 +122,13 @@ export default {
           ingredient: null,
         },
       ],
-      instructions: [],
+      instructions: [
+        {
+          title: null,
+          description: null,
+          image: null,
+        },
+      ],
     }
   },
   async fetch() {
@@ -139,7 +146,6 @@ export default {
   },
   methods: {
     onSubmitCreateRecipe() {
-      console.log('create recipe')
       const userToken = this.$store.state.user.token
       this.$store.dispatch('recipes/create', {
         userToken,
