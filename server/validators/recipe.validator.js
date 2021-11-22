@@ -10,4 +10,20 @@ const searchSchema = Joi.object()
   .or("name", "ingredients", "tags")
   .required();
 
-exports.search = validationMiddleware(searchSchema);
+const createSchema = Joi.object()
+  .keys({
+    recipe: Joi.object().keys({
+      name: Joi.string().required(),
+      description: Joi.string().allow(null, ""),
+      instructions: Joi.array().optional(),
+      ingredients: Joi.array().optional(),
+      image: Joi.string().allow(null, ""),
+      tags: Joi.array().optional(),
+    }),
+  })
+  .required();
+
+module.exports = {
+  search: validationMiddleware(searchSchema),
+  create: validationMiddleware(createSchema),
+};

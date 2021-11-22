@@ -3,7 +3,7 @@
     <div class="container my-5">
       <h1>Crear Nueva Receta</h1>
       <p>Completá el formulario para agregar tu receta a Recetaris</p>
-      <b-form>
+      <b-form class="my-5" @submit.stop.prevent="onSubmitCreateRecipe">
         <b-form-group label="Nombre:">
           <b-form-input v-model="name" type="text" />
         </b-form-group>
@@ -33,7 +33,7 @@
 
         <hr />
         <h2>Ingredientes</h2>
-        <ul v-if="ingredients">
+        <ul>
           <li
             v-for="(ingredient, index) in ingredients"
             :key="ingredient"
@@ -42,17 +42,16 @@
             <b-form-group label="Cantidad:">
               <b-form-input v-model="ingredients[index].quantity" type="text" />
             </b-form-group>
-            <tags-input
+
+            <b-form-input
               v-model="ingredients[index].ingredient"
-              :element-id="`ingredients-${index}`"
-              :existing-tags="ingredientsList"
-              id-field="id"
-              text-field="name"
-              :typeahead="true"
-              :typeahead-hide-discard="true"
-              limit="1"
-              placeholder="Ingrese nombre de ingrediente..."
-            ></tags-input>
+              list="ingredients-list"
+            ></b-form-input>
+            <datalist id="ingredients-list">
+              <option v-for="ingredient in ingredientsList" :key="ingredient">
+                {{ ingredient.name }}
+              </option>
+            </datalist>
             <b-btn
               v-if="ingredients.length > 1"
               variant="outline-danger"
@@ -103,13 +102,7 @@ export default {
           ingredient: null,
         },
       ],
-      instructions: [
-        {
-          title: null,
-          description: null,
-          image: null,
-        },
-      ],
+      instructions: [],
     }
   },
   async fetch() {
@@ -126,6 +119,21 @@ export default {
     },
   },
   methods: {
+    onSubmitCreateRecipe() {
+      console.log('create recipe')
+      const userToken = this.$store.state.user.token
+      this.$store.dispatch('recipes/create', {
+        userToken,
+        recipe: {
+          name: this.name,
+          description: this.description,
+          image: this.image,
+          tags: this.tags,
+          ingredients: this.ingredients,
+          instructions: this.instructions,
+        },
+      })
+    },
     addIngredient() {
       this.ingredients.push({
         quantity: '',

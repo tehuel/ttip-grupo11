@@ -1,8 +1,18 @@
 let Recipe = require("../models/recipe.model");
 
-exports.findAll = async function (skip, limit) {
+const transformSort = (sort) => {
+  const result = {};
+  Object.entries(sort).forEach((entry) => {
+    const [key, value] = entry;
+    result[key] = value ? 1 : -1;
+  });
+  return result;
+};
+
+exports.findAll = async function (sort, skip, limit) {
   try {
-    return await Recipe.find().skip(skip).limit(limit);
+    const transformedSort = transformSort(sort);
+    return await Recipe.find().sort(transformedSort).skip(skip).limit(limit);
   } catch (e) {
     console.error(e);
     throw Error("Error getting recipes.");
