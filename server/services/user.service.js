@@ -48,8 +48,7 @@ exports.getById = async function (id) {
   return User.findById(id).select("-password");
 };
 
-exports.addToFav = async function (recipe) {
-  const user = await User.findById(id);
-  user.favRecipes.push(recipe.id);
+exports.addToFav = async function (id, recipe) {
+  await User.findById(id).favRecipes.push(recipe.id);
   await User.save();
 };
