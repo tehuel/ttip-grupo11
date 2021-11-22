@@ -1,17 +1,20 @@
 <template>
   <div class="recipe-rating-form">
-    <form @submit.prevent="onSubmitRateForm">
-      <b-form-rating
-        v-model="rating"
-        show-value
-        show-value-max
-        no-border
-      ></b-form-rating>
-      <template v-if="editing">
-        <b-btn variant="primary" type="submit">Calificar</b-btn>
-        <b-btn variant="light" @click="onResetRateForm">Cancelar</b-btn>
-      </template>
-    </form>
+    <b-overlay :show="showLoading">
+      <form @submit.prevent="onSubmitRateForm">
+        <b-form-rating
+          v-model="rating"
+          :readonly="!isAuthenticated"
+          show-value
+          show-value-max
+          no-border
+        ></b-form-rating>
+        <template v-if="editing">
+          <b-btn variant="primary" type="submit">Calificar</b-btn>
+          <b-btn variant="light" @click="onResetRateForm">Cancelar</b-btn>
+        </template>
+      </form>
+    </b-overlay>
   </div>
 </template>
 
@@ -22,28 +25,43 @@ export default {
     return {
       editing: false,
       currentRating: null,
+      showLoading: false,
     }
   },
   async fetch() {},
   fetchOnServer: false,
   computed: {
+    isAuthenticated() {
+      return Boolean(this.$store.state.user.token)
+    },
     rating: {
       get() {
         return this.currentRating || this.recipe.avgRating
       },
       set(value) {
-        this.editing = true
+        this.editing = Boolean(value)
         this.currentRating = value
       },
     },
   },
   methods: {
-    onSubmitRateForm() {
+    async onSubmitRateForm() {
+      this.showLoading = true
       this.editing = false
+
+      const userToken = this.$store.state.user.token
+      await this.$store.dispatch('recipes/rate', {
+        rating: this.currentRating,
+        id: this.recipe.id,
+        userToken,
+      })
+
+      // await action
+      this.showLoading = false
     },
     onResetRateForm() {
-      this.editing = false
       this.currentRating = null
+      this.editing = false
     },
   },
 }

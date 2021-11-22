@@ -48,4 +48,14 @@ module.exports = {
     )
     return formatRecipe(createdRecipe.data)
   },
+  rateRecipe: async (axios, { rating, id, userToken }) => {
+    const ratedRecipe = await axios.$post(
+      `/recipes/${id}/rate`,
+      { rating },
+      {
+        headers: { Authorization: `Bearer ${userToken}` },
+      }
+    )
+    return formatRecipe(ratedRecipe.data)
+  },
 }
