@@ -9,6 +9,6 @@ const FavPagination = paginationMiddleware({
 
 // "/user" endpoints
 router.get("/", FavPagination, FavController.getFavs);
-router.post("/", FavController.add);
+router.post("/add", FavController.add);
 
 module.exports = router;

@@ -41,6 +41,13 @@
               <RecipeIngredientsList
                 :ingredients="recipe.ingredients"
               ></RecipeIngredientsList>
+              <button
+                id="search-button"
+                class="btn btn-lg btn-secondary px-3 px-lg-5 mt-3"
+                @click="onAddToFav"
+              >
+                Agregar a favoritas
+              </button>
             </b-card>
           </div>
         </div>
@@ -80,6 +87,15 @@ export default {
         timeStyle: 'short',
       })
       return formatter.format(this.recipe.createdAt)
+    },
+  },
+  methods: {
+    async onAddToFav() {
+      const userToken = this.$store.state.user.token
+      await this.$store.dispatch('favourites/addToFav', {
+        recipe: this.recipe,
+        userToken,
+      })
     },
   },
 }

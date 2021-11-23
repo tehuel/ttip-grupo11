@@ -60,7 +60,8 @@ exports.getCurrent = async function (req, res) {
 
 exports.addToFav = async function (req, res) {
   try {
-    const { user, recipe } = req.body;
+    const { sub: user } = req.user;
+    const { recipe } = req.body;
     let updatedUser = await UserService.getById(user);
     await UserService.addToFav(user, recipe);
     return res.status(200).json({

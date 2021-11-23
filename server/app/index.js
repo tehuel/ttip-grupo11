@@ -24,6 +24,6 @@ app.use("/recipes", RecipeRoute);
 app.use("/tags", TagRoute);
 app.use("/users", UserRoute);
 app.use("/comments", CommentRoute);
-app.use("/favs", FavRoute);
+app.use("/favourites", FavRoute);
 
 module.exports = app;
