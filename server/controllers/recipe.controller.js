@@ -19,11 +19,16 @@ exports.getRecipes = async function (req, res) {
 exports.add = async function (req, res) {
   try {
     const { sub: user } = req.user;
-    // console.log("user:", user);
 
     // TODO: validate req.body
-    const { name, description, instructions, ingredients, image, tags } =
-      req.body.recipe;
+    const {
+      name,
+      description,
+      instructions,
+      ingredients = [],
+      image,
+      tags,
+    } = req.body.recipe;
 
     // acá creo los ingredientes que no existen
     const completeIngredientsList = await Promise.all(
@@ -35,9 +40,6 @@ exports.add = async function (req, res) {
         };
       })
     );
-    console.log("ingredients: ", completeIngredientsList);
-    // await IngredientService.create(ingredients);
-
     const recipeData = {
       name,
       description,
@@ -49,9 +51,6 @@ exports.add = async function (req, res) {
       ratings: [],
       avgRating: null,
     };
-
-    console.log("Recipe Data", recipeData);
-
     const createdRecipe = await RecipeService.create(recipeData);
 
     return res.status(201).json({

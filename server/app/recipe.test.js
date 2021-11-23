@@ -42,23 +42,54 @@ describe("/recipe", () => {
   it("POST /recipes to create recipe", async () => {
     // creates a single recipe
     const newRecipeData = {
-      name: "Test Recipe",
+      recipe: {
+        name: "Test Recipe",
+      },
     };
-    const res = await request(app).post("/recipes").send(newRecipeData);
+    const token = await getUserToken();
+
+    const res = await request(app)
+      .post("/recipes")
+      .set("Authorization", `Bearer ${token}`)
+      .send(newRecipeData);
+
     expect(res.statusCode).toBe(201);
     expect(res.body.message).toBe("Created");
     expect(res.body.data.name).toBe("Test Recipe");
   });
 
-  it("PUT /recipes/:recipe to modify recipe", async () => {
+  it("POST /recipes needs token", async () => {
+    // creates a single recipe
+    const newRecipeData = {
+      recipe: {
+        name: "Test Recipe",
+      },
+    };
+
+    // no envío token de usuario
+    const res = await request(app).post("/recipes").send(newRecipeData);
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body.message).toBe("User token not found");
+  });
+
+  it.skip("PUT /recipes/:recipe to modify recipe", async () => {
     // creates a single recipe
     await Recipe.create({
-      name: "test",
+      name: "Test Recipe",
     });
     const newRecipeData = {
-      name: "Updated Name",
+      recipe: {
+        name: "Updated Test Recipe",
+      },
     };
-    const res = await request(app).put("/recipes/test").send(newRecipeData);
+    const token = await getUserToken();
+
+    const res = await request(app)
+      .put("/recipes/test")
+      .set("Authorization", `Bearer ${token}`)
+      .send(newRecipeData);
+
     expect(res.statusCode).toBe(200);
     expect(res.body.message).toBe("Receta modificada.");
     expect(res.body.data.name).toBe("Updated Name");
@@ -117,3 +148,25 @@ describe("/recipe", () => {
     expect(res.body.data.avgRating).toBe(4.5);
   });
 });
+
+async function createTestUser() {
+  const userData = {
+    email: "example@example.com",
+    password: "example",
+  };
+  const res = await request(app).post("/users/register").send(userData);
+  // console.log("createTestUser", res.body);
+  return userData;
+}
+
+async function authenticateUser(userData) {
+  const res = await request(app).post("/users/authenticate").send(userData);
+  // console.log("authenticateUser", res.body);
+  return res.body.data.token;
+}
+
+async function getUserToken() {
+  const user = await createTestUser();
+  const token = await authenticateUser(user);
+  return token;
+}
