@@ -4,8 +4,8 @@ let TagService = require("../services/tag.service");
 
 exports.getRecipes = async function (req, res) {
   try {
-    const { skip, limit } = req.pagination;
-    let recipes = await RecipeService.findAll(skip, limit);
+    const { sort, skip, limit } = req.pagination;
+    let recipes = await RecipeService.findAll(sort, skip, limit);
     return res.status(200).json({
       data: recipes,
     });
@@ -18,19 +18,40 @@ exports.getRecipes = async function (req, res) {
 
 exports.add = async function (req, res) {
   try {
-    // TODO: validate req.body
-    const { name, description, ingredients, imgUrl, tags } = req.body;
+    const { sub: user } = req.user;
 
-    const createdRecipe = await RecipeService.create({
+    // TODO: validate req.body
+    const {
       name,
       description,
-      ingredients,
-      imgUrl,
+      instructions,
+      ingredients = [],
+      image,
       tags,
-    });
+    } = req.body.recipe;
 
-    await IngredientService.create(ingredients);
-    await TagService.create(tags);
+    // acá creo los ingredientes que no existen
+    const completeIngredientsList = await Promise.all(
+      ingredients.map(async ({ quantity, ingredient: IngredientName }) => {
+        const ingredient = await IngredientService.getOrCreate(IngredientName);
+        return {
+          quantity: quantity,
+          ingredient: ingredient._id,
+        };
+      })
+    );
+    const recipeData = {
+      name,
+      description,
+      instructions,
+      ingredients: completeIngredientsList,
+      image,
+      tags,
+      user,
+      ratings: [],
+      avgRating: null,
+    };
+    const createdRecipe = await RecipeService.create(recipeData);
 
     return res.status(201).json({
       message: "Created",

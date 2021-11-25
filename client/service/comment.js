@@ -26,7 +26,7 @@ module.exports = {
     return commentResponse.data.map(formatComment)
   },
   addComment: async (axios, { text, recipe, userToken }) => {
-    console.log('addComment', { text, recipe, userToken })
+    // console.log('addComment', { text, recipe, userToken })
     const commentResponse = await axios.$post(
       '/comments',
       {
@@ -37,7 +37,7 @@ module.exports = {
         headers: { Authorization: `Bearer ${userToken}` },
       }
     )
-    console.log('getComments', commentResponse)
+    // console.log('getComments', commentResponse)
     return commentResponse.data
   },
 }

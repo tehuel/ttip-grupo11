@@ -10,6 +10,19 @@ const validationMiddleware = (schema) => (req, res, next) => {
   }
 };
 
+/**
+ * Middleware que devuelve error si no se encuentra el usuario
+ */
+const userValidationMiddleware = (req, res, next) => {
+  if (!req.user) {
+    return res.status(400).json({
+      message: "User token not found",
+    });
+  }
+  next();
+};
+
 module.exports = {
   validationMiddleware,
+  userValidationMiddleware,
 };

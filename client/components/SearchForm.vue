@@ -55,7 +55,6 @@
 
 <script>
 export default {
-  name: 'IngredientsList',
   data() {
     return {
       titleSearch: '',

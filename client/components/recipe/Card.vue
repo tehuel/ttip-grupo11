@@ -1,10 +1,9 @@
-/* eslint-disable prettier/prettier */
 <template>
-  <div class="card">
+  <b-card no-body class="recipe-card">
     <NuxtLink :to="{ name: 'recipe-id', params: { id: recipe.id } }">
       <img :src="recipe.image" class="card-img-top" :alt="recipe.name" />
     </NuxtLink>
-    <div class="card-body">
+    <b-card-body>
       <h2 class="h4">{{ recipe.name }}</h2>
       <p>{{ recipe.description }}</p>
 
@@ -21,13 +20,12 @@
           {{ tag(tagId) ? tag(tagId).name : '' }}
         </li>
       </ul>
-    </div>
-  </div>
+    </b-card-body>
+  </b-card>
 </template>
 
 <script>
 export default {
-  name: 'RecipeCard',
   props: {
     recipe: {
       type: Object,

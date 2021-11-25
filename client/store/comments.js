@@ -14,9 +14,8 @@ export const actions = {
     })
     commit('setList', foundComments)
   },
-
   async addComment({ commit, dispatch, state }, { text, recipe, userToken }) {
-    console.log('addComment', { text, recipe, userToken })
+    // console.log('addComment', { text, recipe, userToken })
     const response = await CommentService.addComment(this.$axios, {
       text,
       recipe,

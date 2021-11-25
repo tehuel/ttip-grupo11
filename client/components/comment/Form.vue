@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="comment-form">
     <form @submit.prevent="onSubmitCommentForm">
       <b-form-group label="Comentario:">
         <b-form-textarea
@@ -24,7 +24,6 @@
 
 <script>
 export default {
-  name: 'CommentForm',
   props: ['recipe'],
   data() {
     return {

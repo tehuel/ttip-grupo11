@@ -13,5 +13,12 @@
 <script>
 export default {
   name: 'Default',
+  mounted() {
+    const authUser = {
+      email: localStorage.getItem('userEmail'),
+      token: localStorage.getItem('userToken'),
+    }
+    this.$store.commit('user/setAuthenticated', authUser)
+  },
 }
 </script>
