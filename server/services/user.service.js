@@ -49,9 +49,8 @@ exports.getById = async function (id) {
 };
 
 exports.addToFav = async function (id, recipe) {
-  console.log(id);
-  const user = await User.findById(id);
+  const user = await this.getById(id);
   user.favRecipes.push(recipe.id);
   await user.save();
-  console.log(user);
+  return user;
 };

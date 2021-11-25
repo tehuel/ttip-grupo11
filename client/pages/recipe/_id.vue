@@ -2,6 +2,7 @@
   <div class="page">
     <template v-if="recipe">
       <img
+        v-if="recipe.image"
         :src="recipe.image"
         :alt="recipe.name"
         style="
@@ -42,15 +43,17 @@
                 :ingredients="recipe.ingredients"
               ></RecipeIngredientsList>
               <button
+                v-if="!isRecipeInFavourites"
                 id="search-button"
                 class="btn btn-lg btn-secondary px-3 px-lg-5 mt-3"
-                @click="onAddToFav"
+                @click="onClickAddRecipeToFavourites"
               >
                 Agregar a favoritas
               </button>
             </b-card>
           </div>
         </div>
+        <pre>{{ recipe }}</pre>
       </div>
       <div class="py-5 bg-light border-top">
         <div class="container my-2">
@@ -81,6 +84,11 @@ export default {
     comments() {
       return this.$store.state.comments.list
     },
+    isRecipeInFavourites() {
+      const recipeId = this.$route.params.id
+      const favourites = this.$store.state.user.profile?.favRecipes || []
+      return favourites.includes(recipeId)
+    },
     formattedDate() {
       const formatter = new Intl.DateTimeFormat('es-AR', {
         dateStyle: 'full',
@@ -90,9 +98,9 @@ export default {
     },
   },
   methods: {
-    async onAddToFav() {
+    async onClickAddRecipeToFavourites() {
       const userToken = this.$store.state.user.token
-      await this.$store.dispatch('favourites/addToFav', {
+      await this.$store.dispatch('user/addRecipeToFavourites', {
         recipe: this.recipe,
         userToken,
       })

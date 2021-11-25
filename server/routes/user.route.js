@@ -6,6 +6,6 @@ const UserController = require("../controllers/user.controller");
 // "/users" endpoints
 router.post("/authenticate", UserController.authenticate);
 router.post("/register", UserController.register);
-router.get("/current", UserController.getCurrent);
+router.get("/profile", UserController.getCurrent);
 router.post("/addToFav", UserController.addToFav);
 module.exports = router;
