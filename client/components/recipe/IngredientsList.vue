@@ -2,11 +2,11 @@
   <div class="recipe-ingredients-list">
     <ul>
       <li
-        v-for="ingredient in ingredients"
-        :key="ingredient"
+        v-for="ingredientItem in ingredients"
+        :key="ingredientItem.ingredient"
         class="recipe-ingredient-list-item"
       >
-        {{ getFormattedIngredient(ingredient) }}
+        {{ getFormattedIngredient(ingredientItem) }}
       </li>
     </ul>
   </div>
