@@ -3,10 +3,11 @@ const UserService = require('../service/user')
 export const state = () => ({
   email: null,
   token: null,
+  profile: null,
 })
 
 export const actions = {
-  async authenticate({ commit }, { email, password }) {
+  async authenticate({ commit, dispatch }, { email, password }) {
     // TODO: add loading
     try {
       const authenticatedUser = await UserService.authenticate(this.$axios, {
@@ -16,6 +17,7 @@ export const actions = {
       const { token } = authenticatedUser.data
       // guardo el token y el email en state
       commit('setAuthenticated', { email, token })
+      dispatch('getProfile', { userToken: token })
       window &&
         window.$nuxt.$bvToast.toast('Sesión Iniciada correctamente', {
           title: 'Bienvenido',
@@ -53,6 +55,38 @@ export const actions = {
       throw new Error('Error registrando usuario')
     }
   },
+  async getProfile({ dispatch, commit }, { userToken }) {
+    // TODO: add loading
+    try {
+      const profileResponse = await UserService.getProfile(this.$axios, {
+        userToken,
+      })
+      commit('setProfile', { profile: profileResponse })
+    } catch (e) {
+      throw new Error('Error obteniendo perfil del usuario')
+    }
+  },
+  async addRecipeToFavourites(
+    { commit, dispatch, state },
+    { recipe, userToken }
+  ) {
+    const addRecipeToFavouritesResponse = await UserService.addRecipeToFav(
+      this.$axios,
+      {
+        recipe,
+        userToken,
+      }
+    )
+    console.log(
+      'addRecipeToFavourites addRecipeToFavouritesResponse',
+      addRecipeToFavouritesResponse
+    )
+    commit('setProfile', {
+      profile: addRecipeToFavouritesResponse,
+    })
+    return addRecipeToFavouritesResponse
+  },
+
   async logout({ commit }) {
     commit('logout')
     await this.$router.push('/')
@@ -68,9 +102,13 @@ export const mutations = {
       localStorage.setItem('userToken', token)
     }
   },
+  setProfile(state, { profile }) {
+    state.profile = profile
+  },
   logout(state) {
     state.email = null
     state.token = null
+    state.profile = null
     if (process.client) {
       localStorage.removeItem('userEmail')
       localStorage.removeItem('userToken')

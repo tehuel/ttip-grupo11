@@ -13,6 +13,12 @@ const userSchema = new Schema(
       unique: true,
       required: true,
     },
+    favRecipes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Recipe",
+      },
+    ],
     password: {
       type: String,
       required: true,

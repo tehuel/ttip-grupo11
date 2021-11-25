@@ -57,3 +57,18 @@ exports.getCurrent = async function (req, res) {
     });
   }
 };
+
+exports.addToFav = async function (req, res) {
+  try {
+    const { sub: userId } = req.user;
+    const { recipe } = req.body;
+    let user = await UserService.addToFav(userId, recipe);
+    return res.status(200).json({
+      data: user,
+    });
+  } catch (e) {
+    return res.status(400).json({
+      message: e.message,
+    });
+  }
+};

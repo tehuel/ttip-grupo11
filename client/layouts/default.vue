@@ -19,6 +19,11 @@ export default {
       token: localStorage.getItem('userToken'),
     }
     this.$store.commit('user/setAuthenticated', authUser)
+    if (authUser.token) {
+      this.$store.dispatch('user/getProfile', {
+        userToken: authUser.token,
+      })
+    }
   },
 }
 </script>

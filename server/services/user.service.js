@@ -47,3 +47,10 @@ exports.create = async function ({ name, image, email, password }) {
 exports.getById = async function (id) {
   return User.findById(id).select("-password");
 };
+
+exports.addToFav = async function (id, recipe) {
+  const user = await this.getById(id);
+  user.favRecipes.push(recipe.id);
+  await user.save();
+  return user;
+};
