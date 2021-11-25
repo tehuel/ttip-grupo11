@@ -20,7 +20,10 @@
             <p class="lead">{{ recipe.description }}</p>
             <h2 class="h3">Instrucciones</h2>
             <template v-for="(step, index) in recipe.instructions">
-              <div :key="step" class="recipe-step my-2 py-2 border-bottom">
+              <div
+                :key="step.description"
+                class="recipe-step my-2 py-2 border-bottom"
+              >
                 <h3 class="h4 py-2 sticky-top bg-white">
                   Paso {{ index + 1 }}{{ step.title ? `: ${step.title}` : '' }}
                 </h3>

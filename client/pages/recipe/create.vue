@@ -35,8 +35,8 @@
         <h2>Ingredientes</h2>
         <b-list-group class="mb-2">
           <b-list-group-item
-            v-for="(ingredient, index) in ingredients"
-            :key="ingredient"
+            v-for="(_, index) in ingredients"
+            :key="index"
             class="pr-0"
           >
             <div class="row no-gutters">
@@ -50,7 +50,7 @@
                   <datalist id="ingredients-list">
                     <option
                       v-for="ingredientOption in ingredientsList"
-                      :key="ingredientOption"
+                      :key="ingredientOption.id"
                     >
                       {{ ingredientOption.name }}
                     </option>
@@ -85,7 +85,7 @@
         <hr />
         <h2>Instrucciones</h2>
         <ul v-if="instructions">
-          <li v-for="(instruction, index) in instructions" :key="instruction">
+          <li v-for="(_, index) in instructions" :key="index">
             <b-form-group label="Titulo:">
               <b-form-input v-model="instructions[index].title" type="text" />
             </b-form-group>
