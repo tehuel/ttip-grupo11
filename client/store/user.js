@@ -77,10 +77,6 @@ export const actions = {
         userToken,
       }
     )
-    console.log(
-      'addRecipeToFavourites addRecipeToFavouritesResponse',
-      addRecipeToFavouritesResponse
-    )
     commit('setProfile', {
       profile: addRecipeToFavouritesResponse,
     })

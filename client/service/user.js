@@ -1,6 +1,5 @@
 const formatProfile = (userProfileResponse) => {
   const { name, favRecipes } = userProfileResponse
-  console.log('formatProfile', userProfileResponse)
   return {
     name,
     favRecipes,
@@ -31,7 +30,6 @@ module.exports = {
         headers: { Authorization: `Bearer ${userToken}` },
       }
     )
-    console.log('addRecipeToFav addRecipeToFavResponse', addRecipeToFavResponse)
     return formatProfile(addRecipeToFavResponse.data)
   },
   register: async (axios, { email, password }) => {

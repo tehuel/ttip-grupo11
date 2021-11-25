@@ -53,7 +53,6 @@
             </b-card>
           </div>
         </div>
-        <pre>{{ recipe }}</pre>
       </div>
       <div class="py-5 bg-light border-top">
         <div class="container my-2">

@@ -20,7 +20,6 @@ module.exports = {
         limit,
       },
     })
-    // console.log('getLatestRecipes', recipesResponse)
     return recipesResponse.data.map(formatRecipe)
   },
   getSingleRecipe: async (axios, { id }) => {
@@ -35,7 +34,6 @@ module.exports = {
       ...(ingredients.length && { ingredients }),
       ...(tags.length && { tags }),
     })
-    // console.log('searchRecipes', recipesResponse)
     return recipesResponse.data.map(formatRecipe)
   },
   createRecipe: async (axios, { recipe, userToken }) => {

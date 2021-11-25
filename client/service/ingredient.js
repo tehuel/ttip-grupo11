@@ -9,7 +9,6 @@ const formatIngredient = (IngredientResponse) => {
 module.exports = {
   getIngredients: async (axios) => {
     const ingredientsResponse = await axios.$get('/ingredients')
-    // console.log('getIngredients', ingredientsResponse)
     return ingredientsResponse.data.map(formatIngredient)
   },
 }
