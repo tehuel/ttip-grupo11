@@ -2,6 +2,7 @@
   <div class="page">
     <div class="container my-5">
       <h1 class="h2 text-center">Perfil de Usuario</h1>
+      <pre>{{ profile }}</pre>
     </div>
   </div>
 </template>
@@ -13,15 +14,11 @@ export default {
     isAuthenticated() {
       return Boolean(this.$store.state.user.token)
     },
-    userEmail() {
-      return this.$store.state.user.email
+    profile() {
+      return this.$store.state.user.profile
     },
   },
-  methods: {
-    async onSubmitLoginForm() {
-      await this.$store.dispatch('user/authenticate', this.form)
-    },
-  },
+  methods: {},
 }
 </script>
 
