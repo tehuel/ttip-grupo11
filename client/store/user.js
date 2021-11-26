@@ -4,6 +4,7 @@ export const state = () => ({
   email: null,
   token: null,
   profile: null,
+  favRecipes: null,
 })
 
 export const actions = {
@@ -18,6 +19,7 @@ export const actions = {
       // guardo el token y el email en state
       commit('setAuthenticated', { email, token })
       dispatch('getProfile', { userToken: token })
+      dispatch('myFavRecipes', { userToken: token })
       window &&
         window.$nuxt.$bvToast.toast('Sesión Iniciada correctamente', {
           title: 'Bienvenido',
@@ -82,6 +84,16 @@ export const actions = {
     })
     return addRecipeToFavouritesResponse
   },
+  async myFavRecipes({ dispatch, commit }, { userToken }) {
+    try {
+      const favRecipesResponse = await UserService.myFavRecipes(this.$axios, {
+        userToken,
+      })
+      commit('setFavRecipes', { favRecipes: favRecipesResponse })
+    } catch (e) {
+      throw new Error('Error obteniendo recetas favoritas')
+    }
+  },
 
   async logout({ commit }) {
     commit('logout')
@@ -109,5 +121,9 @@ export const mutations = {
       localStorage.removeItem('userEmail')
       localStorage.removeItem('userToken')
     }
+  },
+  setFavRecipes(state, { favRecipes }) {
+    console.log(favRecipes)
+    state.favRecipes = favRecipes
   },
 }
