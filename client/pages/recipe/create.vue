@@ -110,6 +110,7 @@
 
 <script>
 export default {
+  middleware: ['authenticated'],
   data() {
     return {
       name: '',
@@ -145,19 +146,35 @@ export default {
     },
   },
   methods: {
-    onSubmitCreateRecipe() {
-      const userToken = this.$store.state.user.token
-      this.$store.dispatch('recipes/create', {
-        userToken,
-        recipe: {
-          name: this.name,
-          description: this.description,
-          image: this.image,
-          tags: this.tags,
-          ingredients: this.ingredients,
-          instructions: this.instructions,
-        },
-      })
+    async onSubmitCreateRecipe() {
+      try {
+        const userToken = this.$store.state.user.token
+        await this.$store.dispatch('recipes/create', {
+          userToken,
+          recipe: {
+            name: this.name,
+            description: this.description,
+            image: this.image,
+            tags: this.tags,
+            ingredients: this.ingredients,
+            instructions: this.instructions,
+          },
+        })
+        this.$bvToast.toast('Receta Creada correctamente', {
+          title: 'Receta Creada',
+          variant: 'success',
+          appendToast: true,
+          solid: true,
+        })
+        await this.$router.push('/')
+      } catch (e) {
+        this.$bvToast.toast('Error Cargando la Receta', {
+          title: 'Error',
+          variant: 'danger',
+          appendToast: true,
+          solid: true,
+        })
+      }
     },
     addIngredient() {
       this.ingredients.push({
