@@ -53,6 +53,12 @@ module.exports = {
     })
     return favRecipesResponse.data.map(formatRecipe)
   },
+  myCreatedRecipes: async (axios, { userToken }) => {
+    const createdRecipesResponse = await axios.$get('/users/myCreatedRecipes', {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
+    return createdRecipesResponse.data.map(formatRecipe)
+  },
   register: async (axios, { email, password }) => {
     const registerResponse = await axios.$post('/users/register', {
       email,

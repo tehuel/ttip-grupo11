@@ -74,6 +74,20 @@ exports.myFavRecipes = async function (req, res) {
   }
 };
 
+exports.myCreatedRecipes = async function (req, res) {
+  try {
+    const { sub: userId } = req.user;
+    let myCreatedRecipes = await RecipeService.getCreatedBy(userId);
+    return res.status(200).json({
+      data: myCreatedRecipes,
+    });
+  } catch (e) {
+    return res.status(400).json({
+      message: e.message,
+    });
+  }
+};
+
 exports.addToFav = async function (req, res) {
   try {
     const { sub: userId } = req.user;

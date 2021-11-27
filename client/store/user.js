@@ -5,6 +5,7 @@ export const state = () => ({
   token: null,
   profile: null,
   favRecipes: null,
+  createdRecipes: null,
 })
 
 export const actions = {
@@ -60,9 +61,11 @@ export const actions = {
   async getProfile({ dispatch, commit }, { userToken }) {
     // TODO: add loading
     try {
+      // console.log('userStore.getProfile', { userToken })
       const profileResponse = await UserService.getProfile(this.$axios, {
         userToken,
       })
+      // console.log('userStore.profile', { profileResponse })
       commit('setProfile', { profile: profileResponse })
     } catch (e) {
       throw new Error('Error obteniendo perfil del usuario')
@@ -94,6 +97,19 @@ export const actions = {
       throw new Error('Error obteniendo recetas favoritas')
     }
   },
+  async myCreatedRecipes({ dispatch, commit }, { userToken }) {
+    try {
+      const createdRecipesResponse = await UserService.myCreatedRecipes(
+        this.$axios,
+        {
+          userToken,
+        }
+      )
+      commit('setCreatedRecipes', { createdRecipes: createdRecipesResponse })
+    } catch (e) {
+      throw new Error('Error obteniendo recetas creadas')
+    }
+  },
 
   async logout({ commit }) {
     commit('logout')
@@ -123,7 +139,9 @@ export const mutations = {
     }
   },
   setFavRecipes(state, { favRecipes }) {
-    console.log(favRecipes)
     state.favRecipes = favRecipes
+  },
+  setCreatedRecipes(state, { createdRecipes }) {
+    state.createdRecipes = createdRecipes
   },
 }
