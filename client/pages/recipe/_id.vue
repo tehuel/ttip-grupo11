@@ -34,7 +34,7 @@
               </div>
             </template>
           </div>
-          <div class="col col-lg-4">
+          <div class="col-12 col-lg-4">
             <b-card class="mb-2 sticky-top">
               <h2 class="lead">Ficha Técnica</h2>
               <p>Creada el {{ formattedDate }} por {{ recipe.user }}</p>
