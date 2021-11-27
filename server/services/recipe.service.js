@@ -61,7 +61,7 @@ exports.getMany = async function (ids) {
 };
 
 exports.getCreatedBy = async function (userId) {
-  return Recipe.find({ user: userId });
+  return Recipe.find({ user: userId }, { _id: true });
 };
 
 exports.search = async function (name, ingredients, tags) {
