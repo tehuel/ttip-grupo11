@@ -2,6 +2,7 @@ const UserService = require('../service/user')
 
 export const state = () => ({
   email: null,
+  id: null,
   token: null,
   profile: null,
   favRecipes: null,
@@ -10,15 +11,14 @@ export const state = () => ({
 
 export const actions = {
   async authenticate({ commit, dispatch }, { email, password }) {
-    // TODO: add loading
     try {
-      const authenticatedUser = await UserService.authenticate(this.$axios, {
+      const authUser = await UserService.authenticate(this.$axios, {
         email,
         password,
       })
-      const { token } = authenticatedUser.data
+      const { id, token } = authUser
       // guardo el token y el email en state
-      commit('setAuthenticated', { email, token })
+      commit('setAuthenticated', { id, email, token })
       dispatch('getProfile', { userToken: token })
       dispatch('myFavRecipes', { userToken: token })
       window &&
@@ -110,7 +110,6 @@ export const actions = {
       throw new Error('Error obteniendo recetas creadas')
     }
   },
-
   async logout({ commit }) {
     commit('logout')
     await this.$router.push('/')
@@ -118,10 +117,13 @@ export const actions = {
 }
 
 export const mutations = {
-  setAuthenticated(state, { email, token }) {
+  setAuthenticated(state, { id, email, token }) {
+    state.id = id
     state.email = email
     state.token = token
+
     if (process.client) {
+      localStorage.setItem('userId', id)
       localStorage.setItem('userEmail', email)
       localStorage.setItem('userToken', token)
     }
@@ -130,10 +132,12 @@ export const mutations = {
     state.profile = profile
   },
   logout(state) {
+    state.id = null
     state.email = null
     state.token = null
     state.profile = null
     if (process.client) {
+      localStorage.removeItem('userId')
       localStorage.removeItem('userEmail')
       localStorage.removeItem('userToken')
     }

@@ -7,6 +7,13 @@ const formatProfile = (userProfileResponse) => {
   }
 }
 
+const formatAuthenticatedUser = ({ _id: id, token }) => {
+  return {
+    id,
+    token,
+  }
+}
+
 const formatRecipe = (RecipeResponse) => ({
   _id: RecipeResponse._id,
   name: RecipeResponse.name,
@@ -27,7 +34,7 @@ module.exports = {
       email,
       password,
     })
-    return authenticateResponse
+    return formatAuthenticatedUser(authenticateResponse.data)
   },
   getProfile: async (axios, { userToken }) => {
     const userProfileResponse = await axios.$get('/users/profile', {

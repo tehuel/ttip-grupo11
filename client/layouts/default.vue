@@ -14,12 +14,14 @@
 export default {
   name: 'Default',
   mounted() {
-    const authUser = {
-      email: localStorage.getItem('userEmail'),
-      token: localStorage.getItem('userToken'),
-    }
-    this.$store.commit('user/setAuthenticated', authUser)
-    if (authUser.token) {
+    // si existe usuario en localStorage, lo levanto
+    if (localStorage.getItem('userId')) {
+      const authUser = {
+        id: localStorage.getItem('userId'),
+        email: localStorage.getItem('userEmail'),
+        token: localStorage.getItem('userToken'),
+      }
+      this.$store.commit('user/setAuthenticated', authUser)
       this.$store.dispatch('user/getProfile', {
         userToken: authUser.token,
       })
