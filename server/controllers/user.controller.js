@@ -1,4 +1,5 @@
 const UserService = require("../services/user.service");
+const RecipeService = require("../services/recipe.service");
 
 exports.authenticate = async function (req, res) {
   try {
@@ -50,6 +51,35 @@ exports.getCurrent = async function (req, res) {
     let user = await UserService.getById(userId);
     return res.status(200).json({
       data: user,
+    });
+  } catch (e) {
+    return res.status(400).json({
+      message: e.message,
+    });
+  }
+};
+
+exports.myFavRecipes = async function (req, res) {
+  try {
+    const { sub: userId } = req.user;
+    let user = await UserService.getById(userId);
+    let myFavRecipes = await RecipeService.getMany(user.favRecipes);
+    return res.status(200).json({
+      data: myFavRecipes,
+    });
+  } catch (e) {
+    return res.status(400).json({
+      message: e.message,
+    });
+  }
+};
+
+exports.myCreatedRecipes = async function (req, res) {
+  try {
+    const { sub: userId } = req.user;
+    let myCreatedRecipes = await RecipeService.getCreatedBy(userId);
+    return res.status(200).json({
+      data: myCreatedRecipes,
     });
   } catch (e) {
     return res.status(400).json({

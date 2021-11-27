@@ -8,4 +8,6 @@ router.post("/authenticate", UserController.authenticate);
 router.post("/register", UserController.register);
 router.get("/profile", UserController.getCurrent);
 router.post("/addToFav", UserController.addToFav);
+router.get("/myFavRecipes", UserController.myFavRecipes);
+router.get("/myCreatedRecipes", UserController.myCreatedRecipes);
 module.exports = router;

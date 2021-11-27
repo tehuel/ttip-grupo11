@@ -26,6 +26,10 @@ module.exports = {
     const recipeResponse = await axios.$get(`/recipes/${id}`)
     return formatRecipe(recipeResponse.data)
   },
+  getSomeRecipes: async (axios, { ids }) => {
+    const recipesResponse = await axios.$get(`/recipes/${ids[0]}`)
+    return formatRecipe(recipesResponse.data)
+  },
   searchRecipes: async (axios, { name, ingredients, tags }) => {
     const recipesResponse = await axios.$post('/recipes/search', {
       // agrego condicionalmente los parámetros de busqueda

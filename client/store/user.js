@@ -4,6 +4,8 @@ export const state = () => ({
   email: null,
   token: null,
   profile: null,
+  favRecipes: null,
+  createdRecipes: null,
 })
 
 export const actions = {
@@ -18,6 +20,7 @@ export const actions = {
       // guardo el token y el email en state
       commit('setAuthenticated', { email, token })
       dispatch('getProfile', { userToken: token })
+      dispatch('myFavRecipes', { userToken: token })
       window &&
         window.$nuxt.$bvToast.toast('Sesión Iniciada correctamente', {
           title: 'Bienvenido',
@@ -58,9 +61,11 @@ export const actions = {
   async getProfile({ dispatch, commit }, { userToken }) {
     // TODO: add loading
     try {
+      // console.log('userStore.getProfile', { userToken })
       const profileResponse = await UserService.getProfile(this.$axios, {
         userToken,
       })
+      // console.log('userStore.profile', { profileResponse })
       commit('setProfile', { profile: profileResponse })
     } catch (e) {
       throw new Error('Error obteniendo perfil del usuario')
@@ -81,6 +86,29 @@ export const actions = {
       profile: addRecipeToFavouritesResponse,
     })
     return addRecipeToFavouritesResponse
+  },
+  async myFavRecipes({ dispatch, commit }, { userToken }) {
+    try {
+      const favRecipesResponse = await UserService.myFavRecipes(this.$axios, {
+        userToken,
+      })
+      commit('setFavRecipes', { favRecipes: favRecipesResponse })
+    } catch (e) {
+      throw new Error('Error obteniendo recetas favoritas')
+    }
+  },
+  async myCreatedRecipes({ dispatch, commit }, { userToken }) {
+    try {
+      const createdRecipesResponse = await UserService.myCreatedRecipes(
+        this.$axios,
+        {
+          userToken,
+        }
+      )
+      commit('setCreatedRecipes', { createdRecipes: createdRecipesResponse })
+    } catch (e) {
+      throw new Error('Error obteniendo recetas creadas')
+    }
   },
 
   async logout({ commit }) {
@@ -109,5 +137,11 @@ export const mutations = {
       localStorage.removeItem('userEmail')
       localStorage.removeItem('userToken')
     }
+  },
+  setFavRecipes(state, { favRecipes }) {
+    state.favRecipes = favRecipes
+  },
+  setCreatedRecipes(state, { createdRecipes }) {
+    state.createdRecipes = createdRecipes
   },
 }

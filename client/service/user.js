@@ -1,10 +1,25 @@
 const formatProfile = (userProfileResponse) => {
-  const { name, favRecipes } = userProfileResponse
+  const { name, email, favRecipes } = userProfileResponse
   return {
     name,
+    email,
     favRecipes,
   }
 }
+
+const formatRecipe = (RecipeResponse) => ({
+  _id: RecipeResponse._id,
+  name: RecipeResponse.name,
+  user: RecipeResponse.user,
+  description: RecipeResponse.description,
+  instructions: RecipeResponse.instructions,
+  ingredients: RecipeResponse.ingredients,
+  ratings: RecipeResponse.ratings,
+  avgRating: RecipeResponse.avgRating,
+  image: RecipeResponse.image,
+  tags: RecipeResponse.tags,
+  createdAt: new Date(RecipeResponse.createdAt),
+})
 
 module.exports = {
   authenticate: async (axios, { email, password }) => {
@@ -31,6 +46,18 @@ module.exports = {
       }
     )
     return formatProfile(addRecipeToFavResponse.data)
+  },
+  myFavRecipes: async (axios, { userToken }) => {
+    const favRecipesResponse = await axios.$get('/users/myFavRecipes', {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
+    return favRecipesResponse.data.map(formatRecipe)
+  },
+  myCreatedRecipes: async (axios, { userToken }) => {
+    const createdRecipesResponse = await axios.$get('/users/myCreatedRecipes', {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
+    return createdRecipesResponse.data.map(formatRecipe)
   },
   register: async (axios, { email, password }) => {
     const registerResponse = await axios.$post('/users/register', {
