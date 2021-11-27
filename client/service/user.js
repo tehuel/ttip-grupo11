@@ -51,9 +51,8 @@ module.exports = {
     const favRecipesResponse = await axios.$get('/users/myFavRecipes', {
       headers: { Authorization: `Bearer ${userToken}` },
     })
-    return formatRecipe(favRecipesResponse.data)
+    return favRecipesResponse.data.map(formatRecipe)
   },
-
   register: async (axios, { email, password }) => {
     const registerResponse = await axios.$post('/users/register', {
       email,

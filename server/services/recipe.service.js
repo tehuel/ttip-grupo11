@@ -57,7 +57,7 @@ exports.getByName = async function (name) {
 };
 
 exports.getMany = async function (ids) {
-  return await Recipe.find().where("_id").in(ids);
+  return Recipe.find().where("_id").in(ids);
 };
 
 exports.search = async function (name, ingredients, tags) {
