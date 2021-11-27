@@ -69,7 +69,7 @@ exports.search = async function (name, ingredients, tags) {
   let query = {};
   if (name) {
     // busca cualquier receta por el nombre
-    query.name = { $regex: name };
+    query.name = { $regex: name, $options: "i" };
   }
   if (ingredients.length) {
     // busca cualquier receta que tenga al menos uno de los ingredientes
