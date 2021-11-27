@@ -14,12 +14,14 @@
         :ingredients="recipe.ingredients"
       ></RecipeIngredientsList>
 
-      <p>Tags:</p>
-      <ul>
-        <li v-for="tagId in recipe.tags" :key="tagId">
-          {{ tag(tagId) ? tag(tagId).name : '' }}
-        </li>
-      </ul>
+      <template v-if="recipe.tags.length">
+        <p>Tags:</p>
+        <ul>
+          <li v-for="tagId in recipe.tags" :key="tagId">
+            {{ tag(tagId) ? tag(tagId).name : '' }}
+          </li>
+        </ul>
+      </template>
     </b-card-body>
   </b-card>
 </template>
