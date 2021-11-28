@@ -48,6 +48,16 @@ exports.getById = async function (id) {
   return User.findById(id, { password: false });
 };
 
+exports.update = async function ({ id, name, image, email }) {
+  return User.findByIdAndUpdate(
+    id,
+    { name, image, email },
+    {
+      returnDocument: "after",
+    }
+  );
+};
+
 exports.addToFav = async function (id, recipe) {
   const user = await this.getById(id);
   user.favRecipes.push(recipe.id);

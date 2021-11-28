@@ -70,6 +70,52 @@ exports.getProfile = async function (req, res) {
   }
 };
 
+exports.updateProfile = async function (req, res) {
+  try {
+    const { sub: authUserId } = req.user;
+    const { userId } = req.params;
+    const { name, email, image } = req.body;
+
+    console.log("updateProfile", {
+      authUserId,
+      userId,
+      body: req.body,
+    });
+
+    if (authUserId !== userId) {
+      throw new Error("permission denied");
+    }
+
+    const user = await UserService.update({
+      id: userId,
+      name,
+      image,
+      email,
+    });
+
+    console.log("updatedUser", user);
+
+    // armo un listado de IDs de las recetas creadas por el usuario
+    const userRecipes = (await RecipeService.getCreatedBy(userId)).map(
+      (recipe) => recipe._id
+    );
+
+    const userProfile = {
+      ...user.toJSON(),
+      createdRecipes: userRecipes,
+    };
+
+    return res.status(200).json({
+      data: userProfile,
+    });
+  } catch (e) {
+    console.log("error", e);
+    return res.status(400).json({
+      message: e.message,
+    });
+  }
+};
+
 exports.getCurrent = async function (req, res) {
   try {
     const { sub: userId } = req.user;
