@@ -160,8 +160,8 @@ exports.getByName = async function (req, res) {
 
 exports.search = async function (req, res) {
   try {
-    const { name, ingredients = [], tags = [] } = req.body;
-    let recipes = await RecipeService.search(name, ingredients, tags);
+    const { name, ingredients = [], tags = [], ids = [] } = req.body;
+    let recipes = await RecipeService.search(name, ingredients, tags, ids);
     return res.status(200).json({
       data: recipes,
     });

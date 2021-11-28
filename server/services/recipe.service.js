@@ -64,7 +64,7 @@ exports.getCreatedBy = async function (userId) {
   return Recipe.find({ user: userId }, { _id: true });
 };
 
-exports.search = async function (name, ingredients, tags) {
+exports.search = async function (name, ingredients, tags, ids) {
   // agrego condicionalmente las queries de búsqueda
   let query = {};
   if (name) {
@@ -78,6 +78,10 @@ exports.search = async function (name, ingredients, tags) {
   if (tags.length) {
     // busca cualquier receta que tenga TODOS los tags al mismo tiempo
     query.tags = { $all: tags };
+  }
+  if (ids.length) {
+    // busca las recetas en el listado de IDs
+    query._id = { $in: ids };
   }
 
   return Recipe.find(query);

@@ -1,12 +1,14 @@
 const UserService = require('../service/user')
+const RecipeService = require('../service/recipe')
 
 export const state = () => ({
   email: null,
   id: null,
   token: null,
   profile: null,
-  favRecipes: null,
-  createdRecipes: null,
+
+  favRecipes: [],
+  createdRecipes: [],
 })
 
 export const actions = {
@@ -19,8 +21,8 @@ export const actions = {
       const { id, token } = authUser
       // guardo el token y el email en state
       commit('setAuthenticated', { id, email, token })
-      dispatch('getProfile', { userToken: token })
-      dispatch('myFavRecipes', { userToken: token })
+      dispatch('getProfile', { userId: id })
+      // dispatch('myFavRecipes', { userToken: token })
       window &&
         window.$nuxt.$bvToast.toast('Sesión Iniciada correctamente', {
           title: 'Bienvenido',
@@ -41,7 +43,7 @@ export const actions = {
 
     await this.$router.push('/')
   },
-  async register({ dispatch, commit }, { email, password }) {
+  async register({ dispatch }, { email, password }) {
     // TODO: add loading
     try {
       const registerResponse = await UserService.register(this.$axios, {
@@ -58,23 +60,28 @@ export const actions = {
       throw new Error('Error registrando usuario')
     }
   },
-  async getProfile({ dispatch, commit }, { userToken }) {
-    // TODO: add loading
+  async getProfile({ commit }, { userId }) {
     try {
-      // console.log('userStore.getProfile', { userToken })
-      const profileResponse = await UserService.getProfile(this.$axios, {
-        userToken,
+      const profile = await UserService.getProfile(this.$axios, {
+        userId,
       })
-      // console.log('userStore.profile', { profileResponse })
-      commit('setProfile', { profile: profileResponse })
+      commit('setProfile', { profile })
+
+      const favRecipes = await RecipeService.searchRecipes(this.$axios, {
+        ids: profile.favRecipes,
+      })
+      commit('setFavRecipes', { favRecipes })
+
+      const createdRecipes = await RecipeService.searchRecipes(this.$axios, {
+        ids: profile.createdRecipes,
+      })
+      commit('setCreatedRecipes', { createdRecipes })
     } catch (e) {
+      console.log(e)
       throw new Error('Error obteniendo perfil del usuario')
     }
   },
-  async addRecipeToFavourites(
-    { commit, dispatch, state },
-    { recipe, userToken }
-  ) {
+  async addRecipeToFavourites({ commit }, { recipe, userToken }) {
     const addRecipeToFavouritesResponse = await UserService.addRecipeToFav(
       this.$axios,
       {
@@ -86,29 +93,6 @@ export const actions = {
       profile: addRecipeToFavouritesResponse,
     })
     return addRecipeToFavouritesResponse
-  },
-  async myFavRecipes({ dispatch, commit }, { userToken }) {
-    try {
-      const favRecipesResponse = await UserService.myFavRecipes(this.$axios, {
-        userToken,
-      })
-      commit('setFavRecipes', { favRecipes: favRecipesResponse })
-    } catch (e) {
-      throw new Error('Error obteniendo recetas favoritas')
-    }
-  },
-  async myCreatedRecipes({ dispatch, commit }, { userToken }) {
-    try {
-      const createdRecipesResponse = await UserService.myCreatedRecipes(
-        this.$axios,
-        {
-          userToken,
-        }
-      )
-      commit('setCreatedRecipes', { createdRecipes: createdRecipesResponse })
-    } catch (e) {
-      throw new Error('Error obteniendo recetas creadas')
-    }
   },
   async logout({ commit }) {
     commit('logout')
@@ -142,6 +126,7 @@ export const mutations = {
       localStorage.removeItem('userToken')
     }
   },
+
   setFavRecipes(state, { favRecipes }) {
     state.favRecipes = favRecipes
   },

@@ -23,7 +23,7 @@ export default {
       }
       this.$store.commit('user/setAuthenticated', authUser)
       this.$store.dispatch('user/getProfile', {
-        userToken: authUser.token,
+        userId: authUser.id,
       })
     }
   },
