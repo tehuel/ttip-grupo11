@@ -45,6 +45,31 @@ exports.register = async function (req, res) {
   }
 };
 
+exports.getProfile = async function (req, res) {
+  try {
+    const { userId } = req.params;
+    const user = await UserService.getById(userId);
+
+    // armo un listado de IDs de las recetas creadas por el usuario
+    const userRecipes = (await RecipeService.getCreatedBy(userId)).map(
+      (recipe) => recipe._id
+    );
+
+    const userProfile = {
+      ...user.toJSON(),
+      createdRecipes: userRecipes,
+    };
+
+    return res.status(200).json({
+      data: userProfile,
+    });
+  } catch (e) {
+    return res.status(400).json({
+      message: e.message,
+    });
+  }
+};
+
 exports.getCurrent = async function (req, res) {
   try {
     const { sub: userId } = req.user;

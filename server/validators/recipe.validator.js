@@ -6,8 +6,9 @@ const searchSchema = Joi.object()
     name: Joi.string(),
     ingredients: Joi.array().min(1).items(Joi.string().length(24)),
     tags: Joi.array().min(1).items(Joi.string().length(24)),
+    ids: Joi.array().min(1).items(Joi.string().length(24)),
   })
-  .or("name", "ingredients", "tags")
+  .or("name", "ingredients", "tags", "ids")
   .required();
 
 const createSchema = Joi.object()

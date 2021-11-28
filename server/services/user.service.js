@@ -45,7 +45,7 @@ exports.create = async function ({ name, image, email, password }) {
 };
 
 exports.getById = async function (id) {
-  return User.findById(id).select("-password");
+  return User.findById(id, { password: false });
 };
 
 exports.addToFav = async function (id, recipe) {

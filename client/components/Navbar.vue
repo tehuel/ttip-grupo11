@@ -30,7 +30,7 @@
               <NuxtLink
                 class="dropdown-item"
                 active-class="active"
-                to="/profile"
+                :to="{ name: 'user-id', params: { id: userId } }"
               >
                 Perfil de Usuario
               </NuxtLink>
@@ -61,6 +61,9 @@ export default {
     },
     userEmail() {
       return this.$store.state.user.email
+    },
+    userId() {
+      return this.$store.state.user.id
     },
   },
   methods: {

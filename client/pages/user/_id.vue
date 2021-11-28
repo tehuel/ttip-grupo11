@@ -3,6 +3,8 @@
     <div class="container my-5">
       <b-overlay :show="$fetchState.pending">
         <h1 class="h2 text-center">Perfil de Usuario</h1>
+        <pre>{{ profile }}</pre>
+
         <div class="recipe-feed">
           <h2 class="h3">Recetas Favoritas</h2>
           <div class="row">
@@ -15,6 +17,7 @@
             </div>
           </div>
         </div>
+
         <div class="recipe-feed">
           <h2 class="h3">Recetas Creadas</h2>
           <div class="row">
@@ -33,28 +36,39 @@
 </template>
 
 <script>
+import UserService from '~/service/user'
+import RecipeService from '~/service/recipe'
+
 export default {
-  middleware: ['authenticated'],
+  data() {
+    return {
+      profile: null,
+      favRecipes: [],
+      createdRecipes: [],
+    }
+  },
   async fetch() {
-    const userToken = this.$store.state.user.token
-    await this.$store.dispatch('user/getProfile', { userToken })
-    await this.$store.dispatch('user/myFavRecipes', { userToken })
-    await this.$store.dispatch('user/myCreatedRecipes', { userToken })
+    try {
+      const userId = this.$route.params.id
+      this.profile = await UserService.getProfile(this.$axios, {
+        userId,
+      })
+      if (this.profile.favRecipes.length) {
+        this.favRecipes = await RecipeService.searchRecipes(this.$axios, {
+          ids: this.profile.favRecipes,
+        })
+      }
+      if (this.profile.createdRecipes.length) {
+        this.createdRecipes = await RecipeService.searchRecipes(this.$axios, {
+          ids: this.profile.createdRecipes,
+        })
+      }
+    } catch (e) {
+      console.error(e)
+    }
   },
   fetchOnServer: false,
-  computed: {
-    profile() {
-      return this.$store.state.user.profile
-    },
-    favRecipes() {
-      return this.$store.state.user.favRecipes
-    },
-    createdRecipes() {
-      return this.$store.state.user.createdRecipes
-    },
-  },
+  computed: {},
   methods: {},
 }
 </script>
-
-<style type="text/css"></style>
