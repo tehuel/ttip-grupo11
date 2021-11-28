@@ -4,6 +4,10 @@
       Aplicación desarrollada para la materia "Taller de Trabajo de Inserción
       Profesional" de la UNQ.
     </p>
+    <p>
+      Para más info, visitar el
+      <a href="https://github.com/tehuel/ttip-grupo11">repo en Github</a>.
+    </p>
     <hr />
     <h2 class="h3">Licencias</h2>
     <p>

@@ -17,7 +17,16 @@
           <p>Taller de Trabajo de Inserción Profesional</p>
           <p>Octavio Gonzalez y Tehuel Torres Baldi</p>
           <p>
-            <a href="https://github.com/tehuel/ttip-grupo11">Repo Github</a>
+            <a href="https://github.com/tehuel/ttip-grupo11" class="text-light">
+              Repo Github
+            </a>
+            -
+            <a
+              href="https://github.com/tehuel/ttip-grupo11/wiki"
+              class="text-light"
+            >
+              Wiki
+            </a>
           </p>
         </div>
       </div>
