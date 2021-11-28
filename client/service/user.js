@@ -1,7 +1,16 @@
-const formatProfile = ({ name, email, createdRecipes, favRecipes }) => {
+const formatProfile = ({
+  _id: id = '',
+  name = '',
+  email = '',
+  image = '',
+  createdRecipes = [],
+  favRecipes = [],
+}) => {
   return {
+    id,
     name,
     email,
+    image,
     createdRecipes,
     favRecipes,
   }
@@ -24,6 +33,22 @@ module.exports = {
   },
   getProfile: async (axios, { userId }) => {
     const userProfileResponse = await axios.$get(`/users/${userId}`)
+    return formatProfile(userProfileResponse.data)
+  },
+  updateProfile: async (axios, { userId, userToken, userProfile }) => {
+    const { name = '', email = '', image = '' } = userProfile
+
+    const userProfileResponse = await axios.$post(
+      `/users/${userId}`,
+      {
+        name,
+        email,
+        image,
+      },
+      {
+        headers: { Authorization: `Bearer ${userToken}` },
+      }
+    )
     return formatProfile(userProfileResponse.data)
   },
   addRecipeToFav: async (axios, { recipe, userToken }) => {

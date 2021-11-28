@@ -81,6 +81,19 @@ export const actions = {
       throw new Error('Error obteniendo perfil del usuario')
     }
   },
+  async updateProfile({ commit }, { userId, userToken, userProfile }) {
+    try {
+      const profile = await UserService.updateProfile(this.$axios, {
+        userId,
+        userToken,
+        userProfile,
+      })
+      commit('setProfile', { profile })
+    } catch (e) {
+      console.log(e)
+      throw new Error('Error actualizando perfil del usuario')
+    }
+  },
   async addRecipeToFavourites({ commit }, { recipe, userToken }) {
     const addRecipeToFavouritesResponse = await UserService.addRecipeToFav(
       this.$axios,
