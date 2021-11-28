@@ -52,14 +52,8 @@
               <RecipeIngredientsList
                 :ingredients="recipe.ingredients"
               ></RecipeIngredientsList>
-              <button
-                v-if="!isRecipeInFavourites"
-                id="search-button"
-                class="btn btn-lg btn-secondary px-3 px-lg-5 mt-3"
-                @click="onClickAddRecipeToFavourites"
-              >
-                Agregar a favoritas
-              </button>
+
+              <RecipeFavButton :recipe="recipe"></RecipeFavButton>
             </b-card>
           </div>
         </div>
@@ -100,33 +94,15 @@ export default {
       limit: 999,
       recipe: recipeId,
     })
-    console.log('recipe', {
-      recipe: this.recipe,
-      comments: this.comments,
-    })
   },
   fetchOnServer: false,
   computed: {
-    isRecipeInFavourites() {
-      const recipeId = this.$route.params.id
-      const favourites = this.$store.state.user.profile?.favRecipes || []
-      return favourites.includes(recipeId)
-    },
     formattedDate() {
       const formatter = new Intl.DateTimeFormat('es-AR', {
         dateStyle: 'full',
         timeStyle: 'short',
       })
       return formatter.format(this.recipe.createdAt)
-    },
-  },
-  methods: {
-    async onClickAddRecipeToFavourites() {
-      const userToken = this.$store.state.user.token
-      await this.$store.dispatch('user/addRecipeToFavourites', {
-        recipe: this.recipe,
-        userToken,
-      })
     },
   },
 }
