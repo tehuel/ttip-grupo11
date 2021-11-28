@@ -3,7 +3,8 @@
     <div class="container my-5">
       <b-overlay :show="$fetchState.pending">
         <h1 class="h2 text-center">Perfil de Usuario</h1>
-        <pre>{{ profile }}</pre>
+
+        <ProfileCard v-if="profile" :profile="profile"></ProfileCard>
 
         <div class="recipe-feed">
           <h2 class="h3">Recetas Favoritas</h2>
