@@ -8,6 +8,8 @@ router.post("/authenticate", UserController.authenticate);
 router.post("/register", UserController.register);
 
 router.get("/:userId", UserController.getProfile);
+router.post("/:userId", UserController.updateProfile);
+
 router.get("/myFavRecipes", UserController.myFavRecipes);
 router.get("/myCreatedRecipes", UserController.myCreatedRecipes);
 
