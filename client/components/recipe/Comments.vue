@@ -25,16 +25,9 @@
 
 <script>
 export default {
+  props: ['recipe', 'comments'],
   data() {
     return {}
-  },
-  computed: {
-    recipe() {
-      return this.$store.state.recipes.single
-    },
-    comments() {
-      return this.$store.state.comments.list
-    },
   },
 }
 </script>

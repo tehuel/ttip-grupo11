@@ -66,7 +66,10 @@
       </div>
       <div class="py-5 bg-light border-top">
         <div class="container my-2">
-          <RecipeComments></RecipeComments>
+          <RecipeComments
+            :recipe="recipe"
+            :comments="comments"
+          ></RecipeComments>
         </div>
       </div>
     </template>
@@ -74,25 +77,36 @@
 </template>
 
 <script>
+import RecipeService from '~/service/recipe'
+import CommentService from '~/service/comment'
+
 export default {
+  data() {
+    return {
+      recipe: null,
+      comments: [],
+    }
+  },
   async fetch() {
     await this.$store.dispatch('ingredients/getIngredients')
     await this.$store.dispatch('tags/getTags')
-    await this.$store.dispatch('recipes/getSingleRecipe', {
-      id: this.$route.params.id,
+
+    const recipeId = this.$route.params.id
+    this.recipe = await RecipeService.getSingleRecipe(this.$axios, {
+      id: recipeId,
     })
-    await this.$store.dispatch('comments/getComments', {
-      recipe: this.$route.params.id,
+    this.comments = await CommentService.getComments(this.$axios, {
+      skip: 0,
+      limit: 999,
+      recipe: recipeId,
+    })
+    console.log('recipe', {
+      recipe: this.recipe,
+      comments: this.comments,
     })
   },
   fetchOnServer: false,
   computed: {
-    recipe() {
-      return this.$store.state.recipes.single
-    },
-    comments() {
-      return this.$store.state.comments.list
-    },
     isRecipeInFavourites() {
       const recipeId = this.$route.params.id
       const favourites = this.$store.state.user.profile?.favRecipes || []
