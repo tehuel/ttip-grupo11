@@ -4,7 +4,6 @@ exports.getComments = async function (req, res) {
   try {
     const { skip, limit } = req.pagination;
     const { recipe = null } = req.query;
-    console.log("getComments", recipe);
     let comments = await CommentService.findAll(skip, limit, recipe);
     return res.status(200).json({
       data: comments,

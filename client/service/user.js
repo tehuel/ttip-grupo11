@@ -63,6 +63,18 @@ module.exports = {
     )
     return formatProfile(addRecipeToFavResponse.data)
   },
+  followUser: async (axios, { profile, userToken }) => {
+    const followUserResponse = await axios.$post(
+      'users/followUser',
+      {
+        profile,
+      },
+      {
+        headers: { Authorization: `Bearer ${userToken}` },
+      }
+    )
+    return formatProfile(followUserResponse.data)
+  },
   register: async (axios, { email, password }) => {
     const registerResponse = await axios.$post('/users/register', {
       email,

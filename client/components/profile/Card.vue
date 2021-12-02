@@ -17,6 +17,7 @@
             <p class="lead">{{ profile.name }}</p>
             <p>{{ profile.email }}</p>
             <b-button @click="editProfile">Editar</b-button>
+            <b-button variant="primary" @click="onFollowUser">Seguir</b-button>
           </div>
         </div>
       </template>
@@ -45,6 +46,22 @@ export default {
     },
   },
   methods: {
+    async onFollowUser() {
+      const userId = this.$store.state.user.userId
+      const profile = this.profile
+      const userToken = this.$store.state.user.token
+      await this.$store.dispatch('follows/followUser', {
+        userId,
+        profile,
+        userToken,
+      })
+      this.$bvToast.toast('Ahora sigues a esta persona!', {
+        title: 'Seguir usuario',
+        variant: 'success',
+        appendToast: true,
+        solid: true,
+      })
+    },
     editProfile() {
       this.editing = true
     },
