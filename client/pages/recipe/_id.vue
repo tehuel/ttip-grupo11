@@ -18,6 +18,7 @@
           <RecipeForm
             :recipe="recipe"
             @submit="finishEditingRecipe"
+            @reset="finishEditingRecipe"
           ></RecipeForm>
         </template>
         <template v-else>

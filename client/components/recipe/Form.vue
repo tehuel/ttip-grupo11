@@ -192,7 +192,6 @@ export default {
     async onSubmitEditRecipe() {
       this.isLoading = true
       try {
-        const recipeId = this.recipe.id
         const userToken = this.$store.state.user.token
         const updatedRecipe = {
           name: this.name,
@@ -203,7 +202,6 @@ export default {
           instructions: this.instructions,
         }
         await this.$store.dispatch('recipes/update', {
-          recipeId,
           updatedRecipe,
           userToken,
         })
@@ -213,7 +211,6 @@ export default {
           appendToast: true,
           solid: true,
         })
-        await this.$router.push('/')
       } catch (e) {
         this.$bvToast.toast('Error Cargando la Receta', {
           title: 'Error',

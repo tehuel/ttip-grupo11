@@ -50,8 +50,7 @@ module.exports = {
     )
     return formatRecipe(createdRecipe.data)
   },
-  updateRecipe: async (axios, { recipeId, recipe, userToken }) => {
-    console.log(recipe)
+  updateRecipe: async (axios, { recipe, userToken }) => {
     const {
       name = '',
       description = '',

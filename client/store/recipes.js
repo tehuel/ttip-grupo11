@@ -26,10 +26,9 @@ export const actions = {
     })
     return createdRecipe
   },
-  async update({ commit }, { recipeId, recipe, userToken }) {
+  async update({ commit }, { recipe, userToken }) {
     try {
       const updatedRecipe = await RecipeService.updateRecipe(this.$axios, {
-        recipeId,
         recipe,
         userToken,
       })
