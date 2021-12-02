@@ -1,10 +1,23 @@
 <template>
   <b-card no-body class="recipe-card">
     <NuxtLink :to="{ name: 'recipe-id', params: { id: recipe.id } }">
-      <img :src="recipe.image" class="card-img-top" :alt="recipe.name" />
+      <img
+        v-if="recipe.image"
+        :src="recipe.image"
+        class="card-img-top"
+        :alt="recipe.name"
+      />
+      <img
+        v-else
+        src="~/assets/img/placeholder.png"
+        class="card-img-top"
+        :alt="recipe.name"
+      />
     </NuxtLink>
     <b-card-body>
-      <h2 class="h4">{{ recipe.name }}</h2>
+      <NuxtLink :to="{ name: 'recipe-id', params: { id: recipe.id } }">
+        <h2 class="h4">{{ recipe.name }}</h2>
+      </NuxtLink>
       <p>{{ recipe.description }}</p>
 
       <RecipeRatingForm :recipe="recipe"></RecipeRatingForm>
@@ -45,3 +58,10 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.recipe-card {
+  max-height: 700px;
+  overflow: hidden;
+}
+</style>
