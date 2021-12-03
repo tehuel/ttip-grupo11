@@ -20,19 +20,13 @@
       </b-form-group>
       <b-form-group label="Etiquetas:">
         <b-form-checkbox-group
-          v-slot="{ ariaDescribedby }"
+          v-model="tags"
           name="tags"
           class="d-flex justify-content-center flex-wrap"
+          :options="tagsList"
+          value-field="id"
+          text-field="name"
         >
-          <b-form-checkbox
-            v-for="tag in tagsList"
-            :key="tag.name"
-            v-model="tags"
-            :value="tag.id"
-            :aria-describedby="ariaDescribedby"
-          >
-            {{ tag.name }}
-          </b-form-checkbox>
         </b-form-checkbox-group>
       </b-form-group>
 
