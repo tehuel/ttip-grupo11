@@ -17,8 +17,8 @@
         <template v-if="editing">
           <RecipeForm
             :recipe="recipe"
-            @submit="finishEditingRecipe"
-            @reset="finishEditingRecipe"
+            @submit="onSubmitEditRecipe"
+            @reset="onResetEditRecipe"
           ></RecipeForm>
         </template>
         <template v-else>
@@ -84,7 +84,6 @@
 <script>
 import RecipeService from '~/service/recipe'
 import CommentService from '~/service/comment'
-
 export default {
   data() {
     return {
@@ -124,7 +123,32 @@ export default {
     editRecipe() {
       this.editing = true
     },
-    finishEditingRecipe() {
+    async onSubmitEditRecipe({ recipe }) {
+      await console.log('submit edit recipe', recipe)
+      // try {
+      //   const userToken = this.$store.state.user.token
+      //   await this.$store.dispatch('recipes/create', {
+      //     userToken,
+      //     recipe,
+      //   })
+      //   this.$bvToast.toast('Receta Creada correctamente', {
+      //     title: 'Receta Creada',
+      //     variant: 'success',
+      //     appendToast: true,
+      //     solid: true,
+      //   })
+      //   await this.$router.push('/')
+      // } catch (e) {
+      //   this.$bvToast.toast('Error Cargando la Receta', {
+      //     title: 'Error',
+      //     variant: 'danger',
+      //     appendToast: true,
+      //     solid: true,
+      //   })
+      // }
+    },
+    onResetEditRecipe() {
+      console.log('reset edit recipe')
       this.editing = false
     },
   },
