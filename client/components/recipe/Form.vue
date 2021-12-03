@@ -8,15 +8,15 @@
       <b-form-group id="group-name" label="Nombre:" label-for="input-name">
         <b-form-input id="input-name" v-model="name" trim type="text" />
       </b-form-group>
+      <b-form-group id="group-image" label="Imagen:">
+        <b-form-input id="input-image" v-model="image" type="text" />
+      </b-form-group>
       <b-form-group
         id="group-description"
         label="Descripción:"
         label-for="input-description"
       >
-        <b-form-input v-model="description" type="text" />
-      </b-form-group>
-      <b-form-group label="Imagen:">
-        <b-form-input v-model="image" type="text" />
+        <b-form-textarea v-model="description" />
       </b-form-group>
       <b-form-group label="Etiquetas:">
         <b-form-checkbox-group
@@ -46,7 +46,12 @@
         >
           <div class="row no-gutters">
             <div class="col">
-              <b-form-group label="Ingrediente:" label-cols-sm="3">
+              <b-form-text>Ingrediente {{ index + 1 }}</b-form-text>
+              <b-form-group
+                label="Ingrediente:"
+                label-cols-sm="3"
+                label-cols-md="2"
+              >
                 <b-form-input
                   v-model="ingredients[index].ingredient"
                   type="text"
@@ -64,6 +69,7 @@
               <b-form-group
                 label="Cantidad:"
                 label-cols-sm="3"
+                label-cols-md="2"
                 description="Ej: 3 unidades, 4 gotas, 200 gramos, etc..."
               >
                 <b-form-input
@@ -89,22 +95,45 @@
 
       <hr />
       <h2>Instrucciones</h2>
-      <ul v-if="instructions">
-        <li v-for="(_, index) in instructions" :key="index">
-          <b-form-group label="Titulo:">
-            <b-form-input v-model="instructions[index].title" type="text" />
-          </b-form-group>
-          <b-form-group label="Descripción:">
-            <b-form-input
-              v-model="instructions[index].description"
-              type="text"
-            />
-          </b-form-group>
-          <b-form-group label="Imagen:">
-            <b-form-input v-model="instructions[index].image" type="text" />
-          </b-form-group>
-        </li>
-      </ul>
+      <b-list-group v-if="instructions" class="mb-2">
+        <b-list-group-item
+          v-for="(_, index) in instructions"
+          :key="index"
+          class="pr-0"
+        >
+          <div class="row no-gutters">
+            <div class="col">
+              <b-form-text>Paso {{ index + 1 }}</b-form-text>
+              <b-form-group label="Titulo:" label-cols-sm="3" label-cols-md="2">
+                <b-form-input v-model="instructions[index].title" type="text" />
+              </b-form-group>
+              <b-form-group label="Imagen:" label-cols-sm="3" label-cols-md="2">
+                <b-form-input v-model="instructions[index].image" type="text" />
+              </b-form-group>
+              <b-form-group
+                label="Descripción:"
+                label-cols-sm="3"
+                label-cols-md="2"
+              >
+                <b-form-textarea
+                  v-model="instructions[index].description"
+                ></b-form-textarea>
+              </b-form-group>
+            </div>
+            <div class="col-auto mx-2">
+              <b-btn
+                :disabled="instructions.length <= 1"
+                variant="danger"
+                size="sm"
+                title="Eliminar Ingrediente"
+                @click="deleteInstruction(index)"
+              >
+                x
+              </b-btn>
+            </div>
+          </div>
+        </b-list-group-item>
+      </b-list-group>
       <b-btn @click="addInstruction">Agregar Paso</b-btn>
       <hr />
       <b-button type="submit" variant="primary">
