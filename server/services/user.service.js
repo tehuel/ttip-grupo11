@@ -60,7 +60,12 @@ exports.update = async function ({ id, name, image, email }) {
 
 exports.addToFav = async function (id, recipeId) {
   const user = await this.getById(id);
-  user.favRecipes.push(recipeId);
-  await user.save();
+
+  // solo agrego a listado de favoritos si es que no estaba
+  if (!user.favRecipes.includes(recipeId)) {
+    user.favRecipes.push(recipeId);
+    await user.save();
+  }
+
   return user.favRecipes;
 };
