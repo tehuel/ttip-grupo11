@@ -25,8 +25,8 @@ exports.create = async function (recipeData) {
   return recipe;
 };
 
-exports.update = async function (name, update) {
-  return Recipe.findOneAndUpdate({ name: name }, update, {
+exports.update = async function (id, update) {
+  return Recipe.findOneAndUpdate({ id: id }, update, {
     new: true,
   });
 };

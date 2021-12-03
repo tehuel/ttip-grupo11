@@ -125,27 +125,28 @@ export default {
     },
     async onSubmitEditRecipe({ recipe }) {
       await console.log('submit edit recipe', recipe)
-      // try {
-      //   const userToken = this.$store.state.user.token
-      //   await this.$store.dispatch('recipes/create', {
-      //     userToken,
-      //     recipe,
-      //   })
-      //   this.$bvToast.toast('Receta Creada correctamente', {
-      //     title: 'Receta Creada',
-      //     variant: 'success',
-      //     appendToast: true,
-      //     solid: true,
-      //   })
-      //   await this.$router.push('/')
-      // } catch (e) {
-      //   this.$bvToast.toast('Error Cargando la Receta', {
-      //     title: 'Error',
-      //     variant: 'danger',
-      //     appendToast: true,
-      //     solid: true,
-      //   })
-      // }
+      try {
+        const userToken = this.$store.state.user.token
+        await this.$store.dispatch('recipes/update', {
+          recipe,
+          userToken,
+        })
+        this.$bvToast.toast('Receta Actualizada correctamente', {
+          title: 'Receta Actualizada',
+          variant: 'success',
+          appendToast: true,
+          solid: true,
+        })
+        await this.$router.push('/')
+      } catch (e) {
+        this.$bvToast.toast('Error Editando la Receta', {
+          title: 'Error',
+          variant: 'danger',
+          appendToast: true,
+          solid: true,
+        })
+      }
+      this.editing = false
     },
     onResetEditRecipe() {
       console.log('reset edit recipe')

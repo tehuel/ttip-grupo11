@@ -203,6 +203,10 @@ export default {
         ingredients: this.ingredients,
         instructions: this.instructions,
       }
+      // agrego Id condicionalmente
+      if (this.recipe.id) {
+        recipe.id = this.recipe.id
+      }
       this.$emit('submit', { recipe })
     },
     onResetForm() {
