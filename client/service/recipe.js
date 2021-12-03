@@ -50,6 +50,16 @@ module.exports = {
     )
     return formatRecipe(createdRecipe.data)
   },
+  updateRecipe: async (axios, { recipe, userToken }) => {
+    const updatedRecipe = await axios.$put(
+      `/recipes/${recipe.id}`,
+      { recipe },
+      {
+        headers: { Authorization: `Bearer ${userToken}` },
+      }
+    )
+    return formatRecipe(updatedRecipe.data)
+  },
   rateRecipe: async (axios, { rating, id, userToken }) => {
     const ratedRecipe = await axios.$post(
       `/recipes/${id}/rate`,

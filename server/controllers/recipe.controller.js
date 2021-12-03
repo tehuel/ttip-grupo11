@@ -2,6 +2,21 @@ let RecipeService = require("../services/recipe.service");
 let IngredientService = require("../services/ingredient.service");
 let TagService = require("../services/tag.service");
 
+/**
+ * Creo los ingredients que no existen, identifico los existentes
+ */
+const syncIngredientsList = async (ingredientsList) => {
+  return await Promise.all(
+    ingredientsList.map(async ({ quantity, ingredient: IngredientName }) => {
+      const ingredient = await IngredientService.getOrCreate(IngredientName);
+      return {
+        quantity: quantity,
+        ingredient: ingredient._id,
+      };
+    })
+  );
+};
+
 exports.getRecipes = async function (req, res) {
   try {
     const { sort, skip, limit } = req.pagination;
@@ -31,15 +46,7 @@ exports.add = async function (req, res) {
     } = req.body.recipe;
 
     // acá creo los ingredientes que no existen
-    const completeIngredientsList = await Promise.all(
-      ingredients.map(async ({ quantity, ingredient: IngredientName }) => {
-        const ingredient = await IngredientService.getOrCreate(IngredientName);
-        return {
-          quantity: quantity,
-          ingredient: ingredient._id,
-        };
-      })
-    );
+    const completeIngredientsList = await syncIngredientsList(ingredients);
     const recipeData = {
       name,
       description,
@@ -66,23 +73,45 @@ exports.add = async function (req, res) {
 
 exports.update = async function (req, res) {
   try {
-    // TODO: validate req.params and req.body
-    const { name: originalName } = req.params;
-    const { name, description, ingredients, tags } = req.body;
-    //const { ingredients: newIngredients } = req.body;
+    const { sub: user } = req.user;
+    const { id: recipeId } = req.params;
+    const recipe = await RecipeService.getById(recipeId);
 
-    const updatedRecipe = await RecipeService.update(originalName, {
-      name: name,
-      description: description,
-      ingredients: ingredients,
-      tags: tags,
+    console.log("update", {
+      user,
+      recipeId,
+      "recipe.user": recipe.user,
     });
 
-    await IngredientService.create(ingredients);
-    await TagService.create(tags);
+    if (recipe.user != user) {
+      return res.status(400).json({
+        message: "permission error",
+      });
+    }
 
-    return res.status(200).json({
-      message: "Receta modificada.",
+    // TODO: validate req.body
+    const {
+      name,
+      description,
+      instructions,
+      ingredients = [],
+      image,
+      tags,
+    } = req.body.recipe;
+
+    // acá creo los ingredientes que no existen
+    const completeIngredientsList = await syncIngredientsList(ingredients);
+    const updatedRecipe = RecipeService.update(recipeId, {
+      name,
+      description,
+      instructions,
+      ingredients: completeIngredientsList,
+      image,
+      tags,
+    });
+
+    return res.status(201).json({
+      message: "Updated",
       data: updatedRecipe,
     });
   } catch (e) {

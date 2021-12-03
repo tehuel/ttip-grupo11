@@ -26,6 +26,18 @@ export const actions = {
     })
     return createdRecipe
   },
+  async update({ commit }, { recipe, userToken }) {
+    try {
+      const updatedRecipe = await RecipeService.updateRecipe(this.$axios, {
+        recipe,
+        userToken,
+      })
+      commit('setSingle', { updatedRecipe })
+    } catch (e) {
+      console.log(e)
+      throw new Error('Error actualizando receta.')
+    }
+  },
   async rate({ commit, state }, { rating, id, userToken }) {
     const ratedRecipe = await RecipeService.rateRecipe(this.$axios, {
       rating,

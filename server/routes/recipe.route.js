@@ -17,10 +17,9 @@ const RecipePagination = paginationMiddleware({
 // "/recipes" endpoints
 router.get("/", RecipePagination, RecipeController.getRecipes);
 router.post("/", UserValidator, RecipeValidator.create, RecipeController.add);
-router.put("/:name", RecipeController.update);
-router.delete("/:name", RecipeController.delete);
+router.put("/:id", UserValidator, RecipeController.update);
 router.get("/:id", RecipeController.getById);
-router.get("/get/:name", RecipeController.getByName);
+router.delete("/:id", RecipeController.delete);
 router.post("/:id/rate", RecipeController.rate);
 
 router.post("/search", RecipeValidator.search, RecipeController.search);
