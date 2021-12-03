@@ -27,21 +27,12 @@
               <h1 class="h2 text-center">{{ recipe.name }}</h1>
               <p class="lead">{{ recipe.description }}</p>
               <h2 class="h3">Instrucciones</h2>
-              <template v-for="(step, index) in recipe.instructions">
-                <div
-                  :key="step.description"
-                  class="recipe-step my-2 py-2 border-bottom"
-                >
-                  <h3 class="h4 py-2 sticky-top bg-white">
-                    Paso {{ index + 1
-                    }}{{ step.title ? `: ${step.title}` : '' }}
-                  </h3>
-                  <div class="recipe-step-content">
-                    <b-img v-if="step.image" fluid-grow :src="step.image" />
-                    <p>{{ step.description }}</p>
-                  </div>
-                </div>
-              </template>
+              <RecipeStep
+                v-for="(step, index) in recipe.instructions"
+                :key="step"
+                :step="step"
+                :index="index"
+              ></RecipeStep>
             </div>
             <div class="col-12 col-lg-4">
               <b-card class="mb-2 sticky-top">
