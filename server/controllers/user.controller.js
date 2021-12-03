@@ -165,11 +165,22 @@ exports.addToFav = async function (req, res) {
     const { recipeId } = req.body;
     let userFavRecipes = await UserService.addToFav(userId, recipeId);
 
-    console.log("userController.addToFav", {
-      userId,
-      recipeId,
-      userFavRecipes,
+    return res.status(200).json({
+      data: userFavRecipes,
     });
+  } catch (e) {
+    return res.status(400).json({
+      message: e.message,
+    });
+  }
+};
+
+exports.deleteFromFav = async function (req, res) {
+  try {
+    const { sub: userId } = req.user;
+    const { recipeId } = req.body;
+    let userFavRecipes = await UserService.deleteFromFav(userId, recipeId);
+
     return res.status(200).json({
       data: userFavRecipes,
     });

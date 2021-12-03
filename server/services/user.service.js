@@ -69,3 +69,10 @@ exports.addToFav = async function (id, recipeId) {
 
   return user.favRecipes;
 };
+
+exports.deleteFromFav = async function (id, recipeId) {
+  const user = await this.getById(id);
+  user.favRecipes = user.favRecipes.filter((fav) => fav !== recipeId);
+  await user.save();
+  return user.favRecipes;
+};
