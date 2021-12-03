@@ -26,7 +26,6 @@
             <div class="col">
               <h1 class="h2 text-center">{{ recipe.name }}</h1>
               <p class="lead">{{ recipe.description }}</p>
-              <b-button @click="editRecipe">Editar receta</b-button>
               <h2 class="h3">Instrucciones</h2>
               <template v-for="(step, index) in recipe.instructions">
                 <div
@@ -63,7 +62,19 @@
                   :ingredients="recipe.ingredients"
                 ></RecipeIngredientsList>
 
-                <RecipeFavButton :recipe="recipe"></RecipeFavButton>
+                <b-button
+                  v-if="canEditRecipe"
+                  block
+                  variant="primary"
+                  @click="editRecipe"
+                >
+                  Editar receta
+                </b-button>
+
+                <RecipeFavButton
+                  v-if="!canEditRecipe"
+                  :recipe="recipe"
+                ></RecipeFavButton>
               </b-card>
             </div>
           </div>
@@ -116,7 +127,7 @@ export default {
       return formatter.format(this.recipe.createdAt)
     },
     canEditRecipe() {
-      return this.recipe.user.id === this.$store.state.user.id
+      return this.recipe.user === this.$store.state.user.id
     },
   },
   methods: {
@@ -124,7 +135,6 @@ export default {
       this.editing = true
     },
     async onSubmitEditRecipe({ recipe }) {
-      await console.log('submit edit recipe', recipe)
       try {
         const userToken = this.$store.state.user.token
         await this.$store.dispatch('recipes/update', {
@@ -149,7 +159,6 @@ export default {
       this.editing = false
     },
     onResetEditRecipe() {
-      console.log('reset edit recipe')
       this.editing = false
     },
   },
