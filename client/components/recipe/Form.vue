@@ -248,11 +248,25 @@ export default {
           },
         ],
       } = this.recipe
+
+      const formattedIngredients = ingredients.map(
+        ({ quantity, ingredient }) => {
+          const ingredientName =
+            this.$store.getters['ingredients/getIngredientById'](
+              ingredient
+            )?.name
+          return {
+            quantity,
+            ingredient: ingredientName,
+          }
+        }
+      )
+
       this.name = name
       this.description = description
       this.image = image
       this.tags = JSON.parse(JSON.stringify(tags))
-      this.ingredients = JSON.parse(JSON.stringify(ingredients))
+      this.ingredients = JSON.parse(JSON.stringify(formattedIngredients))
       this.instructions = JSON.parse(JSON.stringify(instructions))
     },
   },
