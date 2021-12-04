@@ -38,6 +38,13 @@ export const actions = {
       throw new Error('Error actualizando receta.')
     }
   },
+  async delete({ commit, state }, { id, userToken }) {
+    const deletedRecipe = await RecipeService.deleteRecipe(this.$axios, {
+      id,
+      userToken,
+    })
+    return deletedRecipe
+  },
   async rate({ commit, state }, { rating, id, userToken }) {
     const ratedRecipe = await RecipeService.rateRecipe(this.$axios, {
       rating,

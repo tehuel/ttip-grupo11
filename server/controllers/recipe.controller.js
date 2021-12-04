@@ -143,10 +143,8 @@ exports.rate = async function (req, res) {
 
 exports.delete = async function (req, res) {
   try {
-    // TODO: validate req.params
-    const { name } = req.params;
-
-    await RecipeService.delete(name);
+    const { id } = req.params;
+    await RecipeService.delete(id);
 
     return res.status(200).json({
       message: "Receta eliminada.",

@@ -60,6 +60,11 @@ module.exports = {
     )
     return formatRecipe(updatedRecipe.data)
   },
+  deleteRecipe: async (axios, { id, userToken }) => {
+    return await axios.$delete(`/recipes/${id}`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
+  },
   rateRecipe: async (axios, { rating, id, userToken }) => {
     const ratedRecipe = await axios.$post(
       `/recipes/${id}/rate`,

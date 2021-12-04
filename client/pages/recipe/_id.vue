@@ -167,6 +167,32 @@ export default {
       }
       this.editing = false
     },
+    async onSubmitDeleteRecipe() {
+      try {
+        const userToken = this.$store.state.user.token
+        const recipeId = this.$route.params.id
+
+        await this.$store.dispatch('recipes/delete', {
+          id: recipeId,
+          userToken,
+        })
+        this.$bvToast.toast('Receta Eliminada correctamente', {
+          title: 'Receta Eliminada',
+          variant: 'success',
+          appendToast: true,
+          solid: true,
+        })
+        await this.$router.push('/')
+      } catch (e) {
+        this.$bvToast.toast('Error Editando la Receta', {
+          title: 'Error',
+          variant: 'danger',
+          appendToast: true,
+          solid: true,
+        })
+      }
+      this.$set(this, 'editing', false)
+    },
     onResetEditRecipe() {
       this.editing = false
     },

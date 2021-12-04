@@ -44,8 +44,8 @@ exports.rate = async function (id, rating) {
   return recipe;
 };
 
-exports.delete = async function (name) {
-  return Recipe.deleteOne({ name: name });
+exports.delete = async function (id) {
+  return Recipe.findByIdAndRemove(id);
 };
 
 exports.getById = async function (id) {
