@@ -28,11 +28,9 @@ export default {
     }
   },
   computed: {
-    favRecipes() {
-      return this.$store.state.user.profile?.favRecipes
-    },
     isRecipeInFavourites() {
-      return this.favRecipes.includes(this.recipe.id)
+      const favRecipes = this.$store.state.user.profile?.favRecipes
+      return favRecipes.includes(this.recipe.id)
     },
   },
   methods: {
@@ -40,21 +38,21 @@ export default {
       this.isLoading = true
       const userToken = this.$store.state.user.token
       await this.$store.dispatch('user/addRecipeToFavourites', {
-        recipe: this.recipe,
+        recipeId: this.recipe.id,
         userToken,
       })
       setTimeout(() => {
         this.isLoading = false
       }, 300)
     },
-    onClickRemoveRecipeFromFavourites() {
+    async onClickRemoveRecipeFromFavourites() {
       this.isLoading = true
       // TODO
-      // const userToken = this.$store.state.user.token
-      // await this.$store.dispatch('user/addRecipeToFavourites', {
-      //   recipe: this.recipe,
-      //   userToken,
-      // })
+      const userToken = this.$store.state.user.token
+      await this.$store.dispatch('user/removeRecipeFromFavourites', {
+        recipeId: this.recipe.id,
+        userToken,
+      })
       setTimeout(() => {
         this.isLoading = false
       }, 300)

@@ -7,12 +7,12 @@ const UserController = require("../controllers/user.controller");
 router.post("/authenticate", UserController.authenticate);
 router.post("/register", UserController.register);
 
-router.get("/:userId", UserController.getProfile);
-router.post("/:userId", UserController.updateProfile);
-
+router.post("/addToFav", UserController.addToFav);
+router.post("/deleteFromFav", UserController.deleteFromFav);
 router.get("/myFavRecipes", UserController.myFavRecipes);
 router.get("/myCreatedRecipes", UserController.myCreatedRecipes);
 
-router.post("/addToFav", UserController.addToFav);
+router.get("/:userId", UserController.getProfile);
+router.post("/:userId", UserController.updateProfile);
 
 module.exports = router;

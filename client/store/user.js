@@ -94,18 +94,36 @@ export const actions = {
       throw new Error('Error actualizando perfil del usuario')
     }
   },
-  async addRecipeToFavourites({ commit }, { recipe, userToken }) {
+  async addRecipeToFavourites({ state, commit }, { recipeId, userToken }) {
     const addRecipeToFavouritesResponse = await UserService.addRecipeToFav(
       this.$axios,
       {
-        recipe,
+        recipeId,
         userToken,
       }
     )
+    const updatedProfile = {
+      ...state.profile,
+      favRecipes: addRecipeToFavouritesResponse,
+    }
     commit('setProfile', {
-      profile: addRecipeToFavouritesResponse,
+      profile: updatedProfile,
     })
     return addRecipeToFavouritesResponse
+  },
+  async removeRecipeFromFavourites({ state, commit }, { recipeId, userToken }) {
+    const removeResponse = await UserService.removeRecipeFromFav(this.$axios, {
+      recipeId,
+      userToken,
+    })
+    const updatedProfile = {
+      ...state.profile,
+      favRecipes: removeResponse,
+    }
+    commit('setProfile', {
+      profile: updatedProfile,
+    })
+    return removeResponse
   },
   async logout({ commit }) {
     commit('logout')

@@ -58,9 +58,25 @@ exports.update = async function ({ id, name, image, email }) {
   );
 };
 
-exports.addToFav = async function (id, recipe) {
+exports.addToFav = async function (id, recipeId) {
   const user = await this.getById(id);
-  user.favRecipes.push(recipe.id);
+
+  // solo agrego a listado de favoritos si es que no estaba
+  if (!user.favRecipes.includes(recipeId)) {
+    user.favRecipes.push(recipeId);
+    await user.save();
+  }
+
+  return user.favRecipes;
+};
+
+exports.deleteFromFav = async function (id, recipeId) {
+  const user = await this.getById(id);
+  // me quedo sólo con los elementos distintos a `recipeId`
+  const updatedRecipesList = user.favRecipes.filter(
+    (fav) => fav.toString() !== recipeId
+  );
+  user.favRecipes = updatedRecipesList;
   await user.save();
-  return user;
+  return updatedRecipesList;
 };

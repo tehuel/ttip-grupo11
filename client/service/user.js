@@ -51,17 +51,29 @@ module.exports = {
     )
     return formatProfile(userProfileResponse.data)
   },
-  addRecipeToFav: async (axios, { recipe, userToken }) => {
+  addRecipeToFav: async (axios, { recipeId, userToken }) => {
     const addRecipeToFavResponse = await axios.$post(
       '/users/addToFav',
       {
-        recipe,
+        recipeId,
       },
       {
         headers: { Authorization: `Bearer ${userToken}` },
       }
     )
-    return formatProfile(addRecipeToFavResponse.data)
+    return addRecipeToFavResponse.data
+  },
+  removeRecipeFromFav: async (axios, { recipeId, userToken }) => {
+    const addRecipeToFavResponse = await axios.$post(
+      '/users/deleteFromFav',
+      {
+        recipeId,
+      },
+      {
+        headers: { Authorization: `Bearer ${userToken}` },
+      }
+    )
+    return addRecipeToFavResponse.data
   },
   register: async (axios, { email, password }) => {
     const registerResponse = await axios.$post('/users/register', {
