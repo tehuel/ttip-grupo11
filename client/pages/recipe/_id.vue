@@ -60,11 +60,7 @@
               <h2 class="lead">Ficha Técnica</h2>
               <p>
                 Creada el {{ formattedDate }} por
-                <NuxtLink
-                  :to="{ name: 'user-id', params: { id: recipe.user } }"
-                >
-                  {{ recipe.user }}
-                </NuxtLink>
+                <ProfileName :user-id="recipe.user"></ProfileName>
               </p>
 
               <RecipeRatingForm :recipe="recipe"></RecipeRatingForm>
