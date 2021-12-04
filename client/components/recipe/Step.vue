@@ -18,9 +18,6 @@
 <script>
 export default {
   props: ['step', 'index'],
-  data() {},
-  computed: {},
-  methods: {},
 }
 </script>
 
