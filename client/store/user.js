@@ -22,7 +22,6 @@ export const actions = {
       // guardo el token y el email en state
       commit('setAuthenticated', { id, email, token })
       dispatch('getProfile', { userId: id })
-      // dispatch('myFavRecipes', { userToken: token })
       window &&
         window.$nuxt.$bvToast.toast('Sesión Iniciada correctamente', {
           title: 'Bienvenido',
