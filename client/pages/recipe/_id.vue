@@ -14,6 +14,7 @@
         "
       />
       <div class="container my-5">
+        <!-- Edit -->
         <template v-if="editing">
           <RecipeForm
             :recipe="recipe"
@@ -71,6 +72,8 @@
           </div>
         </template>
       </div>
+
+      <!-- RecipeComments -->
       <div class="py-5 bg-light border-top">
         <div class="container my-2">
           <RecipeComments

@@ -26,7 +26,7 @@ exports.create = async function (recipeData) {
 };
 
 exports.update = async function (id, update) {
-  return Recipe.findOneAndUpdate({ id: id }, update, {
+  const recipe = await Recipe.findOneAndUpdate({ _id: id }, update, {
     new: true,
   });
 };

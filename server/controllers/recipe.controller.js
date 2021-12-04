@@ -101,7 +101,8 @@ exports.update = async function (req, res) {
 
     // acá creo los ingredientes que no existen
     const completeIngredientsList = await syncIngredientsList(ingredients);
-    const updatedRecipe = RecipeService.update(recipeId, {
+
+    const updatedRecipe = await RecipeService.update(recipeId, {
       name,
       description,
       instructions,
