@@ -2,7 +2,7 @@ let Tag = require("../models/tag.model");
 
 exports.findAll = async function () {
   try {
-    return await Tag.find();
+    return await Tag.find().sort("name");
   } catch (e) {
     console.error(e);
     throw Error("Error getting tags.");
