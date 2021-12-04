@@ -96,11 +96,19 @@ describe("/recipe", () => {
   });
 
   it("DELETE /recipes/:recipe to delete recipe", async () => {
+    const testUserCreated = await createTestUser();
+    const testUserToken = await authenticateUser();
+
     // creates a single recipe
-    await Recipe.create({
+    const recipe = await Recipe.create({
       name: "test",
+      user: testUserCreated._id,
     });
-    const res = await request(app).delete("/recipes/test");
+
+    // request to delete recipe
+    const res = await request(app)
+      .delete(`/recipes/${recipe._id}`)
+      .set("Authorization", `Bearer ${testUserToken}`);
 
     expect(res.statusCode).toBe(200);
     expect(res.body.message).toBe("Receta eliminada.");
@@ -149,18 +157,22 @@ describe("/recipe", () => {
   });
 });
 
-async function createTestUser() {
-  const userData = {
-    email: "example@example.com",
-    password: "example",
-  };
-  const res = await request(app).post("/users/register").send(userData);
+async function createTestUser(userData = {}) {
+  const { email = "admin@example.com", password = "password" } = userData;
+  const res = await request(app).post("/users/register").send({
+    email,
+    password,
+  });
   // console.log("createTestUser", res.body);
-  return userData;
+  return res.body.data;
 }
 
-async function authenticateUser(userData) {
-  const res = await request(app).post("/users/authenticate").send(userData);
+async function authenticateUser(userData = {}) {
+  const { email = "admin@example.com", password = "password" } = userData;
+  const res = await request(app).post("/users/authenticate").send({
+    email,
+    password,
+  });
   // console.log("authenticateUser", res.body);
   return res.body.data.token;
 }
