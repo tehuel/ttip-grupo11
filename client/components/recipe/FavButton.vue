@@ -45,14 +45,14 @@ export default {
         this.isLoading = false
       }, 300)
     },
-    onClickRemoveRecipeFromFavourites() {
+    async onClickRemoveRecipeFromFavourites() {
       this.isLoading = true
       // TODO
-      // const userToken = this.$store.state.user.token
-      // await this.$store.dispatch('user/addRecipeToFavourites', {
-      //   recipe: this.recipe,
-      //   userToken,
-      // })
+      const userToken = this.$store.state.user.token
+      await this.$store.dispatch('user/removeRecipeFromFavourites', {
+        recipeId: this.recipe.id,
+        userToken,
+      })
       setTimeout(() => {
         this.isLoading = false
       }, 300)

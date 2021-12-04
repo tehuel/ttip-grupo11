@@ -111,6 +111,20 @@ export const actions = {
     })
     return addRecipeToFavouritesResponse
   },
+  async removeRecipeFromFavourites({ state, commit }, { recipeId, userToken }) {
+    const removeResponse = await UserService.removeRecipeFromFav(this.$axios, {
+      recipeId,
+      userToken,
+    })
+    const updatedProfile = {
+      ...state.profile,
+      favRecipes: removeResponse,
+    }
+    commit('setProfile', {
+      profile: updatedProfile,
+    })
+    return removeResponse
+  },
   async logout({ commit }) {
     commit('logout')
     await this.$router.push('/')

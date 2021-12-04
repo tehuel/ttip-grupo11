@@ -72,7 +72,11 @@ exports.addToFav = async function (id, recipeId) {
 
 exports.deleteFromFav = async function (id, recipeId) {
   const user = await this.getById(id);
-  user.favRecipes = user.favRecipes.filter((fav) => fav !== recipeId);
+  // me quedo sólo con los elementos distintos a `recipeId`
+  const updatedRecipesList = user.favRecipes.filter(
+    (fav) => fav.toString() !== recipeId
+  );
+  user.favRecipes = updatedRecipesList;
   await user.save();
-  return user.favRecipes;
+  return updatedRecipesList;
 };
