@@ -15,62 +15,72 @@
       />
       <div class="container my-5">
         <!-- Edit -->
-        <template v-if="editing">
-          <RecipeForm
-            :recipe="recipe"
-            @submit="onSubmitEditRecipe"
-            @reset="onResetEditRecipe"
-          ></RecipeForm>
-        </template>
-        <template v-else>
-          <div class="row">
-            <div class="col">
-              <h1 class="h2 text-center">{{ recipe.name }}</h1>
-              <p class="lead">{{ recipe.description }}</p>
-              <h2 class="h3">Instrucciones</h2>
-              <RecipeStep
-                v-for="(step, index) in recipe.instructions"
-                :key="step"
-                :step="step"
-                :index="index"
-              ></RecipeStep>
-            </div>
-            <div class="col-12 col-lg-4">
-              <b-card class="mb-2 sticky-top">
-                <h2 class="lead">Ficha Técnica</h2>
-                <p>
-                  Creada el {{ formattedDate }} por
-                  <NuxtLink
-                    :to="{ name: 'user-id', params: { id: recipe.user } }"
-                  >
-                    {{ recipe.user }}
-                  </NuxtLink>
-                </p>
+        <RecipeForm
+          v-show="editing"
+          :recipe="recipe"
+          @submit="onSubmitEditRecipe"
+          @reset="editing = false"
+        ></RecipeForm>
 
-                <RecipeRatingForm :recipe="recipe"></RecipeRatingForm>
-
-                <p class="lead mt-3">Ingredientes:</p>
-                <RecipeIngredientsList
-                  :ingredients="recipe.ingredients"
-                ></RecipeIngredientsList>
-
-                <b-button
-                  v-if="canEditRecipe"
-                  block
-                  variant="primary"
-                  @click="editRecipe"
-                >
-                  Editar receta
-                </b-button>
-
-                <RecipeFavButton
-                  v-if="!canEditRecipe"
-                  :recipe="recipe"
-                ></RecipeFavButton>
-              </b-card>
-            </div>
+        <!-- View -->
+        <div v-show="!editing" class="row">
+          <div class="col">
+            <h1 class="h2 text-center">{{ recipe.name }}</h1>
+            <p class="lead">{{ recipe.description }}</p>
+            <h2 class="h3">Instrucciones</h2>
+            <RecipeStep
+              v-for="(step, index) in recipe.instructions"
+              :key="JSON.stringify(step)"
+              :step="step"
+              :index="index"
+            ></RecipeStep>
           </div>
-        </template>
+          <div class="col-12 col-lg-4">
+            <b-card class="mb-2 sticky-top">
+              <b-button
+                v-if="canEditRecipe"
+                class="mb-2"
+                block
+                variant="primary"
+                @click="editRecipe"
+              >
+                Editar receta
+              </b-button>
+
+              <b-button
+                v-if="canEditRecipe"
+                class="mb-2"
+                block
+                variant="danger"
+                @click="onSubmitDeleteRecipe"
+              >
+                Eliminar receta
+              </b-button>
+
+              <h2 class="lead">Ficha Técnica</h2>
+              <p>
+                Creada el {{ formattedDate }} por
+                <NuxtLink
+                  :to="{ name: 'user-id', params: { id: recipe.user } }"
+                >
+                  {{ recipe.user }}
+                </NuxtLink>
+              </p>
+
+              <RecipeRatingForm :recipe="recipe"></RecipeRatingForm>
+
+              <p class="lead mt-3">Ingredientes:</p>
+              <RecipeIngredientsList
+                :ingredients="recipe.ingredients"
+              ></RecipeIngredientsList>
+
+              <RecipeFavButton
+                v-if="!canEditRecipe"
+                :recipe="recipe"
+              ></RecipeFavButton>
+            </b-card>
+          </div>
+        </div>
       </div>
 
       <!-- RecipeComments -->
@@ -111,7 +121,6 @@ export default {
       recipe: recipeId,
     })
   },
-  fetchOnServer: false,
   computed: {
     formattedDate() {
       const formatter = new Intl.DateTimeFormat('es-AR', {
@@ -124,6 +133,12 @@ export default {
       return this.recipe.user === this.$store.state.user.id
     },
   },
+  activated() {
+    this.recipe = null
+    this.editing = false
+    this.$fetch()
+  },
+  fetchOnServer: false,
   methods: {
     editRecipe() {
       this.editing = true
