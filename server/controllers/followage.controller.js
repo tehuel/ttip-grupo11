@@ -15,8 +15,23 @@ exports.getFollows = async function (req, res) {
   }
 };
 
+exports.getFollowing = async function (req, res) {
+  try {
+    const { skip, limit } = req.pagination;
+    const { sub: userId } = req.user;
+    let following = await FollowageService.getFollowing(skip, limit, userId);
+    return res.status(200).json({
+      data: following,
+    });
+  } catch (e) {
+    return res.status(400).json({
+      message: e.message,
+    });
+  }
+};
+
 exports.add = async function (req, res) {
-  try {;
+  try {
     const { sub: userId } = req.user;
     const { profile } = req.body;
     const profileId = profile.id;

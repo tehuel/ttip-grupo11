@@ -11,5 +11,6 @@ const CommentPagination = paginationMiddleware({
 //router.get("/", CommentPagination, FollowageController.getFollows);
 router.get("/", FollowageController.getFollows);
 router.post("/", FollowageController.add);
+router.get("/following", FollowageController.getFollowing);
 
 module.exports = router;
