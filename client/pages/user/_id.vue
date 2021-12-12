@@ -4,7 +4,11 @@
       <b-overlay :show="$fetchState.pending">
         <h1 class="h2 text-center">Perfil de Usuario</h1>
 
-        <ProfileCard v-if="profile" :profile="profile"></ProfileCard>
+        <ProfileCard
+          v-if="profile"
+          :profile="profile"
+          class="mb-3"
+        ></ProfileCard>
 
         <div class="recipe-feed">
           <h2 class="h3">Recetas Favoritas</h2>
