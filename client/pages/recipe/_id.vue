@@ -1,94 +1,96 @@
 <template>
   <div class="page">
-    <template v-if="recipe">
-      <img
-        v-if="recipe.image"
-        :src="recipe.image"
-        :alt="recipe.name"
-        style="
-          display: block;
-          height: 100%;
-          max-height: 50vh;
-          width: 100%;
-          object-fit: cover;
-        "
-      />
-      <div class="container my-5">
-        <!-- Edit -->
-        <RecipeForm
-          v-show="editing"
-          :recipe="recipe"
-          @submit="onSubmitEditRecipe"
-          @reset="editing = false"
-        ></RecipeForm>
-
-        <!-- View -->
-        <div v-show="!editing" class="row">
-          <div class="col">
-            <h1 class="h2 text-center">{{ recipe.name }}</h1>
-            <p class="lead">{{ recipe.description }}</p>
-            <h2 class="h3">Instrucciones</h2>
-            <RecipeStep
-              v-for="(step, index) in filteredSteps"
-              :key="JSON.stringify(step)"
-              :step="step"
-              :index="index"
-            ></RecipeStep>
-          </div>
-          <div class="col-12 col-lg-4">
-            <b-card class="mb-2 sticky-top">
-              <b-button
-                v-if="canEditRecipe"
-                class="mb-2"
-                block
-                variant="primary"
-                @click="editRecipe"
-              >
-                Editar receta
-              </b-button>
-
-              <b-button
-                v-if="canEditRecipe"
-                class="mb-2"
-                block
-                variant="danger"
-                @click="onSubmitDeleteRecipe"
-              >
-                Eliminar receta
-              </b-button>
-
-              <h2 class="lead">Ficha Técnica</h2>
-              <p>
-                Creada el {{ formattedDate }} por
-                <ProfileName :user-id="recipe.user"></ProfileName>
-              </p>
-
-              <RecipeRatingForm :recipe="recipe"></RecipeRatingForm>
-
-              <p class="lead mt-3">Ingredientes:</p>
-              <RecipeIngredientsList
-                :ingredients="recipe.ingredients"
-              ></RecipeIngredientsList>
-
-              <RecipeFavButton
-                v-if="canFavRecipe"
-                :recipe="recipe"
-              ></RecipeFavButton>
-            </b-card>
-          </div>
-        </div>
-      </div>
-
-      <!-- RecipeComments -->
-      <div class="py-5 bg-light border-top">
-        <div class="container my-2">
-          <RecipeComments
+    <BOverlay :show="$fetchState.pending">
+      <template v-if="recipe">
+        <img
+          v-if="recipe.image"
+          :src="recipe.image"
+          :alt="recipe.name"
+          style="
+            display: block;
+            height: 100%;
+            max-height: 50vh;
+            width: 100%;
+            object-fit: cover;
+          "
+        />
+        <div class="container my-5">
+          <!-- Edit -->
+          <RecipeForm
+            v-show="editing"
             :recipe="recipe"
-            :comments="comments"
-          ></RecipeComments>
+            @submit="onSubmitEditRecipe"
+            @reset="editing = false"
+          ></RecipeForm>
+
+          <!-- View -->
+          <div v-show="!editing" class="row">
+            <div class="col">
+              <h1 class="h2 text-center">{{ recipe.name }}</h1>
+              <p class="lead">{{ recipe.description }}</p>
+              <h2 class="h3">Instrucciones</h2>
+              <RecipeStep
+                v-for="(step, index) in filteredSteps"
+                :key="JSON.stringify(step)"
+                :step="step"
+                :index="index"
+              ></RecipeStep>
+            </div>
+            <div class="col-12 col-lg-4">
+              <b-card class="mb-2 sticky-top">
+                <b-button
+                  v-if="canEditRecipe"
+                  class="mb-2"
+                  block
+                  variant="primary"
+                  @click="editRecipe"
+                >
+                  Editar receta
+                </b-button>
+
+                <b-button
+                  v-if="canEditRecipe"
+                  class="mb-2"
+                  block
+                  variant="danger"
+                  @click="onSubmitDeleteRecipe"
+                >
+                  Eliminar receta
+                </b-button>
+
+                <h2 class="lead">Ficha Técnica</h2>
+                <p>
+                  Creada el {{ formattedDate }} por
+                  <ProfileName :user-id="recipe.user"></ProfileName>
+                </p>
+
+                <RecipeRatingForm :recipe="recipe"></RecipeRatingForm>
+
+                <p class="lead mt-3">Ingredientes:</p>
+                <RecipeIngredientsList
+                  :ingredients="recipe.ingredients"
+                ></RecipeIngredientsList>
+
+                <RecipeFavButton
+                  v-if="canFavRecipe"
+                  :recipe="recipe"
+                ></RecipeFavButton>
+              </b-card>
+            </div>
+          </div>
         </div>
-      </div>
-    </template>
+
+        <!-- RecipeComments -->
+        <div class="py-5 bg-light border-top">
+          <div class="container my-2">
+            <RecipeComments
+              :recipe="recipe"
+              :comments="comments"
+            ></RecipeComments>
+          </div>
+        </div>
+      </template>
+    </BOverlay>
   </div>
 </template>
 
