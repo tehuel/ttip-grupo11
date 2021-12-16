@@ -13,12 +13,19 @@
         <div class="recipe-feed">
           <h2 class="h3">Recetas Favoritas</h2>
           <div class="row">
-            <div
-              v-for="recipe in favRecipes"
-              :key="recipe.id"
-              class="col-6 col-lg-4 mb-2"
-            >
-              <RecipeCard :recipe="recipe" class="h-100" />
+            <template v-if="favRecipes.length">
+              <div
+                v-for="recipe in favRecipes"
+                :key="recipe.id"
+                class="col-6 col-lg-4 mb-2"
+              >
+                <RecipeCard :recipe="recipe" class="h-100" />
+              </div>
+            </template>
+            <div v-else class="col">
+              <BAlert show variant="light" class="my-4">
+                No hay recetas favoritas para mostrar
+              </BAlert>
             </div>
           </div>
         </div>
@@ -26,12 +33,19 @@
         <div class="recipe-feed">
           <h2 class="h3">Recetas Creadas</h2>
           <div class="row">
-            <div
-              v-for="recipe in createdRecipes"
-              :key="recipe.id"
-              class="col-6 col-lg-4 mb-2"
-            >
-              <RecipeCard :recipe="recipe" class="h-100" />
+            <template v-if="createdRecipes.length">
+              <div
+                v-for="recipe in createdRecipes"
+                :key="recipe.id"
+                class="col-6 col-lg-4 mb-2"
+              >
+                <RecipeCard :recipe="recipe" class="h-100" />
+              </div>
+            </template>
+            <div v-else class="col">
+              <BAlert show variant="light" class="my-4">
+                No hay recetas creadas para mostrar
+              </BAlert>
             </div>
           </div>
         </div>
