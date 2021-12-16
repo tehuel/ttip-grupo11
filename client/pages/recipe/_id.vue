@@ -29,7 +29,7 @@
             <p class="lead">{{ recipe.description }}</p>
             <h2 class="h3">Instrucciones</h2>
             <RecipeStep
-              v-for="(step, index) in recipe.instructions"
+              v-for="(step, index) in filteredSteps"
               :key="JSON.stringify(step)"
               :step="step"
               :index="index"
@@ -124,6 +124,12 @@ export default {
         timeStyle: 'short',
       })
       return formatter.format(this.recipe.createdAt)
+    },
+    filteredSteps() {
+      const steps = this.recipe?.instructions || []
+      return steps.filter((step) => {
+        return step.title || step.description
+      })
     },
     canEditRecipe() {
       return this.recipe.user === this.$store.state.user.id
