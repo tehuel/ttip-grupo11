@@ -71,7 +71,7 @@
               ></RecipeIngredientsList>
 
               <RecipeFavButton
-                v-if="!canEditRecipe"
+                v-if="canFavRecipe"
                 :recipe="recipe"
               ></RecipeFavButton>
             </b-card>
@@ -127,6 +127,9 @@ export default {
     },
     canEditRecipe() {
       return this.recipe.user === this.$store.state.user.id
+    },
+    canFavRecipe() {
+      return this.$store.state.user.id && !this.canEditRecipe
     },
   },
   activated() {
