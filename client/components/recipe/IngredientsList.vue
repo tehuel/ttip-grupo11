@@ -2,11 +2,11 @@
   <div class="recipe-ingredients-list">
     <ul>
       <li
-        v-for="ingredientItem in ingredients"
-        :key="ingredientItem.ingredient"
+        v-for="ingredient in filteredIngredients"
+        :key="ingredient"
         class="recipe-ingredient-list-item"
       >
-        {{ getFormattedIngredient(ingredientItem) }}
+        {{ ingredient }}
       </li>
     </ul>
   </div>
@@ -23,14 +23,22 @@ export default {
   data() {
     return {}
   },
-  computed: {},
-  methods: {
-    getIngredientById(id) {
-      return this.$store.getters['ingredients/getIngredientById'](id)
-    },
-    getFormattedIngredient(ingredient) {
-      const name = this.getIngredientById(ingredient.ingredient)?.name
-      return `${name}, ${ingredient.quantity}`
+  computed: {
+    filteredIngredients() {
+      return this.ingredients
+        .map((i) => {
+          const { ingredient, quantity } = i
+          const name =
+            this.$store.getters['ingredients/getIngredientById'](
+              ingredient
+            )?.name
+
+          if (!name || !quantity) {
+            return null
+          }
+          return `${name}, ${quantity}`
+        })
+        .filter(Boolean)
     },
   },
 }
