@@ -1,7 +1,7 @@
 <template>
   <span class="d-inline">
     <NuxtLink :to="{ name: 'user-id', params: { id: userId } }">
-      {{ userName }}
+      {{ userNameToDisplay }}
     </NuxtLink>
   </span>
 </template>
@@ -22,8 +22,8 @@ export default {
     })
   },
   computed: {
-    userName() {
-      return this.user?.name || this.userId
+    userNameToDisplay() {
+      return this.user?.name || this.user?.email || this.userId
     },
   },
   methods: {},
