@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     isRecipeInFavourites() {
-      const favRecipes = this.$store.state.user.profile?.favRecipes
+      const favRecipes = this.$store.state.user.profile?.favRecipes || []
       return favRecipes.includes(this.recipe.id)
     },
   },
