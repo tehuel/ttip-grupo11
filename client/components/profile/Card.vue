@@ -16,7 +16,9 @@
           <div class="col">
             <p class="lead">{{ profile.name }}</p>
             <p>{{ profile.email }}</p>
-            <b-button @click="editProfile">Editar</b-button>
+            <b-button v-if="canEditProfile" @click="editProfile">
+              Editar
+            </b-button>
           </div>
         </div>
       </template>
